@@ -15,7 +15,7 @@ import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 @SuppressWarnings("serial")
 public class RadioNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements Serializable{
 
-    private Integer uSegundagem;
+    private Integer uSecundagem;
     private String descricao;
     private RadioNotaFiscalSaida notaFiscalSaida;
 
@@ -34,13 +34,13 @@ public class RadioNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    public Integer getUSegundagem() {
-        return uSegundagem;
+    
+	public Integer getUSecundagem() {
+        return uSecundagem;
     }
 
-    public void setUSegundagem(Integer uSegundagem) {
-        this.uSegundagem = uSegundagem;
+    public void setUSecundagem(Integer uSecundagem) {
+        this.uSecundagem = uSecundagem;
     }
 
     public RadioNotaFiscalSaida getNotaFiscalSaida() {

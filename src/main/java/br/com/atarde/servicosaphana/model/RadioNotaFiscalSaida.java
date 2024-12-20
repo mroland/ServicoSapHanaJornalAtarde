@@ -5,9 +5,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import br.com.atarde.servicosaphana.sap.hana.model.ParceiroNegocioModel;
+import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
+import br.com.atarde.servicosaphana.sap.model.Status;
 
 @SuppressWarnings("serial")
 public class RadioNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable {
@@ -27,13 +28,25 @@ public class RadioNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializa
 	private Integer uPermuta;
 
 	public RadioNotaFiscalSaida() {
+	}
+
+	public RadioNotaFiscalSaida(Status status) {
+
+		this.setStatus(status);
 
 	}
 
-	public RadioNotaFiscalSaida(Long id) {
+	public RadioNotaFiscalSaida(Empresa empresa) {
+		this.setEmpresa(empresa);
+	}
 
-		this.setId(id);
+	public RadioNotaFiscalSaida(String atributo, Long valor) {
 
+		if ("interfaceId".equals(atributo)) {
+
+			this.setInterfaceId(valor);
+
+		}
 	}
 
 	public Integer getUPermuta() {

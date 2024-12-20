@@ -246,12 +246,18 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 			linhaJson.setCodigoImpostoId(linha.getCodigoImposto().getId()); // fixo
 
 			linhaJson.setUtilizacaoId(linha.getUtilizacao().getId().toString()); /// fixo
-			
+
+			if (!TSUtil.isEmpty(linha.getDescricao())) {
+
+				linhaJson.setItemDescricao(linha.getDescricao());
+
+			}
+
 			linhaJson.setDepositoId(linha.getEstoque().getId());
 
-			if (!TSUtil.isEmpty(linha.getUSegundagem())) {
+			if (!TSUtil.isEmpty(linha.getUSecundagem())) {
 
-				linhaJson.setUSecundagem(linha.getUSegundagem().toString());
+				linhaJson.setUSecundagem(linha.getUSecundagem().toString());
 
 			}
 

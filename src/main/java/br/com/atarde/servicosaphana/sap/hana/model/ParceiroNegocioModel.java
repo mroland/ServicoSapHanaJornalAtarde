@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ParceiroNegocioModel {
 
+	@SerializedName("Series")
+	private Integer serie;
+
 	@SerializedName("CardCode")
 	private String id;
 
@@ -158,6 +161,14 @@ public class ParceiroNegocioModel {
 
 	public void setFiliais(List<FilialParceiroNegocioModel> filiais) {
 		this.filiais = filiais;
+	}
+
+	public Integer getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Integer serie) {
+		this.serie = serie;
 	}
 
 }

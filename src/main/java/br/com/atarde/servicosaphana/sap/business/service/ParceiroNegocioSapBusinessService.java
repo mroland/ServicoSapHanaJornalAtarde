@@ -90,13 +90,13 @@ public class ParceiroNegocioSapBusinessService {
 
 		model.getEndereco().setTipoEndereco("S");
 
-		model.getEndereco().setId("Entrega" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId("Entrega" /*+ " - " + model.getId()*/ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
 		model.getEndereco().setTipoEndereco("B");
 
-		model.getEndereco().setId("Cobranca" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId("Cobranca" /*+ " - " + model.getId()*/ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
@@ -280,20 +280,27 @@ public class ParceiroNegocioSapBusinessService {
 	private void inserirCliente(ParceiroNegocio model, ParceiroNegocioModel parceiroNegocioJsonModel) {
 
 		parceiroNegocioJsonModel.setNome(model.getNome());
+		
+		
 
 		if (Constantes.TIPO_PARCEIRO_NEGOCIO_CLIENTE.equals(model.getTipo())) {
 
 			parceiroNegocioJsonModel.setTipo("cCustomer");
+			parceiroNegocioJsonModel.setSerie(71);
 
-			parceiroNegocioJsonModel.setId("C" + model.getIdentificadorFiscal().getIdentificador());
+			//parceiroNegocioJsonModel.setId("C" + model.getIdentificadorFiscal().getIdentificador());
 
 		} else {
 
 			parceiroNegocioJsonModel.setTipo("cSupplier");
+			parceiroNegocioJsonModel.setSerie(72);
 			
-			parceiroNegocioJsonModel.setId("F" + model.getIdentificadorFiscal().getIdentificador());
+			//parceiroNegocioJsonModel.setId("F" + model.getIdentificadorFiscal().getIdentificador());
 
 		}
+		
+		
+		
 
 		if (!TSUtil.isEmpty(model.getNomeFantasia())) {
 
