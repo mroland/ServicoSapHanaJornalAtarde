@@ -6,39 +6,43 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class Item implements Serializable {
 
-    private String id;
-    private String descricao;
-    private Origem origem;
-    private String detalhe;
-    private Empresa empresa;
-    private Estoque estoque;
-    private List<Estoque> estoques; 
-    private GrupoItem grupo;
-    private TipoItem tipo;      
+	private String id;
+	private String descricao;
+	private Origem origem;
+	private String detalhe;
+	private Empresa empresa;
+	private Estoque estoque;
+	private List<Estoque> estoques;
+	private GrupoItem grupo;
+	private TipoItem tipo;
 
-    public String getDescricao() {
-        return descricao;
-    }
+	private Boolean flagControleEstoque;
+	private Boolean flagItemVenda;
+	private Boolean flagItemCompra;
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getDetalhe() {
-        return detalhe;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setDetalhe(String detalhe) {
-        this.detalhe = detalhe;
-    }
+	public String getDetalhe() {
+		return detalhe;
+	}
+
+	public void setDetalhe(String detalhe) {
+		this.detalhe = detalhe;
+	}
 
 	public Origem getOrigem() {
 		return origem;
@@ -87,6 +91,29 @@ public class Item implements Serializable {
 	public void setTipo(TipoItem tipo) {
 		this.tipo = tipo;
 	}
-    
-    
+
+	public Boolean getFlagControleEstoque() {
+		return flagControleEstoque;
+	}
+
+	public void setFlagControleEstoque(Boolean flagControleEstoque) {
+		this.flagControleEstoque = flagControleEstoque;
+	}
+
+	public Boolean getFlagItemVenda() {
+		return flagItemVenda;
+	}
+
+	public void setFlagItemVenda(Boolean flagItemVenda) {
+		this.flagItemVenda = flagItemVenda;
+	}
+
+	public Boolean getFlagItemCompra() {
+		return flagItemCompra;
+	}
+
+	public void setFlagItemCompra(Boolean flagItemCompra) {
+		this.flagItemCompra = flagItemCompra;
+	}
+
 }

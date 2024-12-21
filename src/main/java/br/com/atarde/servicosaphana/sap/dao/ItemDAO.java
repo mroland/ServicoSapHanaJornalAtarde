@@ -10,22 +10,22 @@ public class ItemDAO {
 
 	public Item obter(Item model) {
 
-        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 
-        broker.setSQL("SELECT OITM.\"ItemCode\" FROM "+ model.getEmpresa().getDbInstancia() + ".OITM WHERE OITM.\"ItemCode\" = ?", model.getId());
+		broker.setSQL("SELECT OITM.\"ItemCode\", CASE WHEN OITM.\"InvntItem\" = 'Y' THEN TRUE ELSE FALSE END, CASE WHEN OITM.\"SellItem\" = 'Y' THEN TRUE ELSE FALSE END, CASE WHEN OITM.\"PrchseItem\" = 'Y' THEN TRUE ELSE FALSE END FROM " + model.getEmpresa().getDbInstancia() + ".OITM WHERE OITM.\"ItemCode\" = ?", model.getId());
 
-        return (Item) broker.getObjectBean(Item.class, "id");
-        
+		return (Item) broker.getObjectBean(Item.class, "id", "flagControleEstoque", "flagItemVenda", "flagItemCompra");
+
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Item> pesquisar(Item model) {
 
-        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 
-        broker.setSQL("SELECT ITEM.\"ItemCode\" AS ID_EXTERNO, ITEM.\"ItemName\" AS DESCRICAO, PRECO.\"Price\" AS VALOR_UNITARIO , LINHA.\"OnHand\" AS QTD_DISPONIVEL FROM " + model.getEmpresa().getDbInstancia() + ".OITM ITEM , " + model.getEmpresa().getDbInstancia() + ".ITM1 PRECO, " + model.getEmpresa().getDbInstancia() + ".OITW AS LINHA WHERE ITEM.\"ItemCode\" = PRECO.\"ItemCode\" AND LINHA.\"ItemCode\" = ITEM.\"ItemCode\" AND PRECO.\"PriceList\" = 3 AND LINHA.\"OnHand\" > 0 AND LINHA.\"WhsCode\" = ? ", model.getEstoque().getId());
+		broker.setSQL("SELECT ITEM.\"ItemCode\" AS ID_EXTERNO, ITEM.\"ItemName\" AS DESCRICAO, PRECO.\"Price\" AS VALOR_UNITARIO , LINHA.\"OnHand\" AS QTD_DISPONIVEL FROM " + model.getEmpresa().getDbInstancia() + ".OITM ITEM , " + model.getEmpresa().getDbInstancia() + ".ITM1 PRECO, " + model.getEmpresa().getDbInstancia() + ".OITW AS LINHA WHERE ITEM.\"ItemCode\" = PRECO.\"ItemCode\" AND LINHA.\"ItemCode\" = ITEM.\"ItemCode\" AND PRECO.\"PriceList\" = 3 AND LINHA.\"OnHand\" > 0 AND LINHA.\"WhsCode\" = ? ", model.getEstoque().getId());
 
-        return broker.getCollectionBean(Item.class, "id", "descricao", "preco", "estoqueItem.quantidadeDisponivel");
+		return broker.getCollectionBean(Item.class, "id", "descricao", "preco", "estoqueItem.quantidadeDisponivel");
 	}
 
 }

@@ -236,6 +236,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
+		
+		nota.setFilial(model.getFilial());
 
 		return nota;
 
