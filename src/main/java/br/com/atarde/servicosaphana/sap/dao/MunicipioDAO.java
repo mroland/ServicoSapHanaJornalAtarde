@@ -19,7 +19,7 @@ public class MunicipioDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 
-		broker.setSQL("SELECT OCNT.\"AbsId\" FROM " + model.getEmpresa().getDbInstancia() + ".OCNT WHERE OCNT.\"Country\" = ? AND OCNT.\"State\" = ? AND OCNT.\"Name\" = ?", model.getEnderecoAB().getPais().getId(), model.getEnderecoAB().getEstado().getId(), model.getEnderecoAB().getCidade());
+		broker.setSQL("SELECT OCNT.\"AbsId\" FROM " + model.getEmpresa().getDbInstancia() + ".OCNT WHERE OCNT.\"Country\" = ? AND OCNT.\"State\" = ? AND UPPER(OCNT.\"Name\") = UPPER(?)", model.getEnderecoAB().getPais().getId(), model.getEnderecoAB().getEstado().getId(), model.getEnderecoAB().getCidade());
 
 		return (Municipio) broker.getObjectBean(Municipio.class, "id");
 	}

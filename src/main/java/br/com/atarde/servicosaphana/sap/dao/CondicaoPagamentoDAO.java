@@ -12,7 +12,7 @@ public class CondicaoPagamentoDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 
-		broker.setSQL("SELECT OCTG.\"GroupNum\", OCTG.\"InstNum\" FROM" + model.getEmpresa().getDbInstancia() + ".OCTG WHERE OCTG.\"GroupNum\" = ?", model.getId());
+		broker.setSQL("SELECT OCTG.\"GroupNum\", OCTG.\"InstNum\" FROM " + model.getEmpresa().getDbInstancia() + ".OCTG WHERE OCTG.\"GroupNum\" = ?", model.getId());
 
 		return (CondicaoPagamento) broker.getObjectBean(CondicaoPagamento.class, "id", "quantidadeParcelas");
 	}
