@@ -3,7 +3,6 @@ package br.com.atarde.servicosaphana.validation;
 import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.sap.dao.ContaContabilDAO;
 import br.com.atarde.servicosaphana.sap.model.CFOP;
 import br.com.atarde.servicosaphana.sap.model.CST;
