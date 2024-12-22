@@ -24,7 +24,7 @@ public class VendaAvulsaNotaFiscalSaidaRomaneioDAO {
 		
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(model.getEmpresa().getJndi());
 		
-		broker.setPropertySQL("INSERT INTO INTEGRACAOSISTEMALEGADO.DBO.VENDAAVULSANOTAFISCALSAIDAROMANEIOS(ID_EXTERNO, ROTEIRO, DESCRICAO, DATA, REPARTE, ENCALHE, VENDA, PRECO, VALOR, RDJ, EMPRESA_ID, SAP_NOTAFISCALSAIDA_ID, REGIAO, CIDADE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", model.getIdExterno(), model.getRoteiro(), model.getDescricao(), model.getData(), model.getReparte(), model.getEncalhe(), model.getVenda(), model.getPreco(), model.getValor(), model.getRdj(), model.getEmpresa().getId(), model.getNota().getId(), model.getRegiao(), model.getCidade());
+		broker.setSQL("INSERT INTO INTEGRACAOSISTEMALEGADO.DBO.VENDAAVULSANOTAFISCALSAIDAROMANEIOS(ID_EXTERNO, ROTEIRO, DESCRICAO, DATA, REPARTE, ENCALHE, VENDA, PRECO, VALOR, RDJ, EMPRESA_ID, SAP_NOTAFISCALSAIDA_ID, REGIAO, CIDADE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", model.getIdExterno(), model.getRoteiro(), model.getDescricao(), model.getData(), model.getReparte(), model.getEncalhe(), model.getVenda(), model.getPreco(), model.getValor(), model.getRdj(), model.getEmpresa().getId(), model.getNota().getId(), model.getRegiao(), model.getCidade());
 		
 		broker.execute();
 		

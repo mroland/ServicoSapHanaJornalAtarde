@@ -12,8 +12,12 @@ import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
+import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
+import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
+import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
@@ -38,7 +42,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 				item.setStatus(new Status(2L));
 
 				item.setMensagemErro(null);
-				
+
 				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
 
 				lista.add(item);
@@ -95,6 +99,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 
 			new VendedorBusiness().validar(model.getVendedor());
 
+			this.obterSequenciaDefaultParceiroNegocio(model);
+
 			new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
 
 			model.setStatus(new Status(1L));
@@ -103,7 +109,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 
 			new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
 
-			this.inserirRomaneiosMSSQL(model);
+			//this.inserirRomaneiosMSSQL(model);
 
 			new VendaAvulsaNotaFiscalSaidaDAO().excluirInterface(model);
 
@@ -135,26 +141,42 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 
 			}
 
-		} 
+		}
 
 		return model;
 
 	}
 
+	private void obterSequenciaDefaultParceiroNegocio(VendaAvulsaNotaFiscalSaida model) throws Exception {
+
+		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
+
+		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
+
+		if (TSUtil.isEmpty(sequencia)) {
+
+			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
+
+		}
+
+		model.getSequencia().setId(sequencia.getIdExterno());
+
+	}
+
 	private void inserirRomaneiosMSSQL(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
-		
-		if(!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size()>0 ){
-			
+
+		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() > 0) {
+
 			for (VendaAvulsaNotaFiscalSaidaRomaneio item : model.getRomaneios()) {
 
 				item.setEmpresa(model.getEmpresa());
-				
+
 				item.setNota(new VendaAvulsaNotaFiscalSaida(model.getId()));
 
 				new VendaAvulsaNotaFiscalSaidaRomaneioDAO().inserirInterfaceMSSQL(item);
 
 			}
-			
+
 		}
 
 	}
@@ -236,7 +258,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
-		
+
 		nota.setFilial(model.getFilial());
 
 		return nota;
@@ -255,6 +277,5 @@ public class VendaAvulsaNotaFiscalSaidaBusiness {
 
 		}
 
-
-	}	
+	}
 }

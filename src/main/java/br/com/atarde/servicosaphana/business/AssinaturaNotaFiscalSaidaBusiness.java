@@ -9,10 +9,15 @@ import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoAssinaturaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
+import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoAssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.AssinaturaNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
+import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
+import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
+import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
@@ -31,13 +36,13 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 				item.setEmpresa(model);
 
 				item.setLinhas(new AssinaturaNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
-				
+
 				item.setParcelas(new AssinaturaNotaFiscalSaidaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
 
 				item.setMensagemErro(null);
-				
+
 				new AssinaturaNotaFiscalSaidaDAO().alterarInterface(item);
 
 				lista.add(item);
@@ -94,6 +99,8 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 
 			new VendedorBusiness().validar(model.getVendedor());
 
+			this.obterSequenciaDefaultParceiroNegocio(model);
+
 			new AssinaturaNotaFiscalSaidaSapBusinessService().inserir((AssinaturaNotaFiscalSaida) model);
 
 			model.setStatus(new Status(1L));
@@ -135,6 +142,22 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 		}
 
 		return model;
+
+	}
+
+	private void obterSequenciaDefaultParceiroNegocio(AssinaturaNotaFiscalSaida model) throws Exception {
+
+		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
+
+		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
+
+		if (TSUtil.isEmpty(sequencia)) {
+
+			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
+
+		}
+
+		model.getSequencia().setId(sequencia.getIdExterno());
 
 	}
 
@@ -203,7 +226,7 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
-		
+
 		nota.setFilial(model.getFilial());
 
 		return nota;
@@ -222,6 +245,5 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 
 		}
 
-
-	}	
+	}
 }
