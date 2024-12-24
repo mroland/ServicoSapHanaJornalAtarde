@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @XmlRootElement
-public class Estoque implements Serializable{
-	
-	//Tabela OWHS
-	
+public class Estoque implements Serializable {
+
+	// Tabela OWHS
+
 	private String id;
 	private String descricao;
 	private Item item;
@@ -19,34 +19,47 @@ public class Estoque implements Serializable{
 	private Integer quantidadeDisponivel;
 	private Integer quantidadeLiberada;
 	private String mensagemErro;
-	
-	public Estoque(){
-		
+
+	public Estoque() {
+
 	}
-	
+
 	public Estoque(Item item, Empresa empresa) {
-		
+
 		this.item = item;
-		
+
 		this.empresa = empresa;
-		
+
+	}
+
+	public Estoque(String id, Empresa empresa) {
+
+		this.id = id;
+
+		this.empresa = empresa;
+
 	}
 
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public Item getItem() {
 		return item;
 	}
+
 	public void setItem(Item item) {
 		this.item = item;
 	}
+
 	public Empresa getEmpresa() {
 		return empresa;
 	}
+
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
@@ -90,7 +103,5 @@ public class Estoque implements Serializable{
 	public void setMensagemErro(String mensagemErro) {
 		this.mensagemErro = mensagemErro;
 	}
-
-	
 
 }

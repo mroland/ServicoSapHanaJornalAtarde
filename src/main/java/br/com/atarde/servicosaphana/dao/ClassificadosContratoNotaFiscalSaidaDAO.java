@@ -4,6 +4,7 @@
  */
 package br.com.atarde.servicosaphana.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
@@ -12,6 +13,7 @@ import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 /**
  * 
@@ -82,7 +84,7 @@ public class ClassificadosContratoNotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE CLASSIFICADOS_CONTRATO_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getDataAtualizacao(), model.getDataImportacao(), model.getInterfaceId());
+		broker.setSQL("UPDATE CLASSIFICADOS_CONTRATO_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), TSUtil.isEmpty(model.getDataAtualizacao()) ? null : new Timestamp(model.getDataAtualizacao().getTime()), TSUtil.isEmpty(model.getDataImportacao()) ? null : new Timestamp(model.getDataImportacao().getTime()), model.getInterfaceId());
 
 		broker.execute();
 

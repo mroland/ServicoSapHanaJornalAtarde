@@ -7,7 +7,6 @@ public abstract class NotaFiscalSaidaLinhaAB extends DocumentoLinhaAB implements
 
 	private Long interfaceId;
 	private Boolean flagImposto;
-	private Estoque estoque;
 
 	public Long getInterfaceId() {
 		return interfaceId;
@@ -23,14 +22,6 @@ public abstract class NotaFiscalSaidaLinhaAB extends DocumentoLinhaAB implements
 
 	public void setFlagImposto(Boolean flagImposto) {
 		this.flagImposto = flagImposto;
-	}
-
-	public Estoque getEstoque() {
-		return estoque;
-	}
-
-	public void setEstoque(Estoque estoque) {
-		this.estoque = estoque;
 	}
 
 }

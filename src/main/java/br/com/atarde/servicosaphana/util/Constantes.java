@@ -247,6 +247,10 @@ public class Constantes {
 
 	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM_ESTOQUE = "Favor inserir objeto Item.estoque ou atributo Item.estoque.id do Objeto DocumentoLinhaAB válido.";
 
+	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM_ESTOQUE_CONTROLE = "Favor inserir objeto Item.estoque ou atributo Item.estoque.id do Objeto DocumentoLinhaAB válido ou estoque é insuficiente.";
+
+	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_TIPO_ITEM_OBRIGATORIO = "O item informado não é de estoque nem de venda. Favor procurar a TI.";
+
 	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_QUANTIDADE = "Favor inserir atributo quantidade do Objeto DocumentoLinhaAB.";
 
 	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_VALOR = "Favor inserir atributo valor do Objeto DocumentoLinhaAB maior que 0(Zero).";
@@ -372,5 +376,7 @@ public class Constantes {
 	public static final String OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_QTD_PARCELAS = "A quantidade de parcelas é diferente da condicao de pagamento no SAP.";
 
 	public static final String OBJETO_OBRIGATORIO_CONDICAO_PAGAMENTO_QTD_PARCELAS = "favor requisitar a TI para inserir as parcelas em condicao pagamento no SAP.";
+
+	public static final Integer TIPO_DOCUMENTO_SEQUENCIA_NOTA = 1;
 
 }

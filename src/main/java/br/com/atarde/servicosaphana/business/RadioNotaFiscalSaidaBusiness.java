@@ -10,18 +10,14 @@ import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.RadioNotaFiscalSaidaSapBusinessService;
-import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
-import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
-import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
-import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class RadioNotaFiscalSaidaBusiness {
+public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 	public void inserirSAP(Empresa model) {
 
@@ -142,22 +138,6 @@ public class RadioNotaFiscalSaidaBusiness {
 		}
 
 		return model;
-
-	}
-
-	private void obterSequenciaDefaultParceiroNegocio(RadioNotaFiscalSaida model) throws Exception {
-
-		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
-
-		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
-
-		if (TSUtil.isEmpty(sequencia)) {
-
-			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
-
-		}
-
-		model.getSequencia().setId(sequencia.getIdExterno());
 
 	}
 

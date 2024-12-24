@@ -10,18 +10,21 @@ import br.com.atarde.servicosaphana.dao.HistoricoClassificadosExecucaoNotaFiscal
 import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.ClassificadosExecucaoNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.ItemDAO;
 import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
 import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.Item;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
 import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
+import br.com.atarde.servicosaphana.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class ClassificadosExecucaoNotaFiscalSaidaBusiness {
+public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
@@ -141,22 +144,6 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness {
 
 	}
 
-	private void obterSequenciaDefaultParceiroNegocio(ClassificadosExecucaoNotaFiscalSaida model) throws Exception {
-
-		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
-
-		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
-
-		if (TSUtil.isEmpty(sequencia)) {
-
-			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
-
-		}
-
-		model.getSequencia().setId(sequencia.getIdExterno());
-
-	}
-
 	private HistoricoClassificadosExecucaoNotaFiscalSaida carregaHistorico(ClassificadosExecucaoNotaFiscalSaida model) {
 
 		HistoricoClassificadosExecucaoNotaFiscalSaida nota = new HistoricoClassificadosExecucaoNotaFiscalSaida();
@@ -250,7 +237,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness {
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
-		
+
 		nota.setFilial(model.getFilial());
 
 		return nota;

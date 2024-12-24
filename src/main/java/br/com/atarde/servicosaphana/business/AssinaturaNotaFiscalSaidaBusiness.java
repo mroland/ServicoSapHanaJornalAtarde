@@ -9,21 +9,16 @@ import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoAssinaturaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoAssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.AssinaturaNotaFiscalSaidaSapBusinessService;
-import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
-import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
-import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
-import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class AssinaturaNotaFiscalSaidaBusiness {
+public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 	public void inserirSAP(Empresa model) {
 
@@ -145,21 +140,7 @@ public class AssinaturaNotaFiscalSaidaBusiness {
 
 	}
 
-	private void obterSequenciaDefaultParceiroNegocio(AssinaturaNotaFiscalSaida model) throws Exception {
 
-		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
-
-		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
-
-		if (TSUtil.isEmpty(sequencia)) {
-
-			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
-
-		}
-
-		model.getSequencia().setId(sequencia.getIdExterno());
-
-	}
 
 	private HistoricoAssinaturaNotaFiscalSaida carregaHistorico(AssinaturaNotaFiscalSaida model) {
 

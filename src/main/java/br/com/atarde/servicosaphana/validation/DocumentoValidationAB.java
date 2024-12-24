@@ -12,6 +12,7 @@ import br.com.atarde.servicosaphana.sap.model.CodigoImposto;
 import br.com.atarde.servicosaphana.sap.model.DocumentoAB;
 import br.com.atarde.servicosaphana.sap.model.DocumentoLinhaAB;
 import br.com.atarde.servicosaphana.sap.model.Estoque;
+import br.com.atarde.servicosaphana.sap.model.Filial;
 import br.com.atarde.servicosaphana.sap.model.Utilizacao;
 import br.com.atarde.servicosaphana.util.Constantes;
 import br.com.atarde.servicosaphana.util.Utilitarios;
@@ -52,7 +53,7 @@ public class DocumentoValidationAB {
 
 	}
 
-	protected String validaLinhaNFF(DocumentoLinhaAB model) {
+	protected String validaLinhaNFF(DocumentoLinhaAB model, Filial filial) {
 		
 		StringBuilder retorno = new StringBuilder();
 
@@ -64,24 +65,86 @@ public class DocumentoValidationAB {
 			
 			model.getItem().setEmpresa(model.getEmpresa());
 
-			if (TSUtil.isEmpty(new ItemDAO().obter(model.getItem()))) {
+			model.setItem(new ItemDAO().obter(model.getItem()));
+
+			if (TSUtil.isEmpty(model.getItem())) {
 
 				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM + Constantes.CAMPO_OBRIGATORIO + "\n");
 
 			}else{
 				
-				if(TSUtil.isEmpty(model.getItem().getEstoque())){
-					
-					model.getItem().setEstoque(new Estoque());
-					
-				}else{
-					
-					if(TSUtil.isEmpty(new EstoqueDAO().obter(new Estoque(model.getItem(), model.getEmpresa())))){
-						
-						retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM_ESTOQUE + "\n");
-						
+				model.getItem().setEmpresa(model.getEmpresa());
+
+				if (model.getItem().getFlagControleEstoque()) {
+
+					model.setEstoque(new Estoque());
+
+					switch (filial.getId()) {
+
+					case 1: // EDITORIAL
+
+						model.getEstoque().setId("100");
+
+						break;
+
+					case 2: // RADIO
+
+						model.getEstoque().setId("200");
+
+						break;
+					case 3: // ATN
+
+						model.getEstoque().setId("300");
+
+						break;
+
 					}
+
+					model.getItem().setEstoque(model.getEstoque());
+
+					if (TSUtil.isEmpty(new EstoqueDAO().obterItemEstoque(new Estoque(model.getItem(), model.getEmpresa())))) {
+
+						retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM_ESTOQUE_CONTROLE + " para o item " + model.getItem().getId() + " \n");
+
+					}
+
+				} else if (model.getItem().getFlagItemVenda()) {
+
+					model.setEstoque(new Estoque());
+
+					switch (filial.getId()) {
+
+					case 1: // EDITORIAL
+
+						model.getEstoque().setId("199");
+
+						break;
+
+					case 2: // RADIO
+
+						model.getEstoque().setId("299");
+
+						break;
+					case 3: // ATN
+
+						model.getEstoque().setId("399");
+
+						break;
+
+					}
+
+					if (TSUtil.isEmpty(new EstoqueDAO().obter(new Estoque(model.getEstoque().getId(), model.getEmpresa())))) {
+
+						retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM_ESTOQUE + "\n");
+
+					}
+
+				} else {
+
+					retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_TIPO_ITEM_OBRIGATORIO + "\n");
+
 				}
+				
 			}
 		}
 

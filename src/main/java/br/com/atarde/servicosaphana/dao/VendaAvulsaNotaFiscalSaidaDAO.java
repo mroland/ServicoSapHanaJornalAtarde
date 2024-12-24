@@ -4,6 +4,7 @@
  */
 package br.com.atarde.servicosaphana.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
@@ -108,7 +109,7 @@ public class VendaAvulsaNotaFiscalSaidaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
-		broker.setSQL("UPDATE VENDAAVULSANOTAFISCALSAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getDataAtualizacao(), model.getDataImportacao(), model.getInterfaceId());
+		broker.setSQL("UPDATE VENDAAVULSANOTAFISCALSAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), TSUtil.isEmpty(model.getDataAtualizacao()) ? null : new Timestamp(model.getDataAtualizacao().getTime()), TSUtil.isEmpty(model.getDataImportacao()) ? null : new Timestamp(model.getDataImportacao().getTime()), model.getInterfaceId());
 		
 		broker.execute();
 		

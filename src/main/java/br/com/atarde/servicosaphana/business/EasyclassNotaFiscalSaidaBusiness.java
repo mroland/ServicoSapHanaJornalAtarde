@@ -10,18 +10,14 @@ import br.com.atarde.servicosaphana.dao.HistoricoEasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.EasyclassNotaFiscalSaidaSapBusinessService;
-import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
-import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
-import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
-import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class EasyclassNotaFiscalSaidaBusiness {
+public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 	public void inserirSAP(Empresa model) {
 
@@ -145,22 +141,6 @@ public class EasyclassNotaFiscalSaidaBusiness {
 
 	}
 
-	private void obterSequenciaDefaultParceiroNegocio(EasyclassNotaFiscalSaida model) throws Exception {
-
-		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
-
-		Sequencia sequencia = new SequenciaDAO().obterInterface(parceiro.getuTipoDocumento(), model.getFilial());
-
-		if (TSUtil.isEmpty(sequencia)) {
-
-			throw new Exception("Sequencia não mapeada na interface para filial e parceiro.tipoDocumento");
-
-		}
-
-		model.getSequencia().setId(sequencia.getIdExterno());
-
-	}
-
 	private HistoricoEasyclassNotaFiscalSaida carregaHistorico(EasyclassNotaFiscalSaida model) {
 
 		HistoricoEasyclassNotaFiscalSaida nota = new HistoricoEasyclassNotaFiscalSaida();
@@ -254,7 +234,7 @@ public class EasyclassNotaFiscalSaidaBusiness {
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
-		
+
 		nota.setFilial(model.getFilial());
 
 		return nota;

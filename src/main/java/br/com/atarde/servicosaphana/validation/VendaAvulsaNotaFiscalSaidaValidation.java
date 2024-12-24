@@ -8,6 +8,7 @@ import br.com.atarde.servicosaphana.sap.dao.ContaContabilDAO;
 import br.com.atarde.servicosaphana.sap.model.CFOP;
 import br.com.atarde.servicosaphana.sap.model.CST;
 import br.com.atarde.servicosaphana.sap.model.CodigoImposto;
+import br.com.atarde.servicosaphana.sap.model.Filial;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.PedidoVenda;
 import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
@@ -170,7 +171,7 @@ public class VendaAvulsaNotaFiscalSaidaValidation extends NotaFiscalSaidaValidat
 					
 					linha.setCstICMS(new CST());
 
-					retorno.append(this.validaLinhaNFF(linha));
+					retorno.append(this.validaLinhaNFF(linha, model.getFilial()));
 
 				}
 
@@ -298,11 +299,11 @@ public class VendaAvulsaNotaFiscalSaidaValidation extends NotaFiscalSaidaValidat
 		
 	}
 
-	protected String validaLinhaNFF(VendaAvulsaNotaFiscalSaidaLinha model) {		
+	protected String validaLinhaNFF(VendaAvulsaNotaFiscalSaidaLinha model, Filial filial) {		
 
 		StringBuilder retorno = new StringBuilder();
 		
-		retorno.append(super.validaLinhaNFF(model));
+		retorno.append(super.validaLinhaNFF(model, filial));
 		
 		if (!TSUtil.isEmpty(model.getPedidoVendaLinha())) {
 

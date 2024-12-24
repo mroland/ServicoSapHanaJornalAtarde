@@ -17,11 +17,11 @@ public class SequenciaDAO {
 		return (Sequencia) broker.getObjectBean(Sequencia.class, "id");
 	}
 
-	public Sequencia obterInterface(Integer uTipoDocumento, Filial filial) {
+	public Sequencia obterInterface(Integer uTipoDocumento, Filial filial, Boolean flagNfe) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SABWEB);
 
-		broker.setSQL("SELECT ID, FILIAL_ID, ID_EXTERNO, TIPO_DOCUMENTO FROM SEQUENCIA S WHERE FILIAL_ID = ? AND TIPO_DOCUMENTO  = ?", filial.getId(), uTipoDocumento);
+		broker.setSQL("SELECT ID, FILIAL_ID, ID_EXTERNO, TIPO_DOCUMENTO FROM SEQUENCIA S WHERE FILIAL_ID = ? AND TIPO_DOCUMENTO  = ? AND CASE WHEN ?=1 THEN FLAG_NFE = ? ELSE TRUE END", filial.getId(), uTipoDocumento, uTipoDocumento, flagNfe);
 
 		return (Sequencia) broker.getObjectBean(Sequencia.class, "id", "filial.id", "idExterno", "tipoDocumento");
 		

@@ -6,6 +6,8 @@ import java.io.Serializable;
 public class Filial implements Serializable {
 
 	private Integer id;
+	private String descricao;
+	private Boolean flagPrincipal;
 	private Empresa empresa;
 
 	public Integer getId() {
@@ -22,6 +24,22 @@ public class Filial implements Serializable {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Boolean getFlagPrincipal() {
+		return flagPrincipal;
+	}
+
+	public void setFlagPrincipal(Boolean flagPrincipal) {
+		this.flagPrincipal = flagPrincipal;
 	}
 
 }
