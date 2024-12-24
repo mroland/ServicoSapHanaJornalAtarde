@@ -76,7 +76,7 @@ public class VendedorSapBusinessService {
 	
 	private VendedorModel inserir(VendedorModel jsonObjeto, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
-		System.out.println(new Gson().toJson(jsonObjeto));
+		//System.out.println(new Gson().toJson(jsonObjeto));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/SalesPersons").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(jsonObjeto), MediaType.APPLICATION_JSON_TYPE));
 
@@ -86,7 +86,7 @@ public class VendedorSapBusinessService {
 
 			String json = response.readEntity(String.class);
 
-			System.out.println(json);
+			//System.out.println(json);
 
 			resposta = new Gson().fromJson(json, VendedorModel.class);
 
@@ -94,7 +94,7 @@ public class VendedorSapBusinessService {
 
 			String jsonString = response.readEntity(String.class);
 
-			System.out.println(jsonString);
+			//System.out.println(jsonString);
 			
 			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class); 
 

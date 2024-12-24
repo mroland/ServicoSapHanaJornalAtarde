@@ -96,7 +96,7 @@ public class ConexaoSapUtil {
 
 			String json = response.readEntity(String.class);
 
-			System.out.println(json);
+			//System.out.println(json);
 
 			resposta = new Gson().fromJson(json, ConexaoSessaoHanaModel.class);
 
@@ -104,7 +104,7 @@ public class ConexaoSapUtil {
 
 			String jsonString = response.readEntity(String.class);
 
-			System.out.println(jsonString);
+			//System.out.println(jsonString);
 
 			throw new TSApplicationException(new Exception("Erro de conexão com SAP. Erro" + jsonString));
 

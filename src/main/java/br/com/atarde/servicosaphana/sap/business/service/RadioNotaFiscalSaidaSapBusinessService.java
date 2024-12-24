@@ -299,7 +299,7 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 
 	private RadioNotaFiscalSaidaModel inserir(RadioNotaFiscalSaidaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
-		System.out.println(new Gson().toJson(model));
+		//System.out.println(new Gson().toJson(model));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Invoices").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
 
@@ -309,7 +309,7 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 
 			String json = response.readEntity(String.class);
 
-			System.out.println(json);
+			//System.out.println(json);
 
 			resposta = new Gson().fromJson(json, RadioNotaFiscalSaidaModel.class);
 
@@ -317,7 +317,7 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 
 			String jsonString = response.readEntity(String.class);
 
-			System.out.println(jsonString);
+			//System.out.println(jsonString);
 
 			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class);
 
