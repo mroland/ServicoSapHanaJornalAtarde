@@ -5,6 +5,8 @@
 
 package br.com.atarde.servicosaphana.dao;
 
+import java.sql.Timestamp;
+
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaidaParcela;
@@ -46,7 +48,7 @@ public class HistoricoAssinaturaNotaFiscalSaidaDAO {
 				model.getCliente().getDataAtualizacao(), model.getCliente().getClassificacao().getId(), model.getVendedor().getId(), 
 				model.getVendedor().getTipoIdentificador(), model.getVendedor().getIdentificador(), model.getVendedor().getNome(), model.getVendedor().getDataAtualizacao(), 
 				model.getVendedor().getGrupoComissao().getId(), model.getVendedor().getUCga(), model.getId(), model.getDataLancamento(), model.getDataDocumento(), 
-				model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getDataExportacao(), model.getDataImportacao(), model.getDataAtualizacao(), 
+				model.getDataVencimento(), model.getCondicaoPagamento().getId(), model.getDataExportacao(),  new Timestamp(System.currentTimeMillis()), model.getDataAtualizacao(), 
 				model.getSequencia().getId(), model.getStatus().getId(), model.getMensagemErro(), model.getIdExterno(), model.getEmpresa().getId(), 
 				model.getOrigem().getId(), model.getUValorBruto(), model.getValor(), model.getUEnderecoEntrega(), model.getObservacao(), model.getUObservacao(), model.getPedidoVenda().getId(), 
 				model.getCliente().getFlagEndereco(), model.getCliente().getEnderecoEntregaDefault(), model.getCliente().getEnderecoCobrancaDefault(),
