@@ -12,6 +12,16 @@ import java.io.Serializable;
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class HistoricoAssinaturaNotaFiscalSaida extends AssinaturaNotaFiscalSaida implements Serializable{
+public class HistoricoAssinaturaNotaFiscalSaida extends AssinaturaNotaFiscalSaida implements Serializable {
+
+	private Long interfaceOriginalId;
+
+	public Long getInterfaceOriginalId() {
+		return interfaceOriginalId;
+	}
+
+	public void setInterfaceOriginalId(Long interfaceOriginalId) {
+		this.interfaceOriginalId = interfaceOriginalId;
+	}
 
 }

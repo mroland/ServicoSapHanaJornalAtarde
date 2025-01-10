@@ -145,6 +145,8 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 	private HistoricoRadioNotaFiscalSaida carregaHistorico(RadioNotaFiscalSaida model) {
 
 		HistoricoRadioNotaFiscalSaida nota = new HistoricoRadioNotaFiscalSaida();
+		
+		nota.setInterfaceOriginalId(model.getId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 

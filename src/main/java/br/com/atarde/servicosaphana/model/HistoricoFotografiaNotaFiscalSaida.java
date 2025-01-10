@@ -12,4 +12,15 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class HistoricoFotografiaNotaFiscalSaida extends FotografiaNotaFiscalSaida implements Serializable {
+
+	private Long interfaceOriginalId;
+
+	public Long getInterfaceOriginalId() {
+		return interfaceOriginalId;
+	}
+
+	public void setInterfaceOriginalId(Long interfaceOriginalId) {
+		this.interfaceOriginalId = interfaceOriginalId;
+	}
+
 }

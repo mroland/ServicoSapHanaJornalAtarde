@@ -21,7 +21,7 @@ import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
+public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
@@ -104,7 +104,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			model.setStatus(new Status(1L));
 
 			model.setMensagemErro(null);
-			
+
 			new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
 
 			// this.inserirRomaneiosMSSQL(model);
@@ -145,8 +145,6 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 	}
 
-
-
 	private void inserirRomaneiosMSSQL(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
 
 		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() > 0) {
@@ -168,6 +166,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 	private HistoricoVendaAvulsaNotaFiscalSaida carregaHistorico(VendaAvulsaNotaFiscalSaida model) {
 
 		HistoricoVendaAvulsaNotaFiscalSaida nota = new HistoricoVendaAvulsaNotaFiscalSaida();
+
+		nota.setInterfaceOriginalId(model.getId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 

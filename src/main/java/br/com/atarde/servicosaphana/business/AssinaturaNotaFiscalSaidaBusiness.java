@@ -146,6 +146,8 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 	private HistoricoAssinaturaNotaFiscalSaida carregaHistorico(AssinaturaNotaFiscalSaida model) {
 
 		HistoricoAssinaturaNotaFiscalSaida nota = new HistoricoAssinaturaNotaFiscalSaida();
+		
+		nota.setInterfaceOriginalId(model.getId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 
