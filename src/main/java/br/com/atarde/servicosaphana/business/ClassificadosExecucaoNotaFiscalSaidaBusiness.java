@@ -2,6 +2,7 @@ package br.com.atarde.servicosaphana.business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.ClassificadosExecucaoNotaFiscalSaidaDAO;
@@ -10,16 +11,9 @@ import br.com.atarde.servicosaphana.dao.HistoricoClassificadosExecucaoNotaFiscal
 import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.ClassificadosExecucaoNotaFiscalSaidaSapBusinessService;
-import br.com.atarde.servicosaphana.sap.dao.ItemDAO;
-import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
-import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
-import br.com.atarde.servicosaphana.sap.model.Item;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
-import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
-import br.com.atarde.servicosaphana.sap.model.Sequencia;
 import br.com.atarde.servicosaphana.sap.model.Status;
-import br.com.atarde.servicosaphana.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
@@ -166,7 +160,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 		nota.setDataExportacao(model.getDataExportacao());
 
-		nota.setDataImportacao(model.getDataImportacao());
+		nota.setDataImportacao(new Date());
 
 		nota.setDataLancamento(model.getDataLancamento());
 

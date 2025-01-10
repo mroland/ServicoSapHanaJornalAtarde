@@ -2,6 +2,7 @@ package br.com.atarde.servicosaphana.business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.AssinaturaNotaFiscalSaidaDAO;
@@ -162,7 +163,7 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 		nota.setDataExportacao(model.getDataExportacao());
 
-		nota.setDataImportacao(model.getDataImportacao());
+		nota.setDataImportacao(new Date());
 
 		nota.setDataLancamento(model.getDataLancamento());
 

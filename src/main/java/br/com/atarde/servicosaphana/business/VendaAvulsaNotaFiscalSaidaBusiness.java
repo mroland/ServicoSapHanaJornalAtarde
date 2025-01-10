@@ -2,6 +2,7 @@ package br.com.atarde.servicosaphana.business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.HistoricoVendaAvulsaNotaFiscalSaidaDAO;
@@ -103,7 +104,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			model.setStatus(new Status(1L));
 
 			model.setMensagemErro(null);
-
+			
 			new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
 
 			// this.inserirRomaneiosMSSQL(model);
@@ -184,7 +185,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 		nota.setDataExportacao(model.getDataExportacao());
 
-		nota.setDataImportacao(model.getDataImportacao());
+		nota.setDataImportacao(new Date());
 
 		nota.setDataLancamento(model.getDataLancamento());
 
