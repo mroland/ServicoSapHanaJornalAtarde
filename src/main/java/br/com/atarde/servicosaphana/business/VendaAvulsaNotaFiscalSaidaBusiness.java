@@ -167,7 +167,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 		HistoricoVendaAvulsaNotaFiscalSaida nota = new HistoricoVendaAvulsaNotaFiscalSaida();
 
-		nota.setInterfaceOriginalId(model.getId());
+		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 

@@ -146,7 +146,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 		HistoricoEasyclassNotaFiscalSaida nota = new HistoricoEasyclassNotaFiscalSaida();
 		
-		nota.setInterfaceOriginalId(model.getId());
+		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 

@@ -142,7 +142,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 		HistoricoClassificadosExecucaoNotaFiscalSaida nota = new HistoricoClassificadosExecucaoNotaFiscalSaida();
 		
-		nota.setInterfaceOriginalId(model.getId());
+		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
 
