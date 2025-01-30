@@ -52,6 +52,9 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 	@SerializedName("WarehouseCode")
 	private String depositoId;
 
+	@SerializedName("CostingCode")
+	private String unidadeNegocioId;
+
 	public Integer getNumeroLinha() {
 		return numeroLinha;
 	}
@@ -170,6 +173,14 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 
 	public void setDepositoId(String depositoId) {
 		this.depositoId = depositoId;
+	}
+
+	public String getUnidadeNegocioId() {
+		return unidadeNegocioId;
+	}
+
+	public void setUnidadeNegocioId(String unidadeNegocioId) {
+		this.unidadeNegocioId = unidadeNegocioId;
 	}
 
 }

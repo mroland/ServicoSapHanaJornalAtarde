@@ -121,6 +121,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaSapBusinessService {
 			linhaJson.setUtilizacaoId(linha.getUtilizacao().getId().toString()); /// fixo
 			
 			linhaJson.setDepositoId(linha.getEstoque().getId());
+			
+			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
 
 			nffJson.getLinhas().add(linhaJson);
 

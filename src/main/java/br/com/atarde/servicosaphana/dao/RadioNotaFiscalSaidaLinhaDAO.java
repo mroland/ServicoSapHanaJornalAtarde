@@ -25,9 +25,9 @@ public class RadioNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR , CODIGO_IMPOSTO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, U_SECUNDAGEM, DESCRICAO, UTILIZACAO_ID , DEPOSITO_ID FROM RADIO_NFF_SAIDA_LINHA WHERE RADIO_NFF_SAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR , CODIGO_IMPOSTO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, U_SECUNDAGEM, DESCRICAO, UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID FROM RADIO_NFF_SAIDA_LINHA WHERE RADIO_NFF_SAIDA_ID = ?", model.getInterfaceId());
 
-		return broker.getCollectionBean(RadioNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valor", "codigoImposto.id", "cstICMS.codigo", "cstPIS.codigo", "cstIPI.codigo", "cstCOFINS.codigo", "uSecundagem", "descricao", "utilizacao.id", "estoque.id");
+		return broker.getCollectionBean(RadioNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valor", "codigoImposto.id", "cstICMS.codigo", "cstPIS.codigo", "cstIPI.codigo", "cstCOFINS.codigo", "uSecundagem", "descricao", "utilizacao.id", "estoque.id", "unidadeNegocio.id");
 	}
 
 }

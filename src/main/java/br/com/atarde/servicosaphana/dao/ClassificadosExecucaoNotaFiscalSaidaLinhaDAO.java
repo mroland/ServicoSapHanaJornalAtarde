@@ -25,9 +25,9 @@ public class ClassificadosExecucaoNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID , ITEM , QUANTIDADE , VALOR , CODIGO_IMPOSTO , CLASSIFICADOS_EXECUCAO_NFF_SAIDA_ID , UTILIZACAO_ID , DEPOSITO_ID FROM CLASSIFICADOS_EXECUCAO_NFF_SAIDA_LINHA S WHERE S.CLASSIFICADOS_EXECUCAO_NFF_SAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID , ITEM , QUANTIDADE , VALOR , CODIGO_IMPOSTO , CLASSIFICADOS_EXECUCAO_NFF_SAIDA_ID , UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID FROM CLASSIFICADOS_EXECUCAO_NFF_SAIDA_LINHA S WHERE S.CLASSIFICADOS_EXECUCAO_NFF_SAIDA_ID = ?", model.getInterfaceId());
 
-		return broker.getCollectionBean(ClassificadosExecucaoNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valor", "codigoImposto.id", "notaFiscalSaida.id", "utilizacao.id", "estoque.id");
+		return broker.getCollectionBean(ClassificadosExecucaoNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valor", "codigoImposto.id", "notaFiscalSaida.id", "utilizacao.id", "estoque.id", "unidadeNegocio.id");
 	}
 	
 

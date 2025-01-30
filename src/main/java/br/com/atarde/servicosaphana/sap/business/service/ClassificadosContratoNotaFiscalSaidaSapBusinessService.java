@@ -226,6 +226,8 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 			linhaJson.setUValorUnitario(linha.getUValorUnitario().doubleValue());
 			
 			linhaJson.setDepositoId(linha.getEstoque().getId());
+			
+			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
 
 			nffJson.getLinhas().add(linhaJson);
 

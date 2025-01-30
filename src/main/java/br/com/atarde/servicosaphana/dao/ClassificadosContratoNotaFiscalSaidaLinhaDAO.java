@@ -25,9 +25,9 @@ public class ClassificadosContratoNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID , ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , CLASSIFICADOS_CONTRATO_NFF_SAIDA_ID , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , UTILIZACAO_ID , DEPOSITO_ID FROM CLASSIFICADOS_CONTRATO_NFF_SAIDA_LINHA S WHERE S.CLASSIFICADOS_CONTRATO_NFF_SAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID , ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , CLASSIFICADOS_CONTRATO_NFF_SAIDA_ID , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID FROM CLASSIFICADOS_CONTRATO_NFF_SAIDA_LINHA S WHERE S.CLASSIFICADOS_CONTRATO_NFF_SAIDA_ID = ?", model.getInterfaceId());
 
-		return broker.getCollectionBean(ClassificadosContratoNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "notaFiscalSaida.id", "uCmXCol", "uArea", "uQuantidadeInsercoes", "uTotalCmXCol", "uValorUnitario", "utilizacao.id", "estoque.id");
+		return broker.getCollectionBean(ClassificadosContratoNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valorUnitario", "valor", "codigoImposto.id", "notaFiscalSaida.id", "uCmXCol", "uArea", "uQuantidadeInsercoes", "uTotalCmXCol", "uValorUnitario", "utilizacao.id", "estoque.id", "unidadeNegocio.id");
 	}
 
 }
