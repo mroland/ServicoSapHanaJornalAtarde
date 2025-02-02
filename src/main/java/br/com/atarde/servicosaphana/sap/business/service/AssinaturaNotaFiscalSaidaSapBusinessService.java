@@ -145,6 +145,8 @@ public class AssinaturaNotaFiscalSaidaSapBusinessService {
 			linhaJson.setCodigoImpostoId(linha.getCodigoImposto().getId());
 			
 			linhaJson.setDepositoId(linha.getEstoque().getId());
+			
+			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
 
 			nffJson.getLinhas().add(linhaJson);
 

@@ -12,48 +12,65 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class RegraDistribuicao implements Serializable {
-    
-    //Tabela OOCR
 
-    private String id;
-    private String descricao;
-    private Dimensao dimensao;
-    private Empresa empresa;
-    private String mensagemErro;
-    
+	// Tabela OOCR
+
+	private String id;
+	private String descricao;
+	private Dimensao dimensao;
+	private Empresa empresa;
+	private String mensagemErro;
+
+	public RegraDistribuicao() {
+
+	}
+
+	public RegraDistribuicao(String id, Empresa empresa, Dimensao dimensaoModel) {
+
+		this.id = id;
+		this.empresa = empresa;
+		this.dimensao = dimensao;
+
+	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public Dimensao getDimensao() {
 		return dimensao;
 	}
+
 	public void setDimensao(Dimensao dimensao) {
 		this.dimensao = dimensao;
 	}
+
 	public Empresa getEmpresa() {
 		return empresa;
 	}
+
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
+
 	public String getMensagemErro() {
 		return mensagemErro;
 	}
+
 	public void setMensagemErro(String mensagemErro) {
 		this.mensagemErro = mensagemErro;
 	}
-
-
-
-
 
 }

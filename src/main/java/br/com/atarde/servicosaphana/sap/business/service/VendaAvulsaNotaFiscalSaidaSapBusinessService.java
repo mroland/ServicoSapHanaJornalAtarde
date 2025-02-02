@@ -13,6 +13,7 @@ import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaNotaFiscalSaidaLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaNotaFiscalSaidaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaParcelaNotaFiscalSaidaModel;
@@ -29,7 +30,7 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 	private Empresa empresa;
 	private ConexaoSessaoHanaModel conexaoSessaoHanaModel;
 
-	public VendaAvulsaNotaFiscalSaida inserir(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
+	public VendaAvulsaNotaFiscalSaida inserir(VendaAvulsaNotaFiscalSaida model) throws Exception {
 
 		this.initObjetosNaRequisicao(model.getEmpresa());
 
@@ -154,6 +155,8 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 			linhaJson.setContaContabilId(linha.getContaContabil().getId());
 			
 			linhaJson.setDepositoId(linha.getEstoque().getId());
+			
+			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
 
 			//if (linha.getFlagImposto()) {
 
@@ -188,7 +191,7 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 
 	}
 
-	private VendaAvulsaNotaFiscalSaidaModel inserir(VendaAvulsaNotaFiscalSaidaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws TSApplicationException {
+	private VendaAvulsaNotaFiscalSaidaModel inserir(VendaAvulsaNotaFiscalSaidaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
 		//System.out.println(new Gson().toJson(model));
 
@@ -210,7 +213,9 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 
 			//System.out.println(jsonString);
 
-			throw new TSApplicationException(new Exception("Erro de conexão com SAP. Erro" + jsonString));
+			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class);
+
+			throw new Exception(retorno.getErroModel().getMensagemErroModel().getValor());
 
 		}
 
