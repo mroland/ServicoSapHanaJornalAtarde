@@ -20,7 +20,6 @@ import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-@SuppressWarnings("serial")
 public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {

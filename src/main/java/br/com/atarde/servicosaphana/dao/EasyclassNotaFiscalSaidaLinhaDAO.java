@@ -34,13 +34,13 @@ public class EasyclassNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
-		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID FROM EASYCLASS_NFF_SAIDA_LINHA WHERE EASYCLASS_NFF_SAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID, CONTA_CONTABIL_ID FROM EASYCLASS_NFF_SAIDA_LINHA WHERE EASYCLASS_NFF_SAIDA_ID = ?", model.getInterfaceId());
 		
 		return broker.getCollectionBean(EasyclassNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valorUnitario",
 				                                                             "valor","codigoImposto.id", "uCmXCol", "uArea", 
 				                                                             "uQuantidadeInsercoes", "uTotalCmXCol", "uValorUnitario", 
 				                                                             "cstICMS.codigo", "cstPIS.codigo", "cstIPI.codigo", "cstCOFINS.codigo", 
-				                                                             "utilizacao.id", "estoque.id", "unidadeNegocio.id");
+				                                                             "utilizacao.id", "estoque.id", "unidadeNegocio.id", "contaContabil.id");
 	}
 
 }

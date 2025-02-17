@@ -9,7 +9,6 @@ import br.com.atarde.servicosaphana.dao.EmpresaDAO;
 import br.com.atarde.servicosaphana.dao.ExtratoBancarioDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoExtratoBancarioDAO;
 import br.com.atarde.servicosaphana.model.HistoricoExtratoBancario;
-import br.com.atarde.servicosaphana.sap.business.service.ExtratoBancarioSapDiApiDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.ExtratoBancario;
 import br.com.atarde.servicosaphana.sap.model.Status;
@@ -134,7 +133,7 @@ public class ExtratoBancarioBusiness extends MainBusiness<ExtratoBancario> {
 
 		try {
 
-			new ExtratoBancarioSapDiApiDAO().inserir(model);
+			//new ExtratoBancarioSapDiApiDAO().inserir(model);
 
 			model.setStatus(new Status(1L));
 

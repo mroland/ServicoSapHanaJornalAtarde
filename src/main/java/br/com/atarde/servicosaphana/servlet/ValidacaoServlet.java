@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.atarde.servicosaphana.business.ContabilidadeBusiness;
 import br.com.atarde.servicosaphana.dao.EmpresaDAO;
-import br.com.atarde.servicosaphana.sap.business.service.CentroCustoDiApiDAO;
-import br.com.atarde.servicosaphana.sap.business.service.ExtratoBancarioSapDiApiDAO;
 import br.com.atarde.servicosaphana.sap.model.CentroCusto;
 import br.com.atarde.servicosaphana.sap.model.Classificacao;
 import br.com.atarde.servicosaphana.sap.model.ContaContabil;
@@ -62,12 +60,12 @@ public class ValidacaoServlet extends HttpServlet {
 		
 		c.setEmpresa(new EmpresaDAO().obter(new Empresa(1L)));
 		
-		try {
-			new CentroCustoDiApiDAO().inserir(c);
-		} catch (TSApplicationException e) {
+		//try {
+			//new CentroCustoDiApiDAO().inserir(c);
+		//} catch (TSApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
 		
 	}
 
@@ -77,14 +75,14 @@ public class ValidacaoServlet extends HttpServlet {
 		
 		extrato.setEmpresa(new EmpresaDAO().obter(new Empresa(1L)));
 		
-		try {
+		//try {
 			//new ExtratoBancarioSapDiApiDAO().inserir(extrato);
 			
-			new ExtratoBancarioSapDiApiDAO().inserir(extrato);
-		} catch (TSApplicationException e) {
+			//new ExtratoBancarioSapDiApiDAO().inserir(extrato);
+		//} catch (TSApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 		
 	}
 

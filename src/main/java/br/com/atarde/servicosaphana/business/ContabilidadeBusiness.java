@@ -10,7 +10,6 @@ import br.com.atarde.servicosaphana.dao.ContabilidadeLinhaDAO;
 import br.com.atarde.servicosaphana.dao.EmpresaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoContabilidadeDAO;
 import br.com.atarde.servicosaphana.model.HistoricoContabilidade;
-import br.com.atarde.servicosaphana.sap.business.service.ContabilidadeSapDiApiDAO;
 import br.com.atarde.servicosaphana.sap.business.service.ParceiroNegocioSapBusinessService;
 import br.com.atarde.servicosaphana.sap.model.Contabilidade;
 import br.com.atarde.servicosaphana.sap.model.ContabilidadeLinha;
@@ -145,7 +144,7 @@ public class ContabilidadeBusiness extends MainBusiness<Contabilidade> {
 
 			}
 
-			new ContabilidadeSapDiApiDAO().inserir(model);
+			//new ContabilidadeSapDiApiDAO().inserir(model);
 
 			model.setStatus(new Status(1L));
 

@@ -11,7 +11,6 @@ import br.com.atarde.servicosaphana.dao.HistoricoContasReceberDAO;
 import br.com.atarde.servicosaphana.dao.ModalidadePagamentoBoletoDAO;
 import br.com.atarde.servicosaphana.dao.ModalidadePagamentoTransferenciaDAO;
 import br.com.atarde.servicosaphana.model.HistoricoContasReceber;
-import br.com.atarde.servicosaphana.sap.business.service.ContasReceberSapDiApiDAO;
 import br.com.atarde.servicosaphana.sap.model.ContasReceber;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.Status;
@@ -30,11 +29,11 @@ public class ContasReceberBusiness extends MainBusiness<ContasReceber>{
 			
 			if(!TSUtil.isEmpty(model.getModalidadePagamentoBoleto())){
 
-				new ContasReceberSapDiApiDAO().inserirBoleto(model);
+				//new ContasReceberSapDiApiDAO().inserirBoleto(model);
 				
 			}else{
 				
-				new ContasReceberSapDiApiDAO().inserirTransferencia(model);
+				//new ContasReceberSapDiApiDAO().inserirTransferencia(model);
 			}
 			
 			model.setStatus(new Status(1L));
