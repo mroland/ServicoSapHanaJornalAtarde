@@ -6,14 +6,17 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.HistoricoVendaAvulsaNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.TransferenciaEstoqueDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaRomaneioDAO;
 import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
+import br.com.atarde.servicosaphana.sap.business.service.TransferenciaEstoqueSapBusinessService;
 import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
@@ -35,6 +38,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 				item.setLinhas(new VendaAvulsaNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
 
 				item.setRomaneios(new VendaAvulsaNotaFiscalSaidaRomaneioDAO().pesquisarInterface(item));
+
+				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new NotaFiscalSaida(item.getInterfaceId())));
 
 				item.setStatus(new Status(2L));
 
@@ -96,7 +101,19 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 			new VendedorBusiness().validar(model.getVendedor());
 
-			this.obterSequenciaDefaultParceiroNegocio(model);
+			if (!model.getFlagConsignado()) {
+
+				this.obterSequenciaDefaultParceiroNegocio(model);
+
+			}
+
+			if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
+
+				model.getTransferenciaEstoqueReferencia().setEmpresa(model.getEmpresa());
+
+				new TransferenciaEstoqueSapBusinessService().inserir(model.getTransferenciaEstoqueReferencia());
+
+			}
 
 			new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
 
@@ -105,8 +122,6 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			model.setMensagemErro(null);
 
 			new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
-
-			// this.inserirRomaneiosMSSQL(model);
 
 			new VendaAvulsaNotaFiscalSaidaDAO().excluirInterface(model);
 
@@ -141,24 +156,6 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 		}
 
 		return model;
-
-	}
-
-	private void inserirRomaneiosMSSQL(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
-
-		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() > 0) {
-
-			for (VendaAvulsaNotaFiscalSaidaRomaneio item : model.getRomaneios()) {
-
-				item.setEmpresa(model.getEmpresa());
-
-				item.setNota(new VendaAvulsaNotaFiscalSaida(model.getId()));
-
-				new VendaAvulsaNotaFiscalSaidaRomaneioDAO().inserirInterfaceMSSQL(item);
-
-			}
-
-		}
 
 	}
 
@@ -243,6 +240,22 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
+
+		nota.setFlagConsignado(model.getFlagConsignado());
+
+		if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
+
+			nota.setTransferenciaEstoqueReferencia(model.getTransferenciaEstoqueReferencia());
+
+			nota.getTransferenciaEstoqueReferencia().setDataImportacao(nota.getDataImportacao());
+
+			nota.getTransferenciaEstoqueReferencia().setStatus(nota.getStatus());
+
+			nota.getTransferenciaEstoqueReferencia().setMensagemErro(nota.getMensagemErro());
+
+			nota.getTransferenciaEstoqueReferencia().setDataAtualizacao(nota.getDataAtualizacao());
+			
+		}
 
 		return nota;
 

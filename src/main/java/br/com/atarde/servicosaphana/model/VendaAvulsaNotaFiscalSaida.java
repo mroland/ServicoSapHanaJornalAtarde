@@ -20,46 +20,48 @@ import br.com.atarde.servicosaphana.sap.model.Status;
  */
 @SuppressWarnings("serial")
 @XmlRootElement
-public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable{
+public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable {
 
-    private String uBanca;
+	private Boolean flagConsignado;
 
-    private String uLote;
-    
-    private String uRdj;
-    
-    private String uTipoBanca;
-    
-    private String uTipoFaturamento;   
-    
-    private String uObservacao;   
-    
-    private List<VendaAvulsaNotaFiscalSaidaRomaneio> romaneios;
-    
-    private List<VendaAvulsaNotaFiscalSaidaLinha> linhas;
+	private String uBanca;
 
-    public VendaAvulsaNotaFiscalSaida(){
+	private String uLote;
 
-    }
-    
-    public VendaAvulsaNotaFiscalSaida(Status status) {
-        
-        this.setStatus(status);
-        
-    }     
+	private String uRdj;
 
-    public VendaAvulsaNotaFiscalSaida(Long id) {
-        this.setId(id);
-    }
+	private String uTipoBanca;
+
+	private String uTipoFaturamento;
+
+	private String uObservacao;
+
+	private List<VendaAvulsaNotaFiscalSaidaRomaneio> romaneios;
+
+	private List<VendaAvulsaNotaFiscalSaidaLinha> linhas;
+
+	public VendaAvulsaNotaFiscalSaida() {
+
+	}
+
+	public VendaAvulsaNotaFiscalSaida(Status status) {
+
+		this.setStatus(status);
+
+	}
+
+	public VendaAvulsaNotaFiscalSaida(Long id) {
+		this.setId(id);
+	}
 
 	public VendaAvulsaNotaFiscalSaida(String atributo, Long interfaceId) {
 
-		if("interfaceId".equals(atributo)){
-			
+		if ("interfaceId".equals(atributo)) {
+
 			this.setInterfaceId(interfaceId);
-			
+
 		}
-		
+
 	}
 
 	public VendaAvulsaNotaFiscalSaida(Empresa empresa) {
@@ -69,9 +71,9 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 	public VendaAvulsaNotaFiscalSaida(Empresa empresa, Status status) {
 
 		this.setEmpresa(empresa);
-		
+
 		this.setStatus(status);
-		
+
 	}
 
 	public String getUBanca() {
@@ -138,7 +140,12 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 		this.uLote = uLote;
 	}
 
+	public Boolean getFlagConsignado() {
+		return flagConsignado;
+	}
 
-
+	public void setFlagConsignado(Boolean flagConsignado) {
+		this.flagConsignado = flagConsignado;
+	}
 
 }

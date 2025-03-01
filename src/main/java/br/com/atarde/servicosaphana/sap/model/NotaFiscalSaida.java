@@ -5,27 +5,36 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class NotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable {
-	
-    private Long serialInicial;
-    private Long serialFinal;
-    private Long idInicial;
-    private Long idFinal;    
-    private Date dataLancamentoInicial;
-    private Date dataLancamentoFinal;
-    private ParceiroNegocio anunciante;
-    private Boolean flagBoleto;
-    private String autorizacaoPublicidade;
-    private String numeroPI;
-    private NotaFiscalSaidaEletronica notaFiscalSaidaEletronica;
-    private String arquivoUpload;
-    private String uTipoTransacao;
 
-    public NotaFiscalSaida() {
-    }
+	private Long serialInicial;
+	private Long serialFinal;
+	private Long idInicial;
+	private Long idFinal;
+	private Date dataLancamentoInicial;
+	private Date dataLancamentoFinal;
+	private ParceiroNegocio anunciante;
+	private Boolean flagBoleto;
+	private String autorizacaoPublicidade;
+	private String numeroPI;
+	private NotaFiscalSaidaEletronica notaFiscalSaidaEletronica;
+	private String arquivoUpload;
+	private String uTipoTransacao;
 
-    public NotaFiscalSaida(Long id) {
-        this.setId(id);
-    }
+	public NotaFiscalSaida() {
+	}
+
+	public NotaFiscalSaida(Long id) {
+		this.setId(id);
+	}
+
+	public NotaFiscalSaida(String valor, Long interfaceId) {
+
+		if (valor.equals("interfaceId")) {
+
+			this.setInterfaceId(interfaceId);
+
+		}
+	}
 
 	public Long getSerialInicial() {
 		return serialInicial;

@@ -1,6 +1,7 @@
 package br.com.atarde.servicosaphana.sap.hana.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +18,7 @@ public class NotaFiscalSaidaModel implements Serializable {
 	private String tipoDocumento = "dDocument_Items";
 
 	@SerializedName("DocObjectCode")
-	private String tipoObjeto = "oInvoices"; //"oOrders";
+	private String tipoObjeto = "oInvoices"; // "oOrders";
 
 	@SerializedName("DocDate")
 	private String dataLancamento;
@@ -57,6 +58,9 @@ public class NotaFiscalSaidaModel implements Serializable {
 
 	@SerializedName("U_ATRD_Origem")
 	private Integer uOrigem;
+
+	@SerializedName("DocumentReferences")
+	private List<DocumentoReferencia> referencias;
 
 	public Long getId() {
 		return id;
@@ -192,6 +196,14 @@ public class NotaFiscalSaidaModel implements Serializable {
 
 	public void setFilialId(Integer filialId) {
 		this.filialId = filialId;
+	}
+
+	public List<DocumentoReferencia> getReferencias() {
+		return referencias;
+	}
+
+	public void setReferencias(List<DocumentoReferencia> referencias) {
+		this.referencias = referencias;
 	}
 
 }

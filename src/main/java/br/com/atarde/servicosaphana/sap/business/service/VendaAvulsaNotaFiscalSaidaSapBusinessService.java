@@ -13,6 +13,7 @@ import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.DocumentoReferencia;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaNotaFiscalSaidaLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaNotaFiscalSaidaModel;
@@ -169,6 +170,22 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 			// }
 
 			nffJson.getLinhas().add(linhaJson);
+
+		}
+
+		if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
+
+			if (TSUtil.isEmpty(nffJson.getReferencias())) {
+
+				nffJson.setReferencias(new ArrayList<DocumentoReferencia>());
+
+			}
+
+			DocumentoReferencia referencia = new DocumentoReferencia();
+			referencia.setTipoReferencia("rot_InventoryTransfer");
+			referencia.setId(model.getTransferenciaEstoqueReferencia().getId());
+
+			nffJson.getReferencias().add(referencia);
 
 		}
 

@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.FotografiaNotaFiscalSaida;
+import br.com.atarde.servicosaphana.model.TransferenciaEstoque;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 
 @SuppressWarnings("serial")
@@ -36,7 +37,7 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 	private PedidoVenda pedidoVenda;
 	private String observacao; // referente a comments
 
-	private Filial filial;
+	private TransferenciaEstoque transferenciaEstoqueReferencia;
 
 	public Vendedor getVendedor() {
 		return vendedor;
@@ -166,12 +167,12 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 		this.parcelas = parcelas;
 	}
 
-	public Filial getFilial() {
-		return filial;
+	public TransferenciaEstoque getTransferenciaEstoqueReferencia() {
+		return transferenciaEstoqueReferencia;
 	}
 
-	public void setFilial(Filial filial) {
-		this.filial = filial;
+	public void setTransferenciaEstoqueReferencia(TransferenciaEstoque transferenciaEstoqueReferencia) {
+		this.transferenciaEstoqueReferencia = transferenciaEstoqueReferencia;
 	}
 
 }
