@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.sap.model.DocumentoAB;
+import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.Estoque;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Origem;
+import br.com.atarde.servicosaphana.sap.model.Status;
 
 @SuppressWarnings("serial")
 public class TransferenciaEstoque extends DocumentoAB implements Serializable {
@@ -26,6 +28,13 @@ public class TransferenciaEstoque extends DocumentoAB implements Serializable {
 	private List<TransferenciaEstoqueLinha> linhas;
 
 	public TransferenciaEstoque() {
+
+	}
+
+	public TransferenciaEstoque(Status status) {
+
+		this.setStatus(status);
+
 	}
 
 	public TransferenciaEstoque(Long interfaceId) {
@@ -37,6 +46,12 @@ public class TransferenciaEstoque extends DocumentoAB implements Serializable {
 	public TransferenciaEstoque(NotaFiscalSaida notaFiscalSaidaReferenciada) {
 
 		this.notaFiscalSaidaReferenciada = notaFiscalSaidaReferenciada;
+
+	}
+
+	public TransferenciaEstoque(Empresa empresa) {
+
+		this.setEmpresa(empresa);
 
 	}
 

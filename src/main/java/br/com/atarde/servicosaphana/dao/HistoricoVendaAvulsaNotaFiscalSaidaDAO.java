@@ -11,7 +11,6 @@ import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -66,14 +65,6 @@ public class HistoricoVendaAvulsaNotaFiscalSaidaDAO {
 				new HistoricoVendaAvulsaNotaFiscalSaidaRomaneioDAO().inserirInterface(romaneio, broker);
 
 			}
-
-		}
-
-		if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
-
-			model.getTransferenciaEstoqueReferencia().setNotaFiscalSaidaReferenciada(new NotaFiscalSaida("interfaceId", model.getInterfaceId()));
-
-			new HistoricoTransferenciaEstoqueDAO().inserirInterface(model.getTransferenciaEstoqueReferencia(), broker);
 
 		}
 

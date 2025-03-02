@@ -11,13 +11,10 @@ import com.google.gson.Gson;
 
 import br.com.atarde.servicosaphana.model.TransferenciaEstoque;
 import br.com.atarde.servicosaphana.model.TransferenciaEstoqueLinha;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.hana.model.TransferenciaEstoqueLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.TransferenciaEstoqueModel;
-import br.com.atarde.servicosaphana.sap.hana.model.VendaAvulsaNotaFiscalSaidaModel;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.util.ConexaoSapUtil;
 import br.com.atarde.servicosaphana.util.Utilitarios;

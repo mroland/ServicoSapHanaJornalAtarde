@@ -6,14 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.HistoricoVendaAvulsaNotaFiscalSaidaDAO;
-import br.com.atarde.servicosaphana.dao.TransferenciaEstoqueDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaRomaneioDAO;
 import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
-import br.com.atarde.servicosaphana.sap.business.service.TransferenciaEstoqueSapBusinessService;
 import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
@@ -47,7 +44,11 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
 
-				lista.add(item);
+				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || !TSUtil.isEmpty(TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId()))) {
+
+					lista.add(item);
+
+				}
 
 			} catch (TSApplicationException e) {
 
@@ -104,14 +105,6 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			if (!model.getFlagConsignado()) {
 
 				this.obterSequenciaDefaultParceiroNegocio(model);
-
-			}
-
-			if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
-
-				model.getTransferenciaEstoqueReferencia().setEmpresa(model.getEmpresa());
-
-				new TransferenciaEstoqueSapBusinessService().inserir(model.getTransferenciaEstoqueReferencia());
 
 			}
 
@@ -254,7 +247,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			nota.getTransferenciaEstoqueReferencia().setMensagemErro(nota.getMensagemErro());
 
 			nota.getTransferenciaEstoqueReferencia().setDataAtualizacao(nota.getDataAtualizacao());
-			
+
 		}
 
 		return nota;
