@@ -5,36 +5,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import br.com.atarde.servicosaphana.dao.HistoricoVendaAvulsaNotaFiscalSaidaDAO;
-import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaDAO;
-import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaLinhaDAO;
-import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaRomaneioDAO;
-import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.dao.DevolucaoNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.DevolucaoNotaFiscalSaidaLinhaDAO;
+import br.com.atarde.servicosaphana.dao.HistoricoDevolucaoNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.model.HistoricoDevolucaoNotaFiscalSaida;
+import br.com.atarde.servicosaphana.sap.business.service.DevolucaoNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
+public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
-		List<VendaAvulsaNotaFiscalSaida> lista = new ArrayList<VendaAvulsaNotaFiscalSaida>();
+		List<DevolucaoNotaFiscalSaida> lista = new ArrayList<DevolucaoNotaFiscalSaida>();
 
-		for (VendaAvulsaNotaFiscalSaida item : new VendaAvulsaNotaFiscalSaidaDAO().pesquisarInterface(new VendaAvulsaNotaFiscalSaida(model))) {
+		for (DevolucaoNotaFiscalSaida item : new DevolucaoNotaFiscalSaidaDAO().pesquisarInterface(new DevolucaoNotaFiscalSaida(model))) {
 
 			try {
 
 				item.setEmpresa(model);
 
-				item.setLinhas(new VendaAvulsaNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
-
-				item.setRomaneios(new VendaAvulsaNotaFiscalSaidaRomaneioDAO().pesquisarInterface(item));
+				item.setLinhas(new DevolucaoNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
 
 				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new NotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
 
@@ -42,9 +38,10 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				item.setMensagemErro(null);
 
-				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+				new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
 				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || (!TSUtil.isEmpty(TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId())) && item.getTransferenciaEstoqueReferencia().getStatus().getId().equals(1L))) {
+
 					lista.add(item);
 
 				}
@@ -67,9 +64,9 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				try {
 
-					new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
+					new HistoricoDevolucaoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
 
-					new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+					new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
 				} catch (TSApplicationException e1) {
 
@@ -81,7 +78,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 		}
 
-		for (VendaAvulsaNotaFiscalSaida item : lista) {
+		for (DevolucaoNotaFiscalSaida item : lista) {
 
 			this.inserir(item);
 
@@ -89,7 +86,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 	}
 
-	public NotaFiscalSaidaAB inserir(VendaAvulsaNotaFiscalSaida model) {
+	public DevolucaoNotaFiscalSaida inserir(DevolucaoNotaFiscalSaida model) {
 
 		try {
 
@@ -107,15 +104,15 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 			}
 
-			new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
+			new DevolucaoNotaFiscalSaidaSapBusinessService().inserir((DevolucaoNotaFiscalSaida) model);
 
 			model.setStatus(new Status(1L));
 
 			model.setMensagemErro(null);
 
-			new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
+			new HistoricoDevolucaoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
 
-			new VendaAvulsaNotaFiscalSaidaDAO().excluirInterface(model);
+			new DevolucaoNotaFiscalSaidaDAO().excluirInterface(model);
 
 		} catch (Exception e) {
 
@@ -135,9 +132,9 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 			try {
 
-				new HistoricoVendaAvulsaNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
+				new HistoricoDevolucaoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(model));
 
-				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(model);
+				new DevolucaoNotaFiscalSaidaDAO().alterarInterface(model);
 
 			} catch (TSApplicationException e1) {
 
@@ -151,9 +148,9 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 	}
 
-	private HistoricoVendaAvulsaNotaFiscalSaida carregaHistorico(VendaAvulsaNotaFiscalSaida model) {
+	private HistoricoDevolucaoNotaFiscalSaida carregaHistorico(DevolucaoNotaFiscalSaida model) {
 
-		HistoricoVendaAvulsaNotaFiscalSaida nota = new HistoricoVendaAvulsaNotaFiscalSaida();
+		HistoricoDevolucaoNotaFiscalSaida nota = new HistoricoDevolucaoNotaFiscalSaida();
 
 		nota.setInterfaceOriginalId(model.getInterfaceId());
 
@@ -203,29 +200,11 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 		nota.setPercentualDesconto(model.getPercentualDesconto());
 
-		nota.setRomaneios(model.getRomaneios());
-
 		nota.setSequencia(model.getSequencia());
 
 		nota.setSerial(model.getSerial());
 
 		nota.setStatus(model.getStatus());
-
-		nota.setUBanca(model.getUBanca());
-
-		nota.setUEnderecoEntrega(model.getUEnderecoEntrega());
-
-		nota.setULote(model.getULote());
-
-		nota.setUObservacao(model.getUObservacao());
-
-		nota.setURdj(model.getURdj());
-
-		nota.setUTipoBanca(model.getUTipoBanca());
-
-		nota.setUTipoFaturamento(model.getUTipoFaturamento());
-
-		nota.setUValorBruto(model.getUValorBruto());
 
 		nota.setValor(model.getValor());
 
@@ -255,13 +234,13 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 	public void alterarStatusInterface() throws TSApplicationException {
 
-		for (VendaAvulsaNotaFiscalSaida item : new VendaAvulsaNotaFiscalSaidaDAO().pesquisarPorAtrasadaInterface(new VendaAvulsaNotaFiscalSaida(new Status(2L)))) {
+		for (DevolucaoNotaFiscalSaida item : new DevolucaoNotaFiscalSaidaDAO().pesquisarPorAtrasadaInterface(new DevolucaoNotaFiscalSaida(new Status(2L)))) {
 
 			item.setStatus(new Status(0L));
 
 			item.setMensagemErro(null);
 
-			new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+			new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
 		}
 

@@ -106,13 +106,13 @@ public class TransferenciaEstoqueBusiness {
 
 			new HistoricoTransferenciaEstoqueDAO().inserirInterface(this.carregaHistorico(model));
 
-			if (TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada()) || TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada().getInterfaceId())) {
+			if ((!TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada().getInterfaceId())) || (!TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada().getInterfaceId()))) {
 
-				new TransferenciaEstoqueDAO().excluirInterface(model);
+				new TransferenciaEstoqueDAO().alterarInterface(model);
 
 			} else {
 
-				new TransferenciaEstoqueDAO().alterarInterface(model);
+				new TransferenciaEstoqueDAO().excluirInterface(model);
 
 			}
 
@@ -199,6 +199,8 @@ public class TransferenciaEstoqueBusiness {
 		nota.setEstoqueOrigem(model.getEstoqueOrigem());
 
 		nota.setNotaFiscalSaidaReferenciada(model.getNotaFiscalSaidaReferenciada());
+
+		nota.setDevolucaoNotaFiscalSaidaReferenciada(model.getDevolucaoNotaFiscalSaidaReferenciada());
 
 		nota.setObservacaoDiario(model.getObservacaoDiario());
 

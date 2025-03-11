@@ -36,6 +36,13 @@ public class NotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable {
 		}
 	}
 
+	public NotaFiscalSaida(Long interfaceId, Origem origem) {
+
+		this.setInterfaceId(interfaceId);
+		this.setOrigem(origem);
+
+	}
+
 	public Long getSerialInicial() {
 		return serialInicial;
 	}

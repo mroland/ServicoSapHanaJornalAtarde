@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.DocumentoAB;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.Estoque;
@@ -22,6 +23,8 @@ public class TransferenciaEstoque extends DocumentoAB implements Serializable {
 	private Estoque estoqueDestino;
 
 	private NotaFiscalSaida notaFiscalSaidaReferenciada;
+
+	private DevolucaoNotaFiscalSaida devolucaoNotaFiscalSaidaReferenciada;
 
 	private Origem origem;
 
@@ -125,6 +128,14 @@ public class TransferenciaEstoque extends DocumentoAB implements Serializable {
 
 	public void setNotaFiscalSaidaReferenciada(NotaFiscalSaida notaFiscalSaidaReferenciada) {
 		this.notaFiscalSaidaReferenciada = notaFiscalSaidaReferenciada;
+	}
+
+	public DevolucaoNotaFiscalSaida getDevolucaoNotaFiscalSaidaReferenciada() {
+		return devolucaoNotaFiscalSaidaReferenciada;
+	}
+
+	public void setDevolucaoNotaFiscalSaidaReferenciada(DevolucaoNotaFiscalSaida devolucaoNotaFiscalSaidaReferenciada) {
+		this.devolucaoNotaFiscalSaidaReferenciada = devolucaoNotaFiscalSaidaReferenciada;
 	}
 
 }
