@@ -12,7 +12,6 @@ import br.com.atarde.servicosaphana.model.HistoricoDevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.DevolucaoNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
@@ -32,15 +31,15 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 				item.setLinhas(new DevolucaoNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
 
-				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new NotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
+				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new DevolucaoNotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
 
 				item.setStatus(new Status(2L));
 
 				item.setMensagemErro(null);
 
-				new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
+				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || (!TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId()) && item.getTransferenciaEstoqueReferencia().getStatus().getId().equals(1L))) {
 
-				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || (!TSUtil.isEmpty(TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId())) && item.getTransferenciaEstoqueReferencia().getStatus().getId().equals(1L))) {
+					new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
 					lista.add(item);
 

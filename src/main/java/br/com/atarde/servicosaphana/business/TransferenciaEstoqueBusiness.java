@@ -10,8 +10,10 @@ import br.com.atarde.servicosaphana.dao.TransferenciaEstoqueDAO;
 import br.com.atarde.servicosaphana.model.HistoricoTransferenciaEstoque;
 import br.com.atarde.servicosaphana.model.TransferenciaEstoque;
 import br.com.atarde.servicosaphana.sap.business.service.TransferenciaEstoqueSapBusinessService;
+import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
@@ -19,9 +21,20 @@ import br.com.topsys.util.TSUtil;
 
 public class TransferenciaEstoqueBusiness {
 
-	public TransferenciaEstoque obterInterface(NotaFiscalSaida model) {
+	public TransferenciaEstoque obterInterface(NotaFiscalSaidaAB model) {
 
-		TransferenciaEstoque transferencia = new TransferenciaEstoqueDAO().obter(new TransferenciaEstoque(model));
+		TransferenciaEstoque transferenciaModel = null;
+		if (model instanceof NotaFiscalSaida) {
+
+			transferenciaModel = new TransferenciaEstoque((NotaFiscalSaida) model);
+
+		} else if (model instanceof DevolucaoNotaFiscalSaida) {
+
+			transferenciaModel = new TransferenciaEstoque((DevolucaoNotaFiscalSaida) model);
+
+		}
+
+		TransferenciaEstoque transferencia = new TransferenciaEstoqueDAO().obter(transferenciaModel);
 
 		if (!TSUtil.isEmpty(transferencia)) {
 

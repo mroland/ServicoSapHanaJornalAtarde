@@ -52,6 +52,12 @@ public class TransferenciaEstoque extends DocumentoAB implements Serializable {
 
 	}
 
+	public TransferenciaEstoque(DevolucaoNotaFiscalSaida devolucaoNotaFiscalSaidaReferenciada) {
+
+		this.devolucaoNotaFiscalSaidaReferenciada = devolucaoNotaFiscalSaidaReferenciada;
+
+	}
+
 	public TransferenciaEstoque(Empresa empresa) {
 
 		this.setEmpresa(empresa);

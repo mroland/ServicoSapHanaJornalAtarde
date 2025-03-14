@@ -42,9 +42,10 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				item.setMensagemErro(null);
 
-				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || (!TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId()) && item.getTransferenciaEstoqueReferencia().getStatus().getId().equals(1L))) {
 
-				if (TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia()) || (!TSUtil.isEmpty(TSUtil.isEmpty(item.getTransferenciaEstoqueReferencia().getId())) && item.getTransferenciaEstoqueReferencia().getStatus().getId().equals(1L))) {
+					new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+
 					lista.add(item);
 
 				}

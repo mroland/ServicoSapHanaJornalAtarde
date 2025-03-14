@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.model.TransferenciaEstoque;
 import br.com.atarde.servicosaphana.model.TransferenciaEstoqueLinha;
+import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -24,19 +25,19 @@ public class TransferenciaEstoqueDAO {
 
 		sql.append("SELECT ID, ID_EXTERNO, DATA_DOCUMENTO, DATA_LANCAMENTO, DATA_VENCIMENTO, OBSERVACAO_DIARIO, OBSERVACAO, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID, EMPRESA_ID, ORIGEM_ID, FILIAL_ID, DATA_EXPORTACAO, NOTA_FISCAL_SAIDA_REFERENCIA_ID, DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID, SAP_TRANSFERENCIA_ESTOQUE_ID, STATUS_ID FROM TRANSFERENCIA_ESTOQUE TE WHERE 1 = 1 ");
 
-		if (!TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada().getId())) {
+		if (!TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada().getInterfaceId())) {
 
 			sql.append(" AND TE.NOTA_FISCAL_SAIDA_REFERENCIA_ID = ? ");
 
-			params.add(model.getNotaFiscalSaidaReferenciada().getId());
+			params.add(model.getNotaFiscalSaidaReferenciada().getInterfaceId());
 
 		}
 
-		if (!TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada().getId())) {
+		if (!TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getDevolucaoNotaFiscalSaidaReferenciada().getInterfaceId())) {
 
 			sql.append(" AND TE.DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID = ? ");
 
-			params.add(model.getDevolucaoNotaFiscalSaidaReferenciada().getId());
+			params.add(model.getDevolucaoNotaFiscalSaidaReferenciada().getInterfaceId());
 
 		}
 
@@ -59,15 +60,23 @@ public class TransferenciaEstoqueDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, TRANSFERENCIA_ESTOQUE_ID, ITEM_ID, QUANTIDADE, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID FROM TRANSFERENCIA_ESTOQUE_LINHA TE WHERE TE.TRANSFERENCIA_ESTOQUE_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID, TRANSFERENCIA_ESTOQUE_ID, ITEM_ID, QUANTIDADE FROM TRANSFERENCIA_ESTOQUE_LINHA TE WHERE TE.TRANSFERENCIA_ESTOQUE_ID = ?", model.getInterfaceId());
 
-		return broker.getCollectionBean(TransferenciaEstoqueLinha.class, "interfaceId", "transferenciaEstoque.id", "item.id", "quantidade", "estoqueOrigem.id", "estoqueDestino.id");
+		return broker.getCollectionBean(TransferenciaEstoqueLinha.class, "interfaceId", "transferenciaEstoque.id", "item.id", "quantidade");
 
 	}
 
 	public void excluirInterfacePorNota(NotaFiscalSaida model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		broker.setSQL("DELETE FROM TRANSFERENCIA_ESTOQUE WHERE NOTA_FISCAL_SAIDA_REFERENCIA_ID = ?", model.getInterfaceId());
+
+		broker.execute();
+
+	}
+	
+	public void excluirInterfacePorNota(DevolucaoNotaFiscalSaida model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+
+		broker.setSQL("DELETE FROM TRANSFERENCIA_ESTOQUE WHERE DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID = ?", model.getInterfaceId());
 
 		broker.execute();
 

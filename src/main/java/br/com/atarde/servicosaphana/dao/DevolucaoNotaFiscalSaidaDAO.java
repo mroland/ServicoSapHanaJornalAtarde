@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
@@ -82,7 +81,7 @@ public class DevolucaoNotaFiscalSaidaDAO {
 
 		broker.execute();
 
-		new TransferenciaEstoqueDAO().excluirInterfacePorNota(new NotaFiscalSaida("interfaceId", model.getInterfaceId()), broker);
+		new TransferenciaEstoqueDAO().excluirInterfacePorNota(new DevolucaoNotaFiscalSaida("interfaceId", model.getInterfaceId()), broker);
 
 		broker.endTransaction();
 

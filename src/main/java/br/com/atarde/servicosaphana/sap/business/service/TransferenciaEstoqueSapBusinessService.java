@@ -68,10 +68,6 @@ public class TransferenciaEstoqueSapBusinessService {
 
 			linhaJson.setQuantidade(linha.getQuantidade());
 
-			linhaJson.setDepositoOrigemId(linha.getEstoqueOrigem().getId());
-
-			linhaJson.setDepositoDestinoId(linha.getEstoqueDestino().getId());
-
 			nffJson.getLinhas().add(linhaJson);
 
 		}
@@ -86,7 +82,7 @@ public class TransferenciaEstoqueSapBusinessService {
 
 	private TransferenciaEstoqueModel inserir(TransferenciaEstoqueModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
-		//System.out.println(new Gson().toJson(model));
+		// System.out.println(new Gson().toJson(model));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/StockTransfers").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
 

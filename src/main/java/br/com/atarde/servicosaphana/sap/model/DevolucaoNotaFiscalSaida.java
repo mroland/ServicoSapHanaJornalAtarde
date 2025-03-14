@@ -58,6 +58,13 @@ public class DevolucaoNotaFiscalSaida extends NotaFiscalSaidaAB implements Seria
 
 	}
 
+	public DevolucaoNotaFiscalSaida(Long interfaceId, Origem origem) {
+
+		this.setInterfaceId(interfaceId);
+
+		this.setOrigem(origem);
+	}
+
 	public Boolean getFlagConsignado() {
 		return flagConsignado;
 	}
