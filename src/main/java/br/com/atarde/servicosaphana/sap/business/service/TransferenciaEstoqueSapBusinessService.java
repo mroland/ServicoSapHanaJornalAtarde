@@ -33,7 +33,7 @@ public class TransferenciaEstoqueSapBusinessService {
 
 		TransferenciaEstoqueModel nffJson = new TransferenciaEstoqueModel();
 
-		// nffJson.setIdExterno(model.getIdExterno());
+		nffJson.setIdExterno(model.getIdExterno());
 
 		nffJson.setFilialId(model.getFilial().getId());
 

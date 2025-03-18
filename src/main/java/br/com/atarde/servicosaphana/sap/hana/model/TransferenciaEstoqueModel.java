@@ -26,7 +26,7 @@ public class TransferenciaEstoqueModel implements Serializable {
 	@SerializedName("TaxDate")
 	private String dataDocumento;
 
-	@SerializedName("VAI VER QUAL SERA")
+	@SerializedName("U_ATRD_NumAtCard")
 	private String idExterno;
 
 	@SerializedName("Comments")
