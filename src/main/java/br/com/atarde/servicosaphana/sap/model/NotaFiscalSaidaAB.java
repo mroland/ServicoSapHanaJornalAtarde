@@ -39,6 +39,8 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 
 	private TransferenciaEstoque transferenciaEstoqueReferencia;
 
+	private String arquivoRemessa;
+
 	public Vendedor getVendedor() {
 		return vendedor;
 	}
@@ -173,6 +175,14 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 
 	public void setTransferenciaEstoqueReferencia(TransferenciaEstoque transferenciaEstoqueReferencia) {
 		this.transferenciaEstoqueReferencia = transferenciaEstoqueReferencia;
+	}
+
+	public String getArquivoRemessa() {
+		return arquivoRemessa;
+	}
+
+	public void setArquivoRemessa(String arquivoRemessa) {
+		this.arquivoRemessa = arquivoRemessa;
 	}
 
 }

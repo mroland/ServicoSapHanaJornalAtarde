@@ -235,6 +235,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
+		
+		nota.setArquivoRemessa(model.getArquivoRemessa());
 
 		return nota;
 

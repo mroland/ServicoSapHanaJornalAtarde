@@ -212,6 +212,8 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 		nota.setFilial(model.getFilial());
 
 		nota.setFlagConsignado(model.getFlagConsignado());
+		
+		nota.setArquivoRemessa(model.getArquivoRemessa());
 
 		if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {
 

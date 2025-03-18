@@ -239,6 +239,8 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
+		
+		nota.setArquivoRemessa(model.getArquivoRemessa());
 
 		return nota;
 

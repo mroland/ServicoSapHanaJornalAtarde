@@ -216,6 +216,8 @@ public class TransferenciaEstoqueBusiness {
 		nota.setDevolucaoNotaFiscalSaidaReferenciada(model.getDevolucaoNotaFiscalSaidaReferenciada());
 
 		nota.setObservacaoDiario(model.getObservacaoDiario());
+		
+		nota.setArquivoRemessa(model.getArquivoRemessa());
 
 		return nota;
 

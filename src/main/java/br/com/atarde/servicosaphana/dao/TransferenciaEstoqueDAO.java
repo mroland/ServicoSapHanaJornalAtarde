@@ -23,7 +23,7 @@ public class TransferenciaEstoqueDAO {
 
 		List<Object> params = new ArrayList<Object>();
 
-		sql.append("SELECT ID, ID_EXTERNO, DATA_DOCUMENTO, DATA_LANCAMENTO, DATA_VENCIMENTO, OBSERVACAO_DIARIO, OBSERVACAO, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID, EMPRESA_ID, ORIGEM_ID, FILIAL_ID, DATA_EXPORTACAO, NOTA_FISCAL_SAIDA_REFERENCIA_ID, DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID, SAP_TRANSFERENCIA_ESTOQUE_ID, STATUS_ID FROM TRANSFERENCIA_ESTOQUE TE WHERE 1 = 1 ");
+		sql.append("SELECT ID, ID_EXTERNO, DATA_DOCUMENTO, DATA_LANCAMENTO, DATA_VENCIMENTO, OBSERVACAO_DIARIO, OBSERVACAO, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID, EMPRESA_ID, ORIGEM_ID, FILIAL_ID, DATA_EXPORTACAO, NOTA_FISCAL_SAIDA_REFERENCIA_ID, DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID, SAP_TRANSFERENCIA_ESTOQUE_ID, STATUS_ID, ARQUIVO_REMESSA FROM TRANSFERENCIA_ESTOQUE TE WHERE 1 = 1 ");
 
 		if (!TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada()) && !TSUtil.isEmpty(model.getNotaFiscalSaidaReferenciada().getInterfaceId())) {
 
@@ -51,7 +51,7 @@ public class TransferenciaEstoqueDAO {
 
 		broker.setSQL(sql.toString(), params.toArray());
 
-		return (TransferenciaEstoque) broker.getObjectBean(TransferenciaEstoque.class, "interfaceId", "idExterno", "dataDocumento", "dataLancamento", "dataVencimento", "observacaoDiario", "observacao", "estoqueOrigem.id", "estoqueDestino.id", "empresa.id", "origem.id", "filial.id", "dataExportacao", "notaFiscalSaidaReferenciada.interfaceId", "devolucaoNotaFiscalSaidaReferenciada.interfaceId", "id", "status.id");
+		return (TransferenciaEstoque) broker.getObjectBean(TransferenciaEstoque.class, "interfaceId", "idExterno", "dataDocumento", "dataLancamento", "dataVencimento", "observacaoDiario", "observacao", "estoqueOrigem.id", "estoqueDestino.id", "empresa.id", "origem.id", "filial.id", "dataExportacao", "notaFiscalSaidaReferenciada.interfaceId", "devolucaoNotaFiscalSaidaReferenciada.interfaceId", "id", "status.id", "arquivoRemessa");
 
 	}
 
@@ -87,9 +87,9 @@ public class TransferenciaEstoqueDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, ID_EXTERNO, DATA_DOCUMENTO, DATA_LANCAMENTO, DATA_VENCIMENTO, OBSERVACAO_DIARIO, OBSERVACAO, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID, EMPRESA_ID, ORIGEM_ID, FILIAL_ID, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, MENSAGEM_ERRO, STATUS_ID, NOTA_FISCAL_SAIDA_REFERENCIA_ID, DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID, SAP_TRANSFERENCIA_ESTOQUE_ID FROM TRANSFERENCIA_ESTOQUE TE WHERE EMPRESA_ID = ? AND STATUS_ID NOT IN(1,2) ORDER BY ID LIMIT 100 ", model.getEmpresa().getId());
+		broker.setSQL("SELECT ID, ID_EXTERNO, DATA_DOCUMENTO, DATA_LANCAMENTO, DATA_VENCIMENTO, OBSERVACAO_DIARIO, OBSERVACAO, ESTOQUE_ORIGEM_ID, ESTOQUE_DESTINO_ID, EMPRESA_ID, ORIGEM_ID, FILIAL_ID, DATA_EXPORTACAO, DATA_IMPORTACAO, DATA_ATUALIZACAO, MENSAGEM_ERRO, STATUS_ID, NOTA_FISCAL_SAIDA_REFERENCIA_ID, DEVOLUCAO_NOTA_FISCAL_SAIDA_REFERENCIA_ID, SAP_TRANSFERENCIA_ESTOQUE_ID, ARQUIVO_REMESSA FROM TRANSFERENCIA_ESTOQUE TE WHERE EMPRESA_ID = ? AND STATUS_ID NOT IN(1,2) ORDER BY ID LIMIT 100 ", model.getEmpresa().getId());
 
-		return broker.getCollectionBean(TransferenciaEstoque.class, "interfaceId", "idExterno", "dataDocumento", "dataLancamento", "dataVencimento", "observacaoDiario", "observacao", "estoqueOrigem.id", "estoqueDestino.id", "empresa.id", "origem.id", "filial.id", "dataExportacao", "dataImportacao", "dataAtualizacao", "mensagemErro", "status.id", "notaFiscalSaidaReferenciada.interfaceId", "devolucaoNotaFiscalSaidaReferenciada.interfaceId", "id");
+		return broker.getCollectionBean(TransferenciaEstoque.class, "interfaceId", "idExterno", "dataDocumento", "dataLancamento", "dataVencimento", "observacaoDiario", "observacao", "estoqueOrigem.id", "estoqueDestino.id", "empresa.id", "origem.id", "filial.id", "dataExportacao", "dataImportacao", "dataAtualizacao", "mensagemErro", "status.id", "notaFiscalSaidaReferenciada.interfaceId", "devolucaoNotaFiscalSaidaReferenciada.interfaceId", "id", "arquivoRemessa");
 
 	}
 
