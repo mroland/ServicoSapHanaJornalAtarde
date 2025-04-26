@@ -18,12 +18,9 @@ import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 
 import com.google.gson.Gson;
 
-import br.com.atarde.servicosaphana.sap.dao.FilialDAO;
 import br.com.atarde.servicosaphana.sap.dao.FormaPagamentoDAO;
 import br.com.atarde.servicosaphana.sap.dao.IdentificadorFiscalDAO;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
-import br.com.atarde.servicosaphana.sap.hana.model.FilialModel;
-import br.com.atarde.servicosaphana.sap.hana.model.FilialParceiroNegocioModel;
 import br.com.atarde.servicosaphana.sap.hana.model.FormaPagamentoModel;
 import br.com.atarde.servicosaphana.sap.hana.model.IdentificadorFiscalModel;
 import br.com.atarde.servicosaphana.sap.hana.model.ParceiroNegocioEnderecoModel;
@@ -90,17 +87,17 @@ public class ParceiroNegocioSapBusinessService {
 
 		model.getEndereco().setTipoEndereco("S");
 
-		model.getEndereco().setId("Entrega" /*+ " - " + model.getId()*/ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId("Entrega" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
 		model.getEndereco().setTipoEndereco("B");
 
-		model.getEndereco().setId("Cobranca" /*+ " - " + model.getId()*/ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId("Cobranca" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
-		//this.inserirFiliais(model, parceiroNegocioJsonModel);
+		// this.inserirFiliais(model, parceiroNegocioJsonModel);
 
 		parceiroNegocioJsonModel = this.inserir(parceiroNegocioJsonModel, this.conexaoSessaoHanaModel);
 
@@ -110,30 +107,9 @@ public class ParceiroNegocioSapBusinessService {
 
 	}
 
-	private void inserirFiliais(ParceiroNegocio model, ParceiroNegocioModel parceiroNegocioJsonModel) {
-
-		if (TSUtil.isEmpty(parceiroNegocioJsonModel.getFiliais())) {
-
-			parceiroNegocioJsonModel.setFiliais(new ArrayList<FilialParceiroNegocioModel>());
-
-		}
-
-		FilialParceiroNegocioModel filialParceiro;
-		for (FilialModel filial : new FilialDAO().pesquisar(model.getEmpresa())) {
-
-			filialParceiro = new FilialParceiroNegocioModel();
-
-			filialParceiro.setId(filial.getId().intValue());
-
-			parceiroNegocioJsonModel.getFiliais().add(filialParceiro);
-
-		}
-
-	}
-
 	private ParceiroNegocioModel inserir(ParceiroNegocioModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
-		//System.out.println(new Gson().toJson(model));
+		// System.out.println(new Gson().toJson(model));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/BusinessPartners").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
 
@@ -143,17 +119,17 @@ public class ParceiroNegocioSapBusinessService {
 
 			String json = response.readEntity(String.class);
 
-			//System.out.println(json);
+			// System.out.println(json);
 
 			resposta = new Gson().fromJson(json, ParceiroNegocioModel.class);
 
 		} else {
-			
+
 			String jsonString = response.readEntity(String.class);
 
-			//System.out.println(jsonString);
-			
-			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class); 
+			// System.out.println(jsonString);
+
+			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class);
 
 			throw new Exception(retorno.getErroModel().getMensagemErroModel().getValor());
 
@@ -182,8 +158,8 @@ public class ParceiroNegocioSapBusinessService {
 		identificadorFiscalModel.setParceiroNegocio(model);
 
 		this.inserirIdentificadorFiscal(identificadorFiscalModel, parceiroNegocioJsonModel, "bo_ShipTo");
-		
-		//this.inserirFiliais(model, parceiroNegocioJsonModel);
+
+		// this.inserirFiliais(model, parceiroNegocioJsonModel);
 
 		parceiroNegocioJsonModel = this.inserir(parceiroNegocioJsonModel, this.conexaoSessaoHanaModel);
 
@@ -217,15 +193,9 @@ public class ParceiroNegocioSapBusinessService {
 
 	}
 
-	private Integer obterUltimaLinhaEndereco(ParceiroNegocioModel model) {
-
-		return TSUtil.isEmpty(model.getEnderecos()) ? 0 : model.getEnderecos().size();
-
-	}
-
 	private void atualizar(ParceiroNegocioModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws TSApplicationException {
 
-		//System.out.println(new Gson().toJson(model));
+		// System.out.println(new Gson().toJson(model));
 
 		WebTarget target = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/BusinessPartners" + "('" + model.getId() + "')");
 
@@ -239,7 +209,7 @@ public class ParceiroNegocioSapBusinessService {
 
 			String jsonString = response.readEntity(String.class);
 
-			//System.out.println(jsonString);
+			// System.out.println(jsonString);
 
 			throw new TSApplicationException(new Exception("Erro de conexão com SAP. Erro" + jsonString));
 
@@ -249,7 +219,7 @@ public class ParceiroNegocioSapBusinessService {
 
 	private ParceiroNegocioModel obter(ParceiroNegocioModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws TSApplicationException {
 
-		//System.out.println(new Gson().toJson(model));
+		// System.out.println(new Gson().toJson(model));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/BusinessPartners" + "('" + model.getId() + "')?$select=CardCode,CardName,CardType,BPFiscalTaxIDCollection,BPAddresses").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).get();
 
@@ -259,7 +229,7 @@ public class ParceiroNegocioSapBusinessService {
 
 			String json = response.readEntity(String.class);
 
-			//System.out.println(json);
+			// System.out.println(json);
 
 			resposta = new Gson().fromJson(json, ParceiroNegocioModel.class);
 
@@ -267,7 +237,7 @@ public class ParceiroNegocioSapBusinessService {
 
 			String jsonString = response.readEntity(String.class);
 
-			//System.out.println(jsonString);
+			// System.out.println(jsonString);
 
 			throw new TSApplicationException(new Exception("Erro de conexão com SAP. Erro" + jsonString));
 
@@ -280,27 +250,22 @@ public class ParceiroNegocioSapBusinessService {
 	private void inserirCliente(ParceiroNegocio model, ParceiroNegocioModel parceiroNegocioJsonModel) {
 
 		parceiroNegocioJsonModel.setNome(model.getNome());
-		
-		
 
 		if (Constantes.TIPO_PARCEIRO_NEGOCIO_CLIENTE.equals(model.getTipo())) {
 
 			parceiroNegocioJsonModel.setTipo("cCustomer");
 			parceiroNegocioJsonModel.setSerie(71);
 
-			//parceiroNegocioJsonModel.setId("C" + model.getIdentificadorFiscal().getIdentificador());
+			// parceiroNegocioJsonModel.setId("C" + model.getIdentificadorFiscal().getIdentificador());
 
 		} else {
 
 			parceiroNegocioJsonModel.setTipo("cSupplier");
 			parceiroNegocioJsonModel.setSerie(72);
-			
-			//parceiroNegocioJsonModel.setId("F" + model.getIdentificadorFiscal().getIdentificador());
+
+			// parceiroNegocioJsonModel.setId("F" + model.getIdentificadorFiscal().getIdentificador());
 
 		}
-		
-		
-		
 
 		if (!TSUtil.isEmpty(model.getNomeFantasia())) {
 
@@ -427,10 +392,10 @@ public class ParceiroNegocioSapBusinessService {
 
 			endereco.setTipoLogradouro(model.getEndereco().getTipoLogradouro());
 
-		}else {
-			
-			//endereco.setTipoLogradouro("RUA");
-			//colocado provisioriamente
+		} else {
+
+			// endereco.setTipoLogradouro("RUA");
+			// colocado provisioriamente
 		}
 
 		if (!TSUtil.isEmpty(model.getEndereco().getBairro())) {

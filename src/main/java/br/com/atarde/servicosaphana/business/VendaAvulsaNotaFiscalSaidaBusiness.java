@@ -8,7 +8,7 @@ import java.util.List;
 import br.com.atarde.servicosaphana.dao.HistoricoVendaAvulsaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaLinhaDAO;
-import br.com.atarde.servicosaphana.dao.VendaAvulsaNotaFiscalSaidaRomaneioDAO;
+import br.com.atarde.servicosaphana.dao.VendaVulsaNotaFiscalSaidaMovimentacaoDAO;
 import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
@@ -34,9 +34,9 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				item.setLinhas(new VendaAvulsaNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
 
-				item.setRomaneios(new VendaAvulsaNotaFiscalSaidaRomaneioDAO().pesquisarInterface(item));
-
 				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new NotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
+
+				item.setMovimentacoes(new TabelaUsuarioMovimentacaoBusiness().pesquisar(new NotaFiscalSaida("interfaceId", item.getInterfaceId())));
 
 				item.setStatus(new Status(2L));
 
@@ -109,6 +109,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			}
 
 			new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
+			
+			new VendaVulsaNotaFiscalSaidaMovimentacaoDAO().atualizar(new NotaFiscalSaida("interfaceId", model.getInterfaceId()), model.getId());
 
 			model.setStatus(new Status(1L));
 
@@ -190,6 +192,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 		nota.setLinhas(model.getLinhas());
 
+		nota.setMovimentacoes(model.getMovimentacoes());
+
 		nota.setMensagemErro(model.getMensagemErro());
 
 		nota.setObservacao(model.getObservacao());
@@ -203,8 +207,6 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 		nota.setPedidoVenda(model.getPedidoVenda());
 
 		nota.setPercentualDesconto(model.getPercentualDesconto());
-
-		nota.setRomaneios(model.getRomaneios());
 
 		nota.setSequencia(model.getSequencia());
 
@@ -235,7 +237,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 		nota.setFilial(model.getFilial());
 
 		nota.setFlagConsignado(model.getFlagConsignado());
-		
+
 		nota.setArquivoRemessa(model.getArquivoRemessa());
 
 		if (!TSUtil.isEmpty(model.getTransferenciaEstoqueReferencia())) {

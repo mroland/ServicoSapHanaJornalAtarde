@@ -29,7 +29,7 @@ public class RegraDistribuicao implements Serializable {
 
 		this.id = id;
 		this.empresa = empresa;
-		this.dimensao = dimensao;
+		this.dimensao = dimensaoModel;
 
 	}
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("serial")
 public class DocumentoReferencia implements Serializable {
 
 	@SerializedName("RefDocEntr")

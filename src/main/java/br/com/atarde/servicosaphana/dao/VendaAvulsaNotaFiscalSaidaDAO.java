@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
@@ -45,20 +44,6 @@ public class VendaAvulsaNotaFiscalSaidaDAO {
 			linha.setNotaFiscalSaida(new VendaAvulsaNotaFiscalSaida("interfaceId", model.getInterfaceId()));
 
 			new VendaAvulsaNotaFiscalSaidaLinhaDAO().inserirInterface(linha, broker);
-
-		}
-
-		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() != 0) {
-
-			for (VendaAvulsaNotaFiscalSaidaRomaneio romaneio : model.getRomaneios()) {
-
-				romaneio.setEmpresa(model.getEmpresa());
-
-				romaneio.setNota(new VendaAvulsaNotaFiscalSaida("interfaceId", model.getInterfaceId()));
-
-				new VendaAvulsaNotaFiscalSaidaRomaneioDAO().inserirInterface(romaneio, broker);
-
-			}
 
 		}
 

@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.DocumentoReferencia;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
@@ -192,21 +191,6 @@ public class VendaAvulsaNotaFiscalSaidaSapBusinessService {
 		nffJson = this.inserir(nffJson, this.conexaoSessaoHanaModel);
 
 		model.setId(nffJson.getId());
-
-		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() > 0) {
-
-			for (VendaAvulsaNotaFiscalSaidaRomaneio item : model.getRomaneios()) {
-
-				if (TSUtil.isEmpty(item.getNota())) {
-
-					item.setNota(new VendaAvulsaNotaFiscalSaida());
-
-				}
-
-				item.getNota().setId(model.getId());
-
-			}
-		}
 
 		return model;
 

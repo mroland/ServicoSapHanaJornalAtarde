@@ -10,12 +10,10 @@ import java.sql.Timestamp;
 import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaidaRomaneio;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.util.TSUtil;
 
 /**
  *
@@ -49,22 +47,6 @@ public class HistoricoVendaAvulsaNotaFiscalSaidaDAO {
 			linha.setNotaFiscalSaida(new VendaAvulsaNotaFiscalSaida("interfaceId", model.getInterfaceId()));
 
 			new HistoricoVendaAvulsaNotaFiscalSaidaLinhaDAO().inserirInterface(linha, broker);
-
-		}
-
-		if (!TSUtil.isEmpty(model.getRomaneios()) && model.getRomaneios().size() != 0) {
-
-			for (VendaAvulsaNotaFiscalSaidaRomaneio romaneio : model.getRomaneios()) {
-
-				romaneio.setNota(new VendaAvulsaNotaFiscalSaida("interfaceId", model.getInterfaceId()));
-
-				romaneio.getNota().setId(model.getId());
-
-				romaneio.setEmpresa(model.getEmpresa());
-
-				new HistoricoVendaAvulsaNotaFiscalSaidaRomaneioDAO().inserirInterface(romaneio, broker);
-
-			}
 
 		}
 

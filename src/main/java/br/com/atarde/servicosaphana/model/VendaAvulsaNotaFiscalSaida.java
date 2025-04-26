@@ -36,9 +36,9 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 
 	private String uObservacao;
 
-	private List<VendaAvulsaNotaFiscalSaidaRomaneio> romaneios;
-
 	private List<VendaAvulsaNotaFiscalSaidaLinha> linhas;
+
+	private List<VendaVulsaNotaFiscalSaidaMovimentacao> movimentacoes;
 
 	public VendaAvulsaNotaFiscalSaida() {
 
@@ -124,14 +124,6 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 		this.linhas = linhas;
 	}
 
-	public List<VendaAvulsaNotaFiscalSaidaRomaneio> getRomaneios() {
-		return romaneios;
-	}
-
-	public void setRomaneios(List<VendaAvulsaNotaFiscalSaidaRomaneio> romaneios) {
-		this.romaneios = romaneios;
-	}
-
 	public String getULote() {
 		return uLote;
 	}
@@ -146,6 +138,14 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 
 	public void setFlagConsignado(Boolean flagConsignado) {
 		this.flagConsignado = flagConsignado;
+	}
+
+	public List<VendaVulsaNotaFiscalSaidaMovimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<VendaVulsaNotaFiscalSaidaMovimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
 	}
 
 }

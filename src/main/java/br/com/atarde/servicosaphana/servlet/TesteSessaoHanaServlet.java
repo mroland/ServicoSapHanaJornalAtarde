@@ -17,8 +17,6 @@ import br.com.atarde.servicosaphana.sap.model.Municipio;
 import br.com.atarde.servicosaphana.sap.model.Pais;
 import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
 import br.com.atarde.servicosaphana.sap.model.ParceiroNegocioEndereco;
-import br.com.atarde.servicosaphana.util.ConexaoSapUtil;
-import br.com.topsys.exception.TSApplicationException;
 
 /**
  * Servlet implementation class TesteSessaoHanaServlet
@@ -90,22 +88,6 @@ public class TesteSessaoHanaServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-	}
-
-	private void testeConexao() {
-
-		Empresa empresa = new EmpresaDAO().obter(new Empresa(4L));
-
-		try {
-
-			new ConexaoSapUtil().getConnection(empresa);
-
-		} catch (TSApplicationException e) {
-
-			e.printStackTrace();
-
 		}
 
 	}
