@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.com.atarde.servicosaphana.model.TabelaUsuarioMovimentacao;
+
 /**
  *
  * @author mroland
@@ -21,6 +23,8 @@ public class DevolucaoNotaFiscalSaida extends NotaFiscalSaidaAB implements Seria
 	private Boolean flagConsignado;
 
 	private List<DevolucaoNotaFiscalSaidaLinha> linhas;
+
+	private List<TabelaUsuarioMovimentacao> movimentacoes;
 
 	public DevolucaoNotaFiscalSaida() {
 
@@ -79,6 +83,14 @@ public class DevolucaoNotaFiscalSaida extends NotaFiscalSaidaAB implements Seria
 
 	public void setLinhas(List<DevolucaoNotaFiscalSaidaLinha> linhas) {
 		this.linhas = linhas;
+	}
+
+	public List<TabelaUsuarioMovimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<TabelaUsuarioMovimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
 	}
 
 }

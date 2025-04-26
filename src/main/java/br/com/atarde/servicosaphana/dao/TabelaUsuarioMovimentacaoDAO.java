@@ -62,6 +62,16 @@ public class TabelaUsuarioMovimentacaoDAO {
 		broker.execute();
 
 	}
+	
+	public void atualizarDevolucaoNotaFiscal(TabelaUsuarioMovimentacao model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE TABELA_USUARIO_MOVIMENTACAO SET SAP_DEVOLUCAO_NOTA_FISCAL_SAIDA_ID = ? WHERE ID = ?", model.getSapDevolucaoNotaFiscalSaidaId(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
 
 	public void alterarInterface(TabelaUsuarioMovimentacao model) throws TSApplicationException {
 

@@ -8,7 +8,9 @@ import java.util.List;
 import br.com.atarde.servicosaphana.dao.DevolucaoNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.DevolucaoNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoDevolucaoNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.TabelaUsuarioMovimentacaoDAO;
 import br.com.atarde.servicosaphana.model.HistoricoDevolucaoNotaFiscalSaida;
+import br.com.atarde.servicosaphana.model.TabelaUsuarioMovimentacao;
 import br.com.atarde.servicosaphana.sap.business.service.DevolucaoNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
@@ -33,6 +35,8 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new DevolucaoNotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
 
+				item.setMovimentacoes(new TabelaUsuarioMovimentacaoBusiness().pesquisarInterface(new DevolucaoNotaFiscalSaida("interfaceId", item.getInterfaceId())));
+				
 				item.setStatus(new Status(2L));
 
 				item.setMensagemErro(null);
@@ -104,6 +108,18 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 			}
 
 			new DevolucaoNotaFiscalSaidaSapBusinessService().inserir((DevolucaoNotaFiscalSaida) model);
+			
+			if (!TSUtil.isEmpty(model.getMovimentacoes())) {
+
+				for (TabelaUsuarioMovimentacao item : model.getMovimentacoes()) {
+
+					item.setSapDevolucaoNotaFiscalSaidaId(model.getId());
+
+					new TabelaUsuarioMovimentacaoDAO().atualizarDevolucaoNotaFiscal(item);
+
+				}
+
+			}
 
 			model.setStatus(new Status(1L));
 
