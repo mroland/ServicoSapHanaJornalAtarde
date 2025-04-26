@@ -1,10 +1,10 @@
 package br.com.atarde.servicosaphana.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.model.TabelaUsuarioMovimentacao;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -13,7 +13,7 @@ import br.com.topsys.util.TSUtil;
 public class TabelaUsuarioMovimentacaoDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<TabelaUsuarioMovimentacao> pesquisar(TabelaUsuarioMovimentacao model) {
+	public List<TabelaUsuarioMovimentacao> pesquisarInterface(TabelaUsuarioMovimentacao model) {
 
 		StringBuilder sql = new StringBuilder();
 
@@ -39,9 +39,17 @@ public class TabelaUsuarioMovimentacaoDAO {
 
 		}
 
+		if (!TSUtil.isEmpty(model.getEmpresa()) && !TSUtil.isEmpty(model.getEmpresa().getId())) {
+
+			sql.append(" AND M.EMPRESA_ID = ? ");
+
+			params.add(model.getEmpresa().getId());
+
+		}
+
 		broker.setSQL(sql.toString(), params.toArray());
 
-		return broker.getCollectionBean(TabelaUsuarioMovimentacao.class, "interfaceId", "item.id", "quantidade", "tipoMovimentacao", "idExterno", "empresa.id", "filial.id", "dataExportacao", "notaFiscalSaidaReferenciada.interfaceId", "id", "status.id", "arquivoRemessa", "sapNotaFiscalId", "sapDevolucaoNotaFiscalId");
+		return broker.getCollectionBean(TabelaUsuarioMovimentacao.class, "interfaceId", "item.id", "quantidade", "tipoMovimentacao", "idExterno", "empresa.id", "filial.id", "dataExportacao", "notaFiscalSaidaReferenciada.interfaceId", "id", "status.id", "arquivoRemessa", "sapNotaFiscalSaidaId", "sapDevolucaoNotaFiscalSaidaId");
 
 	}
 
@@ -49,10 +57,40 @@ public class TabelaUsuarioMovimentacaoDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE TABELA_USUARIO_MOVIMENTACAO SET SAP_NOTA_FISCAL_SAIDA_ID = ? WHERE ID = ?", model.getSapNotaFiscalId(), model.getInterfaceId());
+		broker.setSQL("UPDATE TABELA_USUARIO_MOVIMENTACAO SET SAP_NOTA_FISCAL_SAIDA_ID = ? WHERE ID = ?", model.getSapNotaFiscalSaidaId(), model.getInterfaceId());
 
 		broker.execute();
 
+	}
+
+	public void alterarInterface(TabelaUsuarioMovimentacao model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE TABELA_USUARIO_MOVIMENTACAO SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), TSUtil.isEmpty(model.getDataAtualizacao()) ? null : new Timestamp(model.getDataAtualizacao().getTime()), TSUtil.isEmpty(model.getDataImportacao()) ? null : new Timestamp(model.getDataImportacao().getTime()), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
+	public void excluirInterface(TabelaUsuarioMovimentacao model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("DELETE FROM TABELA_USUARIO_MOVIMENTACAO WHERE ID = ?", model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<TabelaUsuarioMovimentacao> pesquisarPorAtrasadaInterface(TabelaUsuarioMovimentacao model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT ID FROM TABELA_USUARIO_MOVIMENTACAO A WHERE STATUS_ID = ? AND (DATE_PART('day', NOW()::timestamp - DATA_EXPORTACAO::timestamp) * 24 + DATE_PART('hour', NOW()::timestamp - DATA_EXPORTACAO::timestamp)) * 60 + DATE_PART('minute', NOW()::timestamp - DATA_EXPORTACAO::timestamp) >=30", model.getStatus().getId());
+
+		return broker.getCollectionBean(TabelaUsuarioMovimentacao.class, "interfaceId");
 	}
 
 }

@@ -2,8 +2,10 @@ package br.com.atarde.servicosaphana.model;
 
 import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.DocumentoAB;
+import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.Item;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
+import br.com.atarde.servicosaphana.sap.model.Status;
 
 @SuppressWarnings("serial")
 public class TabelaUsuarioMovimentacao extends DocumentoAB {
@@ -18,9 +20,9 @@ public class TabelaUsuarioMovimentacao extends DocumentoAB {
 
 	private DevolucaoNotaFiscalSaida devolucaoNotaFiscalSaidaReferenciada;
 
-	private Long sapNotaFiscalId;
+	private Long sapNotaFiscalSaidaId;
 
-	private Long sapDevolucaoNotaFiscalId;
+	private Long sapDevolucaoNotaFiscalSaidaId;
 
 	public TabelaUsuarioMovimentacao() {
 
@@ -35,6 +37,17 @@ public class TabelaUsuarioMovimentacao extends DocumentoAB {
 	public TabelaUsuarioMovimentacao(DevolucaoNotaFiscalSaida model) {
 
 		this.devolucaoNotaFiscalSaidaReferenciada = model;
+	}
+
+	public TabelaUsuarioMovimentacao(Empresa empresa) {
+
+		this.setEmpresa(empresa);
+	}
+
+	public TabelaUsuarioMovimentacao(Status status) {
+
+		this.setStatus(status);
+
 	}
 
 	public Long getInterfaceId() {
@@ -93,20 +106,20 @@ public class TabelaUsuarioMovimentacao extends DocumentoAB {
 		this.devolucaoNotaFiscalSaidaReferenciada = devolucaoNotaFiscalSaidaReferenciada;
 	}
 
-	public Long getSapNotaFiscalId() {
-		return sapNotaFiscalId;
+	public Long getSapNotaFiscalSaidaId() {
+		return sapNotaFiscalSaidaId;
 	}
 
-	public void setSapNotaFiscalId(Long sapNotaFiscalId) {
-		this.sapNotaFiscalId = sapNotaFiscalId;
+	public void setSapNotaFiscalSaidaId(Long sapNotaFiscalSaidaId) {
+		this.sapNotaFiscalSaidaId = sapNotaFiscalSaidaId;
 	}
 
-	public Long getSapDevolucaoNotaFiscalId() {
-		return sapDevolucaoNotaFiscalId;
+	public Long getSapDevolucaoNotaFiscalSaidaId() {
+		return sapDevolucaoNotaFiscalSaidaId;
 	}
 
-	public void setSapDevolucaoNotaFiscalId(Long sapDevolucaoNotaFiscalId) {
-		this.sapDevolucaoNotaFiscalId = sapDevolucaoNotaFiscalId;
+	public void setSapDevolucaoNotaFiscalSaidaId(Long sapDevolucaoNotaFiscalSaidaId) {
+		this.sapDevolucaoNotaFiscalSaidaId = sapDevolucaoNotaFiscalSaidaId;
 	}
 
 }

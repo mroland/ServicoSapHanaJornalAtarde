@@ -37,7 +37,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				item.setTransferenciaEstoqueReferencia(new TransferenciaEstoqueBusiness().obterInterface(new NotaFiscalSaida(item.getInterfaceId(), item.getOrigem())));
 
-				item.setMovimentacoes(new TabelaUsuarioMovimentacaoBusiness().pesquisar(new NotaFiscalSaida("interfaceId", item.getInterfaceId())));
+				item.setMovimentacoes(new TabelaUsuarioMovimentacaoBusiness().pesquisarInterface(new NotaFiscalSaida("interfaceId", item.getInterfaceId())));
 
 				item.setStatus(new Status(2L));
 
@@ -115,7 +115,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				for (TabelaUsuarioMovimentacao item : model.getMovimentacoes()) {
 
-					item.setSapNotaFiscalId(model.getId());
+					item.setSapNotaFiscalSaidaId(model.getId());
 
 					new TabelaUsuarioMovimentacaoDAO().atualizarNotaFiscal(item);
 
