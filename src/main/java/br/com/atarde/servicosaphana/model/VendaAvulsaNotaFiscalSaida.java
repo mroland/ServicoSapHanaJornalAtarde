@@ -38,7 +38,7 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 
 	private List<VendaAvulsaNotaFiscalSaidaLinha> linhas;
 
-	private List<VendaVulsaNotaFiscalSaidaMovimentacao> movimentacoes;
+	private List<TabelaUsuarioMovimentacao> movimentacoes;
 
 	public VendaAvulsaNotaFiscalSaida() {
 
@@ -140,11 +140,11 @@ public class VendaAvulsaNotaFiscalSaida extends NotaFiscalSaidaAB implements Ser
 		this.flagConsignado = flagConsignado;
 	}
 
-	public List<VendaVulsaNotaFiscalSaidaMovimentacao> getMovimentacoes() {
+	public List<TabelaUsuarioMovimentacao> getMovimentacoes() {
 		return movimentacoes;
 	}
 
-	public void setMovimentacoes(List<VendaVulsaNotaFiscalSaidaMovimentacao> movimentacoes) {
+	public void setMovimentacoes(List<TabelaUsuarioMovimentacao> movimentacoes) {
 		this.movimentacoes = movimentacoes;
 	}
 
