@@ -46,6 +46,8 @@ public class TabelaUsuarioMovimentacaoDAO {
 			params.add(model.getEmpresa().getId());
 
 		}
+		
+		sql.append(" LIMIT 50");
 
 		broker.setSQL(sql.toString(), params.toArray());
 
