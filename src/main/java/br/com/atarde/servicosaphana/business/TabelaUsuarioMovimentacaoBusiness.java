@@ -106,7 +106,7 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 			TabelaUsuarioMovimentacaoModel obterUltimo = new br.com.atarde.servicosaphana.sap.dao.TabelaUsuarioMovimentacaoDAO().obterUltimo(model);
 
-			if (TSUtil.isEmpty(obterUltimo)) {
+			if (TSUtil.isEmpty(obterUltimo) || TSUtil.isEmpty(obterUltimo.getId())) {
 
 				obterUltimo = new TabelaUsuarioMovimentacaoModel();
 				obterUltimo.setId(1L);
