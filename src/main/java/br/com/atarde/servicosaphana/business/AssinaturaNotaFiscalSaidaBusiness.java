@@ -95,7 +95,11 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 			new VendedorBusiness().validar(model.getVendedor());
 
-			this.obterSequenciaDefaultParceiroNegocio(model);
+			if (!model.getFlagRemessa()) {
+
+				this.obterSequenciaDefaultParceiroNegocio(model);
+
+			}
 
 			new AssinaturaNotaFiscalSaidaSapBusinessService().inserir((AssinaturaNotaFiscalSaida) model);
 
@@ -212,6 +216,8 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
+		
+		nota.setFlagRemessa(model.getFlagRemessa());
 		
 		nota.setArquivoRemessa(model.getArquivoRemessa());
 
