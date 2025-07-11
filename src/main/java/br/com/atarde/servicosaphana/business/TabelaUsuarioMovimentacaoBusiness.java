@@ -26,11 +26,11 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 		if (model instanceof NotaFiscalSaida) {
 
-			return new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao((NotaFiscalSaida) model));
+			return new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao((NotaFiscalSaida) model), null);
 
 		} else if (model instanceof DevolucaoNotaFiscalSaida) {
 
-			return new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao((DevolucaoNotaFiscalSaida) model));
+			return new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao((DevolucaoNotaFiscalSaida) model), null);
 
 		}
 
@@ -42,7 +42,7 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 		List<TabelaUsuarioMovimentacao> lista = new ArrayList<TabelaUsuarioMovimentacao>();
 
-		for (TabelaUsuarioMovimentacao item : new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao(model))) {
+		for (TabelaUsuarioMovimentacao item : new TabelaUsuarioMovimentacaoDAO().pesquisarInterface(new TabelaUsuarioMovimentacao(model), 50)) {
 
 			try {
 

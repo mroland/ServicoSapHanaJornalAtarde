@@ -13,7 +13,7 @@ import br.com.topsys.util.TSUtil;
 public class TabelaUsuarioMovimentacaoDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<TabelaUsuarioMovimentacao> pesquisarInterface(TabelaUsuarioMovimentacao model) {
+	public List<TabelaUsuarioMovimentacao> pesquisarInterface(TabelaUsuarioMovimentacao model, Integer limit) {
 
 		StringBuilder sql = new StringBuilder();
 
@@ -46,8 +46,14 @@ public class TabelaUsuarioMovimentacaoDAO {
 			params.add(model.getEmpresa().getId());
 
 		}
-		
-		sql.append(" ORDER BY SAP_NOTA_FISCAL_SAIDA_ID, SAP_DEVOLUCAO_NOTA_FISCAL_SAIDA_ID LIMIT 50");
+
+		sql.append(" ORDER BY SAP_NOTA_FISCAL_SAIDA_ID, SAP_DEVOLUCAO_NOTA_FISCAL_SAIDA_ID ");
+
+		if (!TSUtil.isEmpty(limit)) {
+
+			sql.append(" LIMIT " + limit);
+
+		}
 
 		broker.setSQL(sql.toString(), params.toArray());
 
@@ -64,7 +70,7 @@ public class TabelaUsuarioMovimentacaoDAO {
 		broker.execute();
 
 	}
-	
+
 	public void atualizarDevolucaoNotaFiscal(TabelaUsuarioMovimentacao model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
