@@ -41,6 +41,9 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 
 	private String arquivoRemessa;
 
+	private Long sapDocumentoId;
+	private boolean flagDocumentoExistente;
+
 	public Vendedor getVendedor() {
 		return vendedor;
 	}
@@ -183,6 +186,22 @@ public abstract class NotaFiscalSaidaAB extends DocumentoAB implements Serializa
 
 	public void setArquivoRemessa(String arquivoRemessa) {
 		this.arquivoRemessa = arquivoRemessa;
+	}
+
+	public Long getSapDocumentoId() {
+		return sapDocumentoId;
+	}
+
+	public void setSapDocumentoId(Long sapDocumentoId) {
+		this.sapDocumentoId = sapDocumentoId;
+	}
+
+	public boolean isFlagDocumentoExistente() {
+		return flagDocumentoExistente;
+	}
+
+	public void setFlagDocumentoExistente(boolean flagDocumentoExistente) {
+		this.flagDocumentoExistente = flagDocumentoExistente;
 	}
 
 }

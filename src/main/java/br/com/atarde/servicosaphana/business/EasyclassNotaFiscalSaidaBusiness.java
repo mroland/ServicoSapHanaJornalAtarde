@@ -11,14 +11,16 @@ import br.com.atarde.servicosaphana.dao.HistoricoEasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.EasyclassNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
+public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
@@ -98,7 +100,18 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
-			new EasyclassNotaFiscalSaidaSapBusinessService().inserir(model);
+			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
+			if (TSUtil.isEmpty(nff)) {
+
+				new EasyclassNotaFiscalSaidaSapBusinessService().inserir(model);
+				model.setFlagDocumentoExistente(false);
+
+			} else {
+
+				model.setSapDocumentoId(nff.getId());
+				model.setFlagDocumentoExistente(true);
+
+			}
 
 			model.setStatus(new Status(1L));
 
@@ -145,7 +158,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 	private HistoricoEasyclassNotaFiscalSaida carregaHistorico(EasyclassNotaFiscalSaida model) {
 
 		HistoricoEasyclassNotaFiscalSaida nota = new HistoricoEasyclassNotaFiscalSaida();
-		
+
 		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
@@ -239,8 +252,12 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
-		
+
 		nota.setArquivoRemessa(model.getArquivoRemessa());
+		
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
+
+		nota.setSapDocumentoId(model.getSapDocumentoId());
 
 		return nota;
 

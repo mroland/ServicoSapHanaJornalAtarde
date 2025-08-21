@@ -12,14 +12,16 @@ import br.com.atarde.servicosaphana.dao.HistoricoAssinaturaNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoAssinaturaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.AssinaturaNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
+public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
@@ -101,7 +103,18 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 			}
 
-			new AssinaturaNotaFiscalSaidaSapBusinessService().inserir((AssinaturaNotaFiscalSaida) model);
+			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
+			if (TSUtil.isEmpty(nff)) {
+
+				new AssinaturaNotaFiscalSaidaSapBusinessService().inserir((AssinaturaNotaFiscalSaida) model);
+				model.setFlagDocumentoExistente(false);
+
+			} else {
+
+				model.setSapDocumentoId(nff.getId());
+				model.setFlagDocumentoExistente(true);
+
+			}
 
 			model.setStatus(new Status(1L));
 
@@ -145,12 +158,10 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 	}
 
-
-
 	private HistoricoAssinaturaNotaFiscalSaida carregaHistorico(AssinaturaNotaFiscalSaida model) {
 
 		HistoricoAssinaturaNotaFiscalSaida nota = new HistoricoAssinaturaNotaFiscalSaida();
-		
+
 		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
@@ -216,10 +227,14 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
-		
+
 		nota.setFlagRemessa(model.getFlagRemessa());
-		
+
 		nota.setArquivoRemessa(model.getArquivoRemessa());
+		
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
+		
+		nota.setSapDocumentoId(model.getSapDocumentoId());
 
 		return nota;
 

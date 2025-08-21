@@ -13,6 +13,7 @@ import br.com.atarde.servicosaphana.model.HistoricoVendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.TabelaUsuarioMovimentacao;
 import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.VendaAvulsaNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
@@ -109,7 +110,18 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 			}
 
-			new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
+			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
+			if (TSUtil.isEmpty(nff)) {
+
+				new VendaAvulsaNotaFiscalSaidaSapBusinessService().inserir((VendaAvulsaNotaFiscalSaida) model);
+				model.setFlagDocumentoExistente(false);
+
+			} else {
+
+				model.setSapDocumentoId(nff.getId());
+				model.setFlagDocumentoExistente(true);
+
+			}
 
 			if (!TSUtil.isEmpty(model.getMovimentacoes())) {
 
@@ -264,6 +276,10 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 			nota.getTransferenciaEstoqueReferencia().setDataAtualizacao(nota.getDataAtualizacao());
 
 		}
+
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
+
+		nota.setSapDocumentoId(model.getSapDocumentoId());
 
 		return nota;
 

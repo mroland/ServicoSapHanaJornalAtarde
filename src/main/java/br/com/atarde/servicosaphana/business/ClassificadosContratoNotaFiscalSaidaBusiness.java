@@ -11,7 +11,9 @@ import br.com.atarde.servicosaphana.dao.HistoricoClassificadosContratoNotaFiscal
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.ClassificadosContratoNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
@@ -98,7 +100,18 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
-			new ClassificadosContratoNotaFiscalSaidaSapBusinessService().inserir(model);
+			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
+			if (TSUtil.isEmpty(nff)) {
+
+				new ClassificadosContratoNotaFiscalSaidaSapBusinessService().inserir(model);
+				model.setFlagDocumentoExistente(false);
+
+			} else {
+
+				model.setSapDocumentoId(nff.getId());
+				model.setFlagDocumentoExistente(true);
+
+			}
 
 			model.setStatus(new Status(1L));
 
@@ -145,7 +158,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 	private HistoricoClassificadosContratoNotaFiscalSaida carregaHistorico(ClassificadosContratoNotaFiscalSaida model) {
 
 		HistoricoClassificadosContratoNotaFiscalSaida nota = new HistoricoClassificadosContratoNotaFiscalSaida();
-		
+
 		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
@@ -239,8 +252,12 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 		nota.setVendedor(model.getVendedor());
 
 		nota.setFilial(model.getFilial());
-		
+
 		nota.setArquivoRemessa(model.getArquivoRemessa());
+
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
+
+		nota.setSapDocumentoId(model.getSapDocumentoId());
 
 		return nota;
 

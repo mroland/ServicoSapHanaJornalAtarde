@@ -11,14 +11,16 @@ import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.RadioNotaFiscalSaidaSapBusinessService;
+import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
 
-public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
+public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 	public void inserirSAP(Empresa model) {
 
@@ -98,7 +100,18 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
-			new RadioNotaFiscalSaidaSapBusinessService().inserir(model);
+			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
+			if (TSUtil.isEmpty(nff)) {
+
+				new RadioNotaFiscalSaidaSapBusinessService().inserir(model);
+				model.setFlagDocumentoExistente(false);
+
+			} else {
+
+				model.setSapDocumentoId(nff.getId());
+				model.setFlagDocumentoExistente(true);
+
+			}
 
 			model.setStatus(new Status(1L));
 
@@ -145,7 +158,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 	private HistoricoRadioNotaFiscalSaida carregaHistorico(RadioNotaFiscalSaida model) {
 
 		HistoricoRadioNotaFiscalSaida nota = new HistoricoRadioNotaFiscalSaida();
-		
+
 		nota.setInterfaceOriginalId(model.getInterfaceId());
 
 		nota.setAtualizadoPor(model.getAtualizadoPor());
@@ -209,9 +222,9 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 		nota.setUEnderecoEntrega(model.getUEnderecoEntrega());
 
 		nota.setUNumeroPI(model.getUNumeroPI());
-		
+
 		nota.setUDataContrato(model.getUDataContrato());
-		
+
 		nota.setUPeriodoVeiculacao(model.getUPeriodoVeiculacao());
 
 		nota.setUTipoTransacao(model.getUTipoTransacao());
@@ -225,10 +238,14 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB{
 		nota.setValor(model.getValor());
 
 		nota.setVendedor(model.getVendedor());
-		
+
 		nota.setFilial(model.getFilial());
-		
+
 		nota.setArquivoRemessa(model.getArquivoRemessa());
+		
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
+
+		nota.setSapDocumentoId(model.getSapDocumentoId());
 
 		return nota;
 
