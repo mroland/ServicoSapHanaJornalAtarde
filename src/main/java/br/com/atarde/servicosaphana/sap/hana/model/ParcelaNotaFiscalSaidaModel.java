@@ -16,6 +16,9 @@ public class ParcelaNotaFiscalSaidaModel implements Serializable {
 	@SerializedName("Total")
 	private Double valor;
 
+	@SerializedName("Percentage")
+	private Double percentual;
+
 	public Integer getParcela() {
 		return parcela;
 	}
@@ -38,6 +41,14 @@ public class ParcelaNotaFiscalSaidaModel implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public Double getPercentual() {
+		return percentual;
+	}
+
+	public void setPercentual(Double percentual) {
+		this.percentual = percentual;
 	}
 
 }

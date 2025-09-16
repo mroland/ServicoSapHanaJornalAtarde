@@ -1,5 +1,6 @@
 package br.com.atarde.servicosaphana.sap.business.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Entity;
@@ -67,6 +68,10 @@ public class AssinaturaNotaFiscalSaidaSapBusinessService {
 					parcelaJsonModel.setDataVencimento(TSParseUtil.dateToString(parcela.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
 					parcelaJsonModel.setValor(parcela.getValor().doubleValue());
+					
+					if(parcela.getValor().compareTo(BigDecimal.ZERO)==0) {
+						parcelaJsonModel.setPercentual(100D);
+					}
 
 					nffJson.getParcelas().add(parcelaJsonModel);
 
