@@ -86,14 +86,18 @@ public class ParceiroNegocioSapBusinessService {
 		}
 
 		model.getEndereco().setTipoEndereco("S");
+		
+		String enderecoEntrega = "Entrega" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero();
 
-		model.getEndereco().setId("Entrega" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId(enderecoEntrega.replace(" ", ""));
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
 		model.getEndereco().setTipoEndereco("B");
+		
+		String enderecoCobranca = "Cobranca" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero();
 
-		model.getEndereco().setId("Cobranca" /* + " - " + model.getId() */ + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.getEndereco().setId(enderecoCobranca.replace(" ", ""));
 
 		this.inserirEndereco(model, parceiroNegocioJsonModel);
 
@@ -446,7 +450,7 @@ public class ParceiroNegocioSapBusinessService {
 
 		IdentificadorFiscalModel fiscalModel = new IdentificadorFiscalModel();
 
-		fiscalModel.setEnderecoId(model.getParceiroNegocio().getIdentificadorFiscal().getEnderecoId());
+		fiscalModel.setEnderecoId(model.getParceiroNegocio().getIdentificadorFiscal().getEnderecoId().replace(" ", ""));
 
 		if (TSUtil.isEmpty(tipoEndereco)) {
 

@@ -87,8 +87,10 @@ public class ParceiroNegocioBusiness {
 		endereco.setEmpresa(model.getEmpresa());
 
 		endereco.setTipoEndereco("B");
+		
+		String enderecoCobranca = "Cobranca" + /*" - " + model.getId() + */ "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero();
 
-		endereco.setId("Cobranca" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		endereco.setId(enderecoCobranca.replace(" ", ""));
 
 		endereco = new ParceiroNegocioEnderecoDAO().obter(endereco);
 
@@ -96,13 +98,13 @@ public class ParceiroNegocioBusiness {
 
 			model.getEndereco().setTipoEndereco("B");
 
-			model.getEndereco().setId("Cobranca" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+			model.getEndereco().setId(enderecoCobranca.replace(" ", ""));
 
 			new ParceiroNegocioSapBusinessService().inserirEnderecoCliente(model);
 
 		}
 		
-		model.setEnderecoCobrancaDefault("Cobranca" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		model.setEnderecoCobrancaDefault(enderecoCobranca.replace(" ", ""));
 		
 	}
 
@@ -115,8 +117,10 @@ public class ParceiroNegocioBusiness {
 		endereco.setEmpresa(model.getEmpresa());
 
 		endereco.setTipoEndereco("S");
+		
+		String enderecoEntrega = "Entrega" + /* " - " + model.getId() + */ "."  + model.getEndereco().getCep() + "." + model.getEndereco().getNumero();
 
-		endereco.setId("Entrega" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+		endereco.setId(enderecoEntrega.replace(" ", ""));
 
 		endereco = new ParceiroNegocioEnderecoDAO().obter(endereco);
 
@@ -124,13 +128,13 @@ public class ParceiroNegocioBusiness {
 
 			model.getEndereco().setTipoEndereco("S");
 
-			model.getEndereco().setId("Entrega" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());
+			model.getEndereco().setId(enderecoEntrega.replace(" ", ""));
 
 			new ParceiroNegocioSapBusinessService().inserirEnderecoCliente(model);
 
 		}
 		
-		model.setEnderecoEntregaDefault("Entrega" + " - " + model.getId() + "." + model.getEndereco().getCep() + "." + model.getEndereco().getNumero());		
+		model.setEnderecoEntregaDefault(enderecoEntrega.replace(" ", ""));		
 
 		
 	}
