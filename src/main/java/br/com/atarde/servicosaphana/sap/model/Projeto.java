@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Projeto implements Serializable{
 	
+	//Tabela OPRJ
 	private String id;
 	
 	private String descricao;

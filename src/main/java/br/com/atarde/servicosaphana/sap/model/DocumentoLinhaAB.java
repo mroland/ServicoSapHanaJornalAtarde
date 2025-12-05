@@ -26,6 +26,7 @@ public abstract class DocumentoLinhaAB implements Serializable {
 	private Double percentualDesconto;
 	private Estoque estoque;
 	private RegraDistribuicao unidadeNegocio;
+	private Projeto projeto;
 
 	public Long getId() {
 		return id;
@@ -185,6 +186,14 @@ public abstract class DocumentoLinhaAB implements Serializable {
 
 	public void setUnidadeNegocio(RegraDistribuicao unidadeNegocio) {
 		this.unidadeNegocio = unidadeNegocio;
+	}
+
+	public Projeto getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
 	}
 
 }

@@ -55,6 +55,9 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 	@SerializedName("CostingCode")
 	private String unidadeNegocioId;
 
+	@SerializedName("ProjectCode")
+	private String projetoId;
+
 	public Integer getNumeroLinha() {
 		return numeroLinha;
 	}
@@ -181,6 +184,14 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 
 	public void setUnidadeNegocioId(String unidadeNegocioId) {
 		this.unidadeNegocioId = unidadeNegocioId;
+	}
+
+	public String getProjetoId() {
+		return projetoId;
+	}
+
+	public void setProjetoId(String projetoId) {
+		this.projetoId = projetoId;
 	}
 
 }

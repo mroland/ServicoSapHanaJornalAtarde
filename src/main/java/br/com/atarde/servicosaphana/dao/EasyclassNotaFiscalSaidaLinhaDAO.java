@@ -7,6 +7,7 @@ import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 public class EasyclassNotaFiscalSaidaLinhaDAO {
 
@@ -14,7 +15,7 @@ public class EasyclassNotaFiscalSaidaLinhaDAO {
 		
 		model.setInterfaceId(broker.getSequenceNextValue("easyclassnotafiscalsaida_linhas_id_seq"));
 
-		broker.setSQL("INSERT INTO EASYCLASSNOTAFISCALSAIDA_LINHAS(ID, NOTAFISCALSAIDA_ID, ITEM_ID, QUANTIDADE, VALOR_UNITARIO, VALOR, CODIGO_IMPOSTO_ID, CST_COFINS, CST_ICMS, CST_IPI, CST_PIS, U_CMXCOL, U_AREA, U_QUANTIDADE_INSERCOES, U_TOTAL_CMXCOL, U_VALOR_UNITARIO, CODIGO_BARRAS, PEDIDO_VENDA_ID, PEDIDO_VENDA_LINHA_NUMERO, UTILIZACAO_ID, VOLUME) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", model.getInterfaceId(), model.getNotaFiscalSaida().getInterfaceId(), 
+		broker.setSQL("INSERT INTO EASYCLASSNOTAFISCALSAIDA_LINHAS(ID, NOTAFISCALSAIDA_ID, ITEM_ID, QUANTIDADE, VALOR_UNITARIO, VALOR, CODIGO_IMPOSTO_ID, CST_COFINS, CST_ICMS, CST_IPI, CST_PIS, U_CMXCOL, U_AREA, U_QUANTIDADE_INSERCOES, U_TOTAL_CMXCOL, U_VALOR_UNITARIO, CODIGO_BARRAS, PEDIDO_VENDA_ID, PEDIDO_VENDA_LINHA_NUMERO, UTILIZACAO_ID, VOLUME, PROJETO_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", model.getInterfaceId(), model.getNotaFiscalSaida().getInterfaceId(), 
 																			model.getItem().getId(), model.getQuantidade(), model.getValorUnitario(),
 				                                                            model.getValor(), model.getCodigoImposto().getId(), 
 				                                                            model.getCstCOFINS().getCodigo(), model.getCstICMS().getCodigo(), 
@@ -23,7 +24,8 @@ public class EasyclassNotaFiscalSaidaLinhaDAO {
 				                                                            model.getUTotalCmXCol(), model.getUValorUnitario(),
 				                                                            model.getCodigoBarras(), model.getPedidoVendaLinha().getPedidoVenda().getId(),
 				                                                            model.getPedidoVendaLinha().getNumero(),
-				                                                            model.getUtilizacao().getId(), model.getVolume());
+				                                                            model.getUtilizacao().getId(), model.getVolume(),
+				                                                            TSUtil.isEmpty(model.getProjeto()) ? null : model.getProjeto().getId());
 
 		broker.execute();
 		
@@ -34,13 +36,13 @@ public class EasyclassNotaFiscalSaidaLinhaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
-		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID, CONTA_CONTABIL_ID FROM EASYCLASS_NFF_SAIDA_LINHA WHERE EASYCLASS_NFF_SAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID, ITEM , QUANTIDADE , VALOR_UNITARIO , VALOR , CODIGO_IMPOSTO , U_CMXCOL , U_AREA , U_QUANTIDADE_INSERCOES , U_TOTAL_CMXCOL , U_VALOR_UNITARIO , CST_ICMS, CST_PIS, CST_IPI, CST_COFINS, UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID, CONTA_CONTABIL_ID, PROJETO_ID FROM EASYCLASS_NFF_SAIDA_LINHA WHERE EASYCLASS_NFF_SAIDA_ID = ?", model.getInterfaceId());
 		
 		return broker.getCollectionBean(EasyclassNotaFiscalSaidaLinha.class, "interfaceId", "item.id", "quantidade", "valorUnitario",
 				                                                             "valor","codigoImposto.id", "uCmXCol", "uArea", 
 				                                                             "uQuantidadeInsercoes", "uTotalCmXCol", "uValorUnitario", 
 				                                                             "cstICMS.codigo", "cstPIS.codigo", "cstIPI.codigo", "cstCOFINS.codigo", 
-				                                                             "utilizacao.id", "estoque.id", "unidadeNegocio.id", "contaContabil.id");
+				                                                             "utilizacao.id", "estoque.id", "unidadeNegocio.id", "contaContabil.id", "projeto.id");
 	}
 
 }

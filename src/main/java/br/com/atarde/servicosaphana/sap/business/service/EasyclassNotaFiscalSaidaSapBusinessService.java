@@ -291,6 +291,12 @@ public class EasyclassNotaFiscalSaidaSapBusinessService {
 				linhaJson.setContaContabilId(linha.getContaContabil().getId());
 
 			}
+			
+			if(!TSUtil.isEmpty(linha.getProjeto().getId())) {
+				
+				linhaJson.setProjetoId(linha.getProjeto().getId());
+				
+			}
 
 			nffJson.getLinhas().add(linhaJson);
 

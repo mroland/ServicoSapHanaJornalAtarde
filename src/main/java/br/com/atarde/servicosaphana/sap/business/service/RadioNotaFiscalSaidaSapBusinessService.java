@@ -286,10 +286,16 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 			}
 
 			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
-			
+
 			if (!TSUtil.isEmpty(linha.getContaContabil().getId())) {
 
 				linhaJson.setContaContabilId(linha.getContaContabil().getId());
+
+			}
+
+			if (!TSUtil.isEmpty(linha.getProjeto().getId())) {
+
+				linhaJson.setProjetoId(linha.getProjeto().getId());
 
 			}
 
