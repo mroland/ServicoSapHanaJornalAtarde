@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("serial")
 public class ClassificadosExecucaoNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 
+	@SerializedName("DocumentInstallments")
+	private List<ClassificadosExecucaoParcelaNotaFiscalSaidaModel> parcelas;
+
 	@SerializedName("DocumentLines")
 	private List<ClassificadosExecucaoNotaFiscalSaidaLinhaModel> linhas;
 
@@ -38,6 +41,14 @@ public class ClassificadosExecucaoNotaFiscalSaidaModel extends NotaFiscalSaidaMo
 
 	public void setUValorBruto(Double uValorBruto) {
 		this.uValorBruto = uValorBruto;
+	}
+
+	public List<ClassificadosExecucaoParcelaNotaFiscalSaidaModel> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(List<ClassificadosExecucaoParcelaNotaFiscalSaidaModel> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 }

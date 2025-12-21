@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.atarde.servicosaphana.dao.HistoricoRadioNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaLinhaDAO;
+import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.RadioNotaFiscalSaidaSapBusinessService;
@@ -33,6 +34,8 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 				item.setEmpresa(model);
 
 				item.setLinhas(new RadioNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
+				
+				item.setParcelas(new RadioNotaFiscalSaidaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
 

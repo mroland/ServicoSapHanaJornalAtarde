@@ -4,6 +4,7 @@
  */
 package br.com.atarde.servicosaphana.sap.business.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Entity;
@@ -17,9 +18,11 @@ import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.sap.hana.model.ClassificadosContratoNotaFiscalSaidaLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.ClassificadosContratoNotaFiscalSaidaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.ClassificadosContratoParcelaNotaFiscalSaidaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.atarde.servicosaphana.util.ConexaoSapUtil;
 import br.com.atarde.servicosaphana.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
@@ -63,14 +66,58 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 
 		nffJson.setDataDocumento(TSParseUtil.dateToString(model.getDataDocumento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
-		if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId())) {
+		if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId()) && !TSUtil.isEmpty(model.getParcelas())) {
 
 			// pegar a condicao de pagamento
 			nffJson.setCondicaoPagamentoId(Integer.valueOf(model.getCondicaoPagamento().getId().toString()));
 
+			if (!TSUtil.isEmpty(model.getParcelas())) {
+
+				if (TSUtil.isEmpty(nffJson.getParcelas())) {
+
+					nffJson.setParcelas(new ArrayList<ClassificadosContratoParcelaNotaFiscalSaidaModel>());
+
+				}
+
+				String ultimaDataVencimento = null;
+				ClassificadosContratoParcelaNotaFiscalSaidaModel parcelaJsonModel;
+				for (ParcelaAB parcela : model.getParcelas()) {
+
+					// verificar se vai add o InstallmentId 0,1,2
+
+					parcelaJsonModel = new ClassificadosContratoParcelaNotaFiscalSaidaModel();
+
+					parcelaJsonModel.setDataVencimento(TSParseUtil.dateToString(parcela.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+
+					parcelaJsonModel.setValor(parcela.getValor().doubleValue());
+
+					if (parcela.getValor().compareTo(BigDecimal.ZERO) == 0) {
+						parcelaJsonModel.setPercentual(100D);
+					}
+
+					nffJson.getParcelas().add(parcelaJsonModel);
+
+					// pega a ultima data de vencimento
+					ultimaDataVencimento = parcelaJsonModel.getDataVencimento();
+
+				}
+
+				nffJson.setDataVencimento(ultimaDataVencimento);
+
+			}
+
 		} else {
 
-			nffJson.setDataVencimento(TSParseUtil.dateToString(model.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+			if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId())) {
+
+				// pegar a condicao de pagamento
+				nffJson.setCondicaoPagamentoId(Integer.valueOf(model.getCondicaoPagamento().getId().toString()));
+
+			} else {
+
+				nffJson.setDataVencimento(TSParseUtil.dateToString(model.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+
+			}
 
 		}
 
@@ -89,7 +136,6 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 			nffJson.setEnderecoCobrancaId(model.getCliente().getEnderecoCobrancaDefault());
 
 		}
-
 
 		nffJson.setUOrigem(model.getOrigem().getId().intValue());
 
@@ -120,7 +166,6 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 			nffJson.setUAutorizacaoPublicidade(model.getUAutorizacaoPublicidade());
 
 		}
-
 
 		if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getLogradouro())) {
 
@@ -224,23 +269,22 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 			linhaJson.setUTotalCmXCol(linha.getUTotalCmXCol().doubleValue());
 
 			linhaJson.setUValorUnitario(linha.getUValorUnitario().doubleValue());
-			
+
 			linhaJson.setDepositoId(linha.getEstoque().getId());
-			
+
 			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
-			
+
 			if (!TSUtil.isEmpty(linha.getContaContabil().getId())) {
 
 				linhaJson.setContaContabilId(linha.getContaContabil().getId());
 
 			}
-			
-			if(!TSUtil.isEmpty(linha.getProjeto().getId())) {
-				
-				linhaJson.setProjetoId(linha.getProjeto().getId());
-				
-			}
 
+			if (!TSUtil.isEmpty(linha.getProjeto().getId())) {
+
+				linhaJson.setProjetoId(linha.getProjeto().getId());
+
+			}
 
 			nffJson.getLinhas().add(linhaJson);
 
@@ -256,7 +300,7 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 
 	private ClassificadosContratoNotaFiscalSaidaModel inserir(ClassificadosContratoNotaFiscalSaidaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
-		//System.out.println(new Gson().toJson(model));
+		// System.out.println(new Gson().toJson(model));
 
 		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Invoices").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
 
@@ -266,7 +310,7 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 
 			String json = response.readEntity(String.class);
 
-			//System.out.println(json);
+			// System.out.println(json);
 
 			resposta = new Gson().fromJson(json, ClassificadosContratoNotaFiscalSaidaModel.class);
 
@@ -274,7 +318,7 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 
 			String jsonString = response.readEntity(String.class);
 
-			//System.out.println(jsonString);
+			// System.out.println(jsonString);
 
 			RetornoSapErroModel retorno = new Gson().fromJson(jsonString, RetornoSapErroModel.class);
 

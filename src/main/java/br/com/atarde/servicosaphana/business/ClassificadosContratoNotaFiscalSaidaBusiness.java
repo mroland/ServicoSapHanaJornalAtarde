@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.ClassificadosContratoNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.ClassificadosContratoNotaFiscalSaidaLinhaDAO;
+import br.com.atarde.servicosaphana.dao.ClassificadosContratoNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoClassificadosContratoNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosContratoNotaFiscalSaida;
@@ -33,6 +34,8 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 				item.setEmpresa(model);
 
 				item.setLinhas(new ClassificadosContratoNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
+				
+				item.setParcelas(new ClassificadosContratoNotaFiscalSaidaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
 
@@ -60,7 +63,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 				try {
 
-					new ClassificadosContratoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
+					new HistoricoClassificadosContratoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
 
 					new ClassificadosContratoNotaFiscalSaidaDAO().alterarInterface(item);
 

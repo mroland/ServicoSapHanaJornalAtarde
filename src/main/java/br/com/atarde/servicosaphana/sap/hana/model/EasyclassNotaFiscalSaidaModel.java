@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("serial")
 public class EasyclassNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 
+	@SerializedName("DocumentInstallments")
+	private List<EasyclassParcelaNotaFiscalSaidaModel> parcelas;
+
 	@SerializedName("DocumentLines")
 	private List<EasyclassNotaFiscalSaidaLinhaModel> linhas;
 
@@ -313,6 +316,14 @@ public class EasyclassNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 
 	public void setUPermuta(String uPermuta) {
 		this.uPermuta = uPermuta;
+	}
+
+	public List<EasyclassParcelaNotaFiscalSaidaModel> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(List<EasyclassParcelaNotaFiscalSaidaModel> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 }

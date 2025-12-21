@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaLinhaDAO;
+import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoEasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassNotaFiscalSaida;
@@ -33,6 +34,8 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 				item.setEmpresa(model);
 
 				item.setLinhas(new EasyclassNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
+				
+				item.setParcelas(new EasyclassNotaFiscalSaidaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
 

@@ -9,11 +9,14 @@ import java.sql.Timestamp;
 
 import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaParcela;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 /**
  *
@@ -107,6 +110,20 @@ public class HistoricoClassificadosExecucaoNotaFiscalSaidaDAO {
 			
 			new HistoricoClassificadosExecucaoNotaFiscalSaidaLinhaDAO().inserirInterface(linha,broker);
 
+		}
+		
+		if(!TSUtil.isEmpty(model.getParcelas())){
+			
+			for (ParcelaAB p : model.getParcelas()) {
+				
+				ClassificadosExecucaoNotaFiscalSaidaParcela parcela = (ClassificadosExecucaoNotaFiscalSaidaParcela) p;
+				
+				parcela.setNotaFiscalSaida(new ClassificadosExecucaoNotaFiscalSaida("interfaceId",model.getInterfaceId()));
+				
+				new HistoricoClassificadosExecucaoNotaFiscalSaidaParcelaDAO().inserirInterface(parcela,broker);
+				
+			}
+			
 		}
 		
 		broker.endTransaction();

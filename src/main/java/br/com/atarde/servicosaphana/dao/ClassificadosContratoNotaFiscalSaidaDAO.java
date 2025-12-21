@@ -9,7 +9,9 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaidaParcela;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -54,6 +56,21 @@ public class ClassificadosContratoNotaFiscalSaidaDAO {
 			linha.setNotaFiscalSaida(new ClassificadosContratoNotaFiscalSaida("interfaceId", model.getInterfaceId()));
 
 			new ClassificadosContratoNotaFiscalSaidaLinhaDAO().inserirInterface(linha, broker);
+
+		}
+		
+		
+		if (!TSUtil.isEmpty(model.getParcelas())) {
+
+			for (ParcelaAB item : model.getParcelas()) {
+
+				ClassificadosContratoNotaFiscalSaidaParcela linha = (ClassificadosContratoNotaFiscalSaidaParcela) item;
+
+				linha.setNotaFiscalSaida(new ClassificadosContratoNotaFiscalSaida("interfaceId", model.getInterfaceId()));
+
+				new ClassificadosContratoNotaFiscalSaidaParcelaDAO().inserirInterface(linha, broker);
+
+			}
 
 		}
 

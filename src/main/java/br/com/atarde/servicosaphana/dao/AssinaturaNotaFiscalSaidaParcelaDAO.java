@@ -31,7 +31,7 @@ public class AssinaturaNotaFiscalSaidaParcelaDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
-		broker.setSQL("SELECT ID, NOTAFISCALSAIDA_ID, DATA_VENCIMENTO, VALOR FROM ASSINATURANOTAFISCALSAIDA_PARCELAS WHERE NOTAFISCALSAIDA_ID = ?", model.getInterfaceId());
+		broker.setSQL("SELECT ID, NOTAFISCALSAIDA_ID, DATA_VENCIMENTO, VALOR FROM ASSINATURANOTAFISCALSAIDA_PARCELAS WHERE NOTAFISCALSAIDA_ID = ? ORDER BY DATA_VENCIMENTO ", model.getInterfaceId());
 		
 		return broker.getCollectionBean(AssinaturaNotaFiscalSaidaParcela.class, "interfaceId", "notaFiscalSaida.interfaceId", "dataVencimento", "valor");
 	}	

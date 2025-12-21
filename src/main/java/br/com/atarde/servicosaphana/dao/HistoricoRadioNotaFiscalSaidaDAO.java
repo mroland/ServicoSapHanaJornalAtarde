@@ -7,13 +7,16 @@ package br.com.atarde.servicosaphana.dao;
 
 import java.sql.Timestamp;
 
+import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
+import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaidaParcela;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 /**
  *
@@ -60,6 +63,20 @@ public class HistoricoRadioNotaFiscalSaidaDAO {
 
 			new HistoricoRadioNotaFiscalSaidaLinhaDAO().inserirInterface(linha, broker);
 
+		}
+		
+		if(!TSUtil.isEmpty(model.getParcelas())){
+			
+			for (ParcelaAB p : model.getParcelas()) {
+				
+				RadioNotaFiscalSaidaParcela parcela = (RadioNotaFiscalSaidaParcela) p;
+				
+				parcela.setNotaFiscalSaida(new RadioNotaFiscalSaida("interfaceId",model.getInterfaceId()));
+				
+				new HistoricoRadioNotaFiscalSaidaParcelaDAO().inserirInterface(parcela,broker);
+				
+			}
+			
 		}
 
 		broker.endTransaction();
