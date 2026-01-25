@@ -1,6 +1,7 @@
 package br.com.atarde.servicosaphana.dao;
 
 import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinhaImposto;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
@@ -14,6 +15,18 @@ public class HistoricoClassificadosExecucaoNotaFiscalSaidaLinhaDAO {
 		broker.setSQL("INSERT INTO HISTORICO_CLASSIFICADOS_EXECUCAO_NFF_SAIDA_LINHA (ID , ITEM , QUANTIDADE , VALOR , CODIGO_IMPOSTO , HISTORICO_CLASSIFICADOS_EXECUCAO_NFF_SAIDA_ID , UTILIZACAO_ID , DEPOSITO_ID, UNIDADE_NEGOCIO_ID, CONTA_CONTABIL_ID, PROJETO_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?)", model.getInterfaceId(), model.getItem().getId(), model.getQuantidade(), model.getValor(), model.getCodigoImposto().getId(), model.getNotaFiscalSaida().getInterfaceId(), model.getUtilizacao().getId(), model.getEstoque().getId(),  model.getUnidadeNegocio().getId(), model.getContaContabil().getId(), TSUtil.isEmpty(model.getProjeto()) ? null : model.getProjeto().getId());
 
 		broker.execute();
+		
+		if (!TSUtil.isEmpty(model.getImpostos())) {
+
+			for (ClassificadosExecucaoNotaFiscalSaidaLinhaImposto imposto : model.getImpostos()) {
+
+				imposto.setLinha(model);
+
+				new HistoricoClassificadosExecucaoNotaFiscalSaidaLinhaImpostoDAO().inserirInterface(imposto, broker);
+
+			}
+
+		}
 
 	}
 

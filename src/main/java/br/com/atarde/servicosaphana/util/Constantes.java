@@ -379,4 +379,10 @@ public class Constantes {
 
 	public static final Integer TIPO_DOCUMENTO_SEQUENCIA_NOTA = 1;
 
+	public static final Long CODIGO_IMPOSTO_CLIENTE = 14L;
+
+	public static final Long CODIGO_IMPOSTO_GERAL = 13L;
+
+	public static final Long MUNICIPIO_OUTROS = 999L;
+
 }

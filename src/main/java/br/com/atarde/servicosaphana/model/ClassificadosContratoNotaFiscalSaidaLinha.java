@@ -7,6 +7,7 @@ package br.com.atarde.servicosaphana.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
@@ -16,33 +17,35 @@ import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class ClassificadosContratoNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements Serializable{
+public class ClassificadosContratoNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements Serializable {
 
-    private String uCmXCol;
+	private String uCmXCol;
 
-    private BigDecimal uArea;
+	private BigDecimal uArea;
 
-    private Integer uQuantidadeInsercoes;
+	private Integer uQuantidadeInsercoes;
 
-    private BigDecimal uTotalCmXCol;
+	private BigDecimal uTotalCmXCol;
 
-    private BigDecimal uValorUnitario;
+	private BigDecimal uValorUnitario;
 
-    private ClassificadosContratoNotaFiscalSaida notaFiscalSaida;
-    
-	private PedidoVendaLinha pedidoVendaLinha;      
+	private ClassificadosContratoNotaFiscalSaida notaFiscalSaida;
 
-    public ClassificadosContratoNotaFiscalSaidaLinha(){
-        
-    }
+	private PedidoVendaLinha pedidoVendaLinha;
 
-    public ClassificadosContratoNotaFiscalSaidaLinha(ClassificadosContratoNotaFiscalSaida notaFiscalSaida) {
-        this.notaFiscalSaida = notaFiscalSaida;
-    }
+	private List<ClassificadosContratoNotaFiscalSaidaLinhaImposto> impostos;
 
-    public ClassificadosContratoNotaFiscalSaidaLinha(Long id) {
-        this.setId(id);
-    }
+	public ClassificadosContratoNotaFiscalSaidaLinha() {
+
+	}
+
+	public ClassificadosContratoNotaFiscalSaidaLinha(ClassificadosContratoNotaFiscalSaida notaFiscalSaida) {
+		this.notaFiscalSaida = notaFiscalSaida;
+	}
+
+	public ClassificadosContratoNotaFiscalSaidaLinha(Long id) {
+		this.setId(id);
+	}
 
 	public String getUCmXCol() {
 		return uCmXCol;
@@ -98,6 +101,14 @@ public class ClassificadosContratoNotaFiscalSaidaLinha extends NotaFiscalSaidaLi
 
 	public void setNotaFiscalSaida(ClassificadosContratoNotaFiscalSaida notaFiscalSaida) {
 		this.notaFiscalSaida = notaFiscalSaida;
+	}
+
+	public List<ClassificadosContratoNotaFiscalSaidaLinhaImposto> getImpostos() {
+		return impostos;
+	}
+
+	public void setImpostos(List<ClassificadosContratoNotaFiscalSaidaLinhaImposto> impostos) {
+		this.impostos = impostos;
 	}
 
 }

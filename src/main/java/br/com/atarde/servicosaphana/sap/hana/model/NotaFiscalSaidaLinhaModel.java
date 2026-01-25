@@ -1,6 +1,7 @@
 package br.com.atarde.servicosaphana.sap.hana.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -57,6 +58,9 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 
 	@SerializedName("ProjectCode")
 	private String projetoId;
+
+	@SerializedName("WithholdingTaxLines")
+	private List<NotaFiscalSaidaLinhaImposto> impostos;
 
 	public Integer getNumeroLinha() {
 		return numeroLinha;
@@ -192,6 +196,14 @@ public class NotaFiscalSaidaLinhaModel implements Serializable {
 
 	public void setProjetoId(String projetoId) {
 		this.projetoId = projetoId;
+	}
+
+	public List<NotaFiscalSaidaLinhaImposto> getImpostos() {
+		return impostos;
+	}
+
+	public void setImpostos(List<NotaFiscalSaidaLinhaImposto> impostos) {
+		this.impostos = impostos;
 	}
 
 }

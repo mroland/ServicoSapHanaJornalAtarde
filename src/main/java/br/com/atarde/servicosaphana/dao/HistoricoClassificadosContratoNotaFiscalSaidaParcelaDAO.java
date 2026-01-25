@@ -10,11 +10,12 @@ public class HistoricoClassificadosContratoNotaFiscalSaidaParcelaDAO {
 		
 		model.setInterfaceId(broker.getSequenceNextValue("historico_classificados_contrato_nff_saida_parcelas_id_seq"));
 		
-        broker.setSQL("INSERT INTO HISTORICO_CLASSIFICADOS_CONTRATO_NFF_SAIDA_PARCELAS(ID, HISTORICO_NOTAFISCALSAIDA_ID, DATA_VENCIMENTO, VALOR) VALUES(?,?,?,?)",
+        broker.setSQL("INSERT INTO HISTORICO_CLASSIFICADOS_CONTRATO_NFF_SAIDA_PARCELAS(ID, HISTORICO_NOTAFISCALSAIDA_ID, DATA_VENCIMENTO, VALOR, VALOR_SEM_IMPOSTO_RETIDO) VALUES(?,?,?,?,?)",
         		model.getInterfaceId(),
         		model.getNotaFiscalSaida().getInterfaceId(),        		
         		model.getDataVencimento(),
-                model.getValor());
+                model.getValor(),
+                model.getValorSemImpostoRetido());
 
         broker.execute();
         

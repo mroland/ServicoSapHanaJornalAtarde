@@ -16,10 +16,12 @@ import com.google.gson.Gson;
 
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.EasyclassNotaFiscalSaidaLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.EasyclassNotaFiscalSaidaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.EasyclassParcelaNotaFiscalSaidaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.NotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
@@ -89,7 +91,7 @@ public class EasyclassNotaFiscalSaidaSapBusinessService {
 
 					parcelaJsonModel.setDataVencimento(TSParseUtil.dateToString(parcela.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
-					parcelaJsonModel.setValor(parcela.getValor().doubleValue());
+					parcelaJsonModel.setValor(TSUtil.isEmpty(parcela.getValorSemImpostoRetido()) ? parcela.getValor().doubleValue() : parcela.getValorSemImpostoRetido().doubleValue());
 
 					if (parcela.getValor().compareTo(BigDecimal.ZERO) == 0) {
 						parcelaJsonModel.setPercentual(100D);
@@ -341,6 +343,28 @@ public class EasyclassNotaFiscalSaidaSapBusinessService {
 			if (!TSUtil.isEmpty(linha.getProjeto().getId())) {
 
 				linhaJson.setProjetoId(linha.getProjeto().getId());
+
+			}
+
+			if (!TSUtil.isEmpty(linha.getImpostos())) {
+
+				if (TSUtil.isEmpty(linhaJson.getImpostos())) {
+
+					linhaJson.setImpostos(new ArrayList<NotaFiscalSaidaLinhaImposto>());
+
+				}
+
+				NotaFiscalSaidaLinhaImposto impostoLinhaJson;
+
+				for (EasyclassNotaFiscalSaidaLinhaImposto imposto : linha.getImpostos()) {
+
+					impostoLinhaJson = new NotaFiscalSaidaLinhaImposto();
+
+					impostoLinhaJson.setImpostoId(imposto.getImpostoId());
+
+					linhaJson.getImpostos().add(impostoLinhaJson);
+
+				}
 
 			}
 

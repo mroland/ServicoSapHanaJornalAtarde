@@ -19,91 +19,93 @@ import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaidaParcela;
  */
 @SuppressWarnings("serial")
 @XmlRootElement
-@XmlSeeAlso({ParcelaNotaFiscalSaida.class, AssinaturaNotaFiscalSaidaParcela.class})
+@XmlSeeAlso({ ParcelaNotaFiscalSaida.class, AssinaturaNotaFiscalSaidaParcela.class })
 public abstract class ParcelaAB implements Serializable {
 
-    private Long id;
-    private Date dataVencimentoInicial;
-    private Date dataVencimentoFinal;
-    private Date dataVencimento;
-    private BigDecimal valor;
-    private BigDecimal valorInicial;
-    private BigDecimal valorFinal;
-    private BigDecimal valorAberto;    
-    private Boolean flagPago;
-    private Boolean flagBoleto;
-    private Integer numero;
-    private Status status;
+	private Long id;
+	private Date dataVencimentoInicial;
+	private Date dataVencimentoFinal;
+	private Date dataVencimento;
+	private BigDecimal valor;
+	private BigDecimal valorInicial;
+	private BigDecimal valorFinal;
+	private BigDecimal valorAberto;
+	private Boolean flagPago;
+	private Boolean flagBoleto;
+	private Integer numero;
+	private Status status;
 	private Boolean flagEmail;
 	private Empresa empresa;
-	
-    private Date dataPagamento;
-    private BigDecimal valorPago;
-	private Boleto boleto;		
 
-    public BigDecimal getValor() {
-        return valor;
-    }
+	private Date dataPagamento;
+	private BigDecimal valorPago;
+	private Boleto boleto;
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
+	private BigDecimal valorSemImpostoRetido;
 
-    public Boolean getFlagBoleto() {
-        return flagBoleto;
-    }
+	public BigDecimal getValor() {
+		return valor;
+	}
 
-    public void setFlagBoleto(Boolean flagBoleto) {
-        this.flagBoleto = flagBoleto;
-    }
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
 
-    public Boolean getFlagPago() {
-        return flagPago;
-    }
+	public Boolean getFlagBoleto() {
+		return flagBoleto;
+	}
 
-    public void setFlagPago(Boolean flagPago) {
-        this.flagPago = flagPago;
-    }
+	public void setFlagBoleto(Boolean flagBoleto) {
+		this.flagBoleto = flagBoleto;
+	}
 
-    public Date getDataVencimentoFinal() {
-        return dataVencimentoFinal;
-    }
+	public Boolean getFlagPago() {
+		return flagPago;
+	}
 
-    public void setDataVencimentoFinal(Date dataVencimentoFinal) {
-        this.dataVencimentoFinal = dataVencimentoFinal;
-    }
+	public void setFlagPago(Boolean flagPago) {
+		this.flagPago = flagPago;
+	}
 
-    public Date getDataVencimentoInicial() {
-        return dataVencimentoInicial;
-    }
+	public Date getDataVencimentoFinal() {
+		return dataVencimentoFinal;
+	}
 
-    public void setDataVencimentoInicial(Date dataVencimentoInicial) {
-        this.dataVencimentoInicial = dataVencimentoInicial;
-    }
+	public void setDataVencimentoFinal(Date dataVencimentoFinal) {
+		this.dataVencimentoFinal = dataVencimentoFinal;
+	}
 
-    public Date getDataVencimento() {
-        return dataVencimento;
-    }
+	public Date getDataVencimentoInicial() {
+		return dataVencimentoInicial;
+	}
 
-    public void setDataVencimento(Date dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
+	public void setDataVencimentoInicial(Date dataVencimentoInicial) {
+		this.dataVencimentoInicial = dataVencimentoInicial;
+	}
 
-    public Integer getNumero() {
-        return numero;
-    }
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Integer getNumero() {
+		return numero;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public BigDecimal getValorInicial() {
 		return valorInicial;
@@ -180,7 +182,13 @@ public abstract class ParcelaAB implements Serializable {
 	public void setBoleto(Boleto boleto) {
 		this.boleto = boleto;
 	}
-	
-	
-    
+
+	public BigDecimal getValorSemImpostoRetido() {
+		return valorSemImpostoRetido;
+	}
+
+	public void setValorSemImpostoRetido(BigDecimal valorSemImpostoRetido) {
+		this.valorSemImpostoRetido = valorSemImpostoRetido;
+	}
+
 }

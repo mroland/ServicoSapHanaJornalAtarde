@@ -7,6 +7,7 @@ package br.com.atarde.servicosaphana.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
@@ -31,6 +32,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaLinha extends NotaFiscalSaidaLi
 	private ClassificadosExecucaoNotaFiscalSaida notaFiscalSaida;
 
 	private PedidoVendaLinha pedidoVendaLinha;
+
+	private List<ClassificadosExecucaoNotaFiscalSaidaLinhaImposto> impostos;
 
 	public ClassificadosExecucaoNotaFiscalSaidaLinha() {
 
@@ -98,6 +101,14 @@ public class ClassificadosExecucaoNotaFiscalSaidaLinha extends NotaFiscalSaidaLi
 
 	public void setUValorUnitario(BigDecimal uValorUnitario) {
 		this.uValorUnitario = uValorUnitario;
+	}
+
+	public List<ClassificadosExecucaoNotaFiscalSaidaLinhaImposto> getImpostos() {
+		return impostos;
+	}
+
+	public void setImpostos(List<ClassificadosExecucaoNotaFiscalSaidaLinhaImposto> impostos) {
+		this.impostos = impostos;
 	}
 
 }

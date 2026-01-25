@@ -1,5 +1,7 @@
 package br.com.atarde.servicosaphana.business;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,14 +11,21 @@ import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoEasyclassNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.TabelaUsuarioImpostoTaxaDAO;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
+import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.EasyclassNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
+import br.com.atarde.servicosaphana.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
 import br.com.topsys.util.TSUtil;
@@ -34,7 +43,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 				item.setEmpresa(model);
 
 				item.setLinhas(new EasyclassNotaFiscalSaidaLinhaDAO().pesquisarInterface(item));
-				
+
 				item.setParcelas(new EasyclassNotaFiscalSaidaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
@@ -103,6 +112,8 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
+			this.setarImpostoCasoNecessario(model);
+
 			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
 			if (TSUtil.isEmpty(nff)) {
 
@@ -155,6 +166,137 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 		}
 
 		return model;
+
+	}
+
+	private void setarImpostoCasoNecessario(EasyclassNotaFiscalSaida model) {
+
+		boolean retorno;
+
+		retorno = this.setarImposto(Constantes.CODIGO_IMPOSTO_CLIENTE, model);
+
+		if (!retorno) {
+
+			retorno = this.setarImposto(Constantes.CODIGO_IMPOSTO_GERAL, model);
+
+		}
+
+		if (retorno) {
+
+			this.ajustarParcelas(model);
+
+		}
+
+	}
+
+	private void ajustarParcelas(EasyclassNotaFiscalSaida model) {
+
+		BigDecimal valorTotalImposto = BigDecimal.ZERO;
+		BigDecimal valorTotalParcelas = BigDecimal.ZERO;
+		BigDecimal valorRateadoPorParcela = BigDecimal.ZERO;
+		BigDecimal valorTotalNff = BigDecimal.ZERO;
+
+		if (!TSUtil.isEmpty(model.getParcelas())) {
+
+			int qtdParcelas = model.getParcelas().size();
+
+			for (EasyclassNotaFiscalSaidaLinha linha : model.getLinhas()) {
+
+				valorTotalNff = valorTotalNff.add(linha.getValor());
+
+				for (EasyclassNotaFiscalSaidaLinhaImposto imposto : linha.getImpostos()) {
+
+					valorTotalImposto = valorTotalImposto.add(imposto.getValor());
+
+				}
+
+			}
+
+			valorRateadoPorParcela = valorTotalImposto.divide(new BigDecimal(qtdParcelas), 2, RoundingMode.HALF_UP);
+
+			for (ParcelaAB parcela : model.getParcelas()) {
+
+				parcela.setValorSemImpostoRetido(parcela.getValor().subtract(valorRateadoPorParcela));
+
+				valorTotalParcelas = valorTotalParcelas.add(parcela.getValorSemImpostoRetido());
+
+			}
+
+			if (valorTotalNff.subtract(valorTotalImposto).compareTo(valorTotalParcelas) > 0) {
+
+				model.getParcelas().get(qtdParcelas - 1).setValorSemImpostoRetido(model.getParcelas().get(qtdParcelas - 1).getValorSemImpostoRetido().add((valorTotalNff.subtract(valorTotalImposto)).subtract(valorTotalParcelas)));
+
+			}
+			if (valorTotalNff.subtract(valorTotalImposto).compareTo(valorTotalParcelas) < 0) {
+
+				model.getParcelas().get(qtdParcelas - 1).setValorSemImpostoRetido(model.getParcelas().get(qtdParcelas - 1).getValorSemImpostoRetido().subtract(valorTotalParcelas.subtract((valorTotalNff.subtract(valorTotalImposto)))));
+
+			}
+
+		}
+
+	}
+
+	private boolean setarImposto(Long codigoImpostoCliente, EasyclassNotaFiscalSaida model) {
+
+		boolean encontrou = false;
+
+		List<TabelaUsuarioImpostoTaxa> taxas;
+
+		if (codigoImpostoCliente.equals(Constantes.CODIGO_IMPOSTO_CLIENTE)) {
+
+			taxas = new TabelaUsuarioImpostoTaxaDAO().obterPorCliente(model.getEmpresa(), model.getFilial(), model.getCliente().getId(), codigoImpostoCliente);
+
+		} else {
+
+			taxas = new TabelaUsuarioImpostoTaxaDAO().obterPorGeral(model.getEmpresa(), model.getFilial(), model.getCliente().getEndereco().getMunicipio().getId(), model.getCliente().getClassificacao().getId(), codigoImpostoCliente, model.getSequencia().getId());
+
+			if(TSUtil.isEmpty(taxas)) {
+				
+				taxas = new TabelaUsuarioImpostoTaxaDAO().obterPorGeral(model.getEmpresa(), model.getFilial(), Constantes.MUNICIPIO_OUTROS, model.getCliente().getClassificacao().getId(), codigoImpostoCliente, model.getSequencia().getId());
+				
+			}
+			
+		}
+
+		if (!TSUtil.isEmpty(taxas)) {
+
+			encontrou = true;
+
+			for (EasyclassNotaFiscalSaidaLinha linha : model.getLinhas()) {
+
+				this.setarTaxas(linha, taxas);
+
+			}
+
+		}
+
+		return encontrou;
+	}
+
+	private void setarTaxas(EasyclassNotaFiscalSaidaLinha linha, List<TabelaUsuarioImpostoTaxa> taxas) {
+
+		EasyclassNotaFiscalSaidaLinhaImposto imposto;
+
+		if (TSUtil.isEmpty(linha.getImpostos())) {
+
+			linha.setImpostos(new ArrayList<EasyclassNotaFiscalSaidaLinhaImposto>());
+
+		}
+
+		for (TabelaUsuarioImpostoTaxa taxa : taxas) {
+
+			imposto = new EasyclassNotaFiscalSaidaLinhaImposto();
+
+			imposto.setImpostoId(taxa.getImpostoId());
+
+			imposto.setPercentual(taxa.getPercentual());
+
+			imposto.setValor(linha.getValor().multiply(taxa.getPercentual()).divide(new BigDecimal(100L), 2, RoundingMode.HALF_UP));
+
+			linha.getImpostos().add(imposto);
+
+		}
 
 	}
 
@@ -257,7 +399,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 		nota.setFilial(model.getFilial());
 
 		nota.setArquivoRemessa(model.getArquivoRemessa());
-		
+
 		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
 
 		nota.setSapDocumentoId(model.getSapDocumentoId());

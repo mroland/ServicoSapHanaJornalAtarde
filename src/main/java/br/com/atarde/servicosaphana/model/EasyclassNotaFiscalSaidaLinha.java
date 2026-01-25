@@ -7,6 +7,7 @@ package br.com.atarde.servicosaphana.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
@@ -16,33 +17,35 @@ import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class EasyclassNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements Serializable{
+public class EasyclassNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implements Serializable {
 
-    private String uCmXCol;
+	private String uCmXCol;
 
-    private BigDecimal uArea;
+	private BigDecimal uArea;
 
-    private Integer uQuantidadeInsercoes;
+	private Integer uQuantidadeInsercoes;
 
-    private BigDecimal uTotalCmXCol;
+	private BigDecimal uTotalCmXCol;
 
-    private BigDecimal uValorUnitario;
+	private BigDecimal uValorUnitario;
 
-    private EasyclassNotaFiscalSaida notaFiscalSaida;
-    
-	private PedidoVendaLinha pedidoVendaLinha;      
+	private EasyclassNotaFiscalSaida notaFiscalSaida;
 
-    public EasyclassNotaFiscalSaidaLinha(){
-        
-    }
+	private PedidoVendaLinha pedidoVendaLinha;
 
-    public EasyclassNotaFiscalSaidaLinha(EasyclassNotaFiscalSaida notaFiscalSaida) {
-        this.notaFiscalSaida = notaFiscalSaida;
-    }
+	private List<EasyclassNotaFiscalSaidaLinhaImposto> impostos;
 
-    public EasyclassNotaFiscalSaidaLinha(Long id) {
-        this.setId(id);
-    }
+	public EasyclassNotaFiscalSaidaLinha() {
+
+	}
+
+	public EasyclassNotaFiscalSaidaLinha(EasyclassNotaFiscalSaida notaFiscalSaida) {
+		this.notaFiscalSaida = notaFiscalSaida;
+	}
+
+	public EasyclassNotaFiscalSaidaLinha(Long id) {
+		this.setId(id);
+	}
 
 	public String getUCmXCol() {
 		return uCmXCol;
@@ -98,6 +101,14 @@ public class EasyclassNotaFiscalSaidaLinha extends NotaFiscalSaidaLinhaAB implem
 
 	public void setPedidoVendaLinha(PedidoVendaLinha pedidoVendaLinha) {
 		this.pedidoVendaLinha = pedidoVendaLinha;
+	}
+
+	public List<EasyclassNotaFiscalSaidaLinhaImposto> getImpostos() {
+		return impostos;
+	}
+
+	public void setImpostos(List<EasyclassNotaFiscalSaidaLinhaImposto> impostos) {
+		this.impostos = impostos;
 	}
 
 }
