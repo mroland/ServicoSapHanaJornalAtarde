@@ -1,0 +1,18 @@
+package br.com.atarde.servicosaphana.model;
+
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class HistoricoClassificadosExecucaoPedidoVenda extends ClassificadosExecucaoPedidoVenda implements Serializable {
+
+	private Long interfaceOriginalId;
+
+	public Long getInterfaceOriginalId() {
+		return interfaceOriginalId;
+	}
+
+	public void setInterfaceOriginalId(Long interfaceOriginalId) {
+		this.interfaceOriginalId = interfaceOriginalId;
+	}
+
+}

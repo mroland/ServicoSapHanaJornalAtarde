@@ -8,41 +8,38 @@ package br.com.atarde.servicosaphana.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
-import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinha;
+import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinhaAB;
 
 /**
  *
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class EasyclassPedidoVendaLinha extends NotaFiscalSaidaLinhaAB implements Serializable {
+public class EasyclassPedidoVendaLinha extends PedidoVendaLinhaAB implements Serializable{
 
-	private String uCmXCol;
+    private String uCmXCol;
 
-	private BigDecimal uArea;
+    private BigDecimal uArea;
 
-	private Integer uQuantidadeInsercoes;
+    private Integer uQuantidadeInsercoes;
 
-	private BigDecimal uTotalCmXCol;
+    private BigDecimal uTotalCmXCol;
 
-	private BigDecimal uValorUnitario;
+    private BigDecimal uValorUnitario;
 
-	private EasyclassPedidoVenda pedidoVenda;
+    private EasyclassPedidoVenda pedidoVenda;
+    
+    public EasyclassPedidoVendaLinha(){
+        
+    }
 
-	private PedidoVendaLinha pedidoVendaLinha;
+    public EasyclassPedidoVendaLinha(EasyclassPedidoVenda pedidoVenda) {
+        this.pedidoVenda = pedidoVenda;
+    }
 
-	public EasyclassPedidoVendaLinha() {
-
-	}
-
-	public EasyclassPedidoVendaLinha(EasyclassPedidoVenda pedidoVenda) {
-		this.pedidoVenda = pedidoVenda;
-	}
-
-	public EasyclassPedidoVendaLinha(Long id) {
-		this.setId(id);
-	}
+    public EasyclassPedidoVendaLinha(Long id) {
+        this.setId(id);
+    }
 
 	public String getUCmXCol() {
 		return uCmXCol;
@@ -90,14 +87,6 @@ public class EasyclassPedidoVendaLinha extends NotaFiscalSaidaLinhaAB implements
 
 	public void setPedidoVenda(EasyclassPedidoVenda pedidoVenda) {
 		this.pedidoVenda = pedidoVenda;
-	}
-
-	public PedidoVendaLinha getPedidoVendaLinha() {
-		return pedidoVendaLinha;
-	}
-
-	public void setPedidoVendaLinha(PedidoVendaLinha pedidoVendaLinha) {
-		this.pedidoVendaLinha = pedidoVendaLinha;
 	}
 
 }

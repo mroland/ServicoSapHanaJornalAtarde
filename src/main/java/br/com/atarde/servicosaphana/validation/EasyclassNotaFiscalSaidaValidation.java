@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.EasyclassPedidoVendaDAO;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.EasyclassPedidoVenda;
 import br.com.atarde.servicosaphana.sap.dao.CategoriaDAO;
 import br.com.atarde.servicosaphana.sap.dao.CstDAO;
 import br.com.atarde.servicosaphana.sap.model.CST;
@@ -33,9 +35,9 @@ public class EasyclassNotaFiscalSaidaValidation extends NotaFiscalSaidaValidatio
 				model.getAnunciante().setEmpresa(model.getEmpresa());
 
 			}
-			
+
 			retorno.append(new ParceiroNegocioValidation().validar(model.getAnunciante()));
-			
+
 			retorno.append(this.validaNFF(model));
 
 		}
@@ -51,13 +53,13 @@ public class EasyclassNotaFiscalSaidaValidation extends NotaFiscalSaidaValidatio
 		if (TSUtil.isEmpty(retorno.toString())) {
 
 			EasyclassNotaFiscalSaida nota = (EasyclassNotaFiscalSaida) model;
-			
-			if(!TSUtil.isEmpty(new EasyclassNotaFiscalSaidaDAO().obterIdExternoInterface(nota))) {
-				
+
+			if (!TSUtil.isEmpty(new EasyclassNotaFiscalSaidaDAO().obterIdExternoInterface(nota)) || this.isExistePedidoVendaInterface(nota)) {
+
 				retorno.append(Constantes.DOCUMENTOEXPORTADO + "\n");
-				
+
 				return retorno.toString();
-				
+
 			}
 
 			if (TSUtil.isEmpty(model.getUValorBruto()) || (model.getUValorBruto().equals(BigDecimal.ZERO))) {
@@ -94,93 +96,91 @@ public class EasyclassNotaFiscalSaidaValidation extends NotaFiscalSaidaValidatio
 
 				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_U_TITULO_PUBLICACAO + Constantes.CAMPO_OBRIGATORIO + "\n");
 
-			}else {
-				
+			} else {
+
 				nota.setUTituloPublicacao(nota.getUTituloPublicacao().toUpperCase());
-				
+
 			}
-			
-            if (TSUtil.isEmpty(nota.getUEnderecoEntrega()) || (!TSUtil.isEmpty(nota.getUEnderecoEntrega()) && nota.getUEnderecoEntrega().length()>254)) {
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_ENDERECO_ENTREGA + Constantes.CAMPO_OBRIGATORIO + "\n");
+			if (TSUtil.isEmpty(nota.getUEnderecoEntrega()) || (!TSUtil.isEmpty(nota.getUEnderecoEntrega()) && nota.getUEnderecoEntrega().length() > 254)) {
 
-            }else {
-            	
-            	nota.setUEnderecoEntrega(nota.getUEnderecoEntrega().toUpperCase());
-            }
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_ENDERECO_ENTREGA + Constantes.CAMPO_OBRIGATORIO + "\n");
 
-            if (!TSUtil.isEmpty(nota.getUNumeroPI()) && nota.getUNumeroPI().length()>32) {
+			} else {
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_NUMERO_PI + "\n");
+				nota.setUEnderecoEntrega(nota.getUEnderecoEntrega().toUpperCase());
+			}
 
-            }
-            
-            if (!TSUtil.isEmpty(nota.getUTipoTransacao()) && nota.getUTipoTransacao().length()>10) {
+			if (!TSUtil.isEmpty(nota.getUNumeroPI()) && nota.getUNumeroPI().length() > 32) {
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_TIPO_TRANSACAO + "\n");
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_NUMERO_PI + "\n");
 
-            }    
-            
-            if (!TSUtil.isEmpty(nota.getUPeriodo()) && nota.getUPeriodo().length()>30) {
+			}
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PERIODO + "\n");
+			if (!TSUtil.isEmpty(nota.getUTipoTransacao()) && nota.getUTipoTransacao().length() > 10) {
 
-            }  
-            
-            if (!TSUtil.isEmpty(nota.getUFormato()) && nota.getUFormato().length()>50) {
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_TIPO_TRANSACAO + "\n");
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_FORMATO + "\n");
+			}
 
-            }  
-            
-            if (!TSUtil.isEmpty(nota.getUPageViews()) && nota.getUPageViews().equals(BigDecimal.ZERO)) {
+			if (!TSUtil.isEmpty(nota.getUPeriodo()) && nota.getUPeriodo().length() > 30) {
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PAGEVIEWS + "\n");
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PERIODO + "\n");
 
-            } 
-            
-            if (!TSUtil.isEmpty(nota.getUEntregaVendedor())) {
-            	
-            	if(nota.getUEntregaVendedor().length()>254) {
-            		
-            		retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_ENTREGA_VENDEDOR + "\n");
+			}
 
-            	}else {
-            		
-            		nota.setUEntregaVendedor(nota.getUEntregaVendedor().toUpperCase());
-            		
-            	}
+			if (!TSUtil.isEmpty(nota.getUFormato()) && nota.getUFormato().length() > 50) {
 
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_FORMATO + "\n");
 
-            }  
-            
-            if (!TSUtil.isEmpty(nota.getUProduto()) && nota.getUProduto().length()>254) {
+			}
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PRODUTO + "\n");
+			if (!TSUtil.isEmpty(nota.getUPageViews()) && nota.getUPageViews().equals(BigDecimal.ZERO)) {
 
-            }  
-            
-            if (!TSUtil.isEmpty(nota.getUCampanha())) {
-            	
-            	if(nota.getUCampanha().length()>254) {
-            		
-            		retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_CAMPANHA + "\n");
-            		
-            	}else {
-            		
-            		nota.setUCampanha(nota.getUCampanha().toUpperCase());
-            		
-            	}
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PAGEVIEWS + "\n");
 
+			}
 
-            }  
-            
-            if (!TSUtil.isEmpty(nota.getUPostoId()) && nota.getUPostoId().length()>64) {
+			if (!TSUtil.isEmpty(nota.getUEntregaVendedor())) {
 
-                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_POSTO_ID + "\n");
+				if (nota.getUEntregaVendedor().length() > 254) {
 
-            }             
-            
+					retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_ENTREGA_VENDEDOR + "\n");
+
+				} else {
+
+					nota.setUEntregaVendedor(nota.getUEntregaVendedor().toUpperCase());
+
+				}
+
+			}
+
+			if (!TSUtil.isEmpty(nota.getUProduto()) && nota.getUProduto().length() > 254) {
+
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_PRODUTO + "\n");
+
+			}
+
+			if (!TSUtil.isEmpty(nota.getUCampanha())) {
+
+				if (nota.getUCampanha().length() > 254) {
+
+					retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_CAMPANHA + "\n");
+
+				} else {
+
+					nota.setUCampanha(nota.getUCampanha().toUpperCase());
+
+				}
+
+			}
+
+			if (!TSUtil.isEmpty(nota.getUPostoId()) && nota.getUPostoId().length() > 64) {
+
+				retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_U_POSTO_ID + "\n");
+
+			}
+
 			if (!TSUtil.isEmpty(nota.getLinhas()) || (!TSUtil.isEmpty(nota.getLinhas()) && nota.getLinhas().size() != 0)) {
 
 				for (EasyclassNotaFiscalSaidaLinha linha : nota.getLinhas()) {
@@ -203,44 +203,61 @@ public class EasyclassNotaFiscalSaidaValidation extends NotaFiscalSaidaValidatio
 
 	}
 
+	private boolean isExistePedidoVendaInterface(EasyclassNotaFiscalSaida model) {
+
+		boolean retorno = false;
+
+		EasyclassPedidoVenda saida = new EasyclassPedidoVenda(model.getEmpresa());
+		saida.setOrigem(model.getOrigem());
+		saida.setIdExterno(model.getIdExterno());
+
+		if (!TSUtil.isEmpty(new EasyclassPedidoVendaDAO().obterIdExternoInterface(saida))) {
+
+			retorno = true;
+
+		}
+
+		return retorno;
+
+	}
+
 	protected String validaLinhaNFF(EasyclassNotaFiscalSaidaLinha model, Filial filial) {
 
 		Categoria categoria;
 
 		StringBuilder retorno = new StringBuilder();
 
-		retorno.append(super.validaLinhaNFF(model, filial));
+		retorno.append(super.validaDocumentoLinha(model, filial));
 
 		if (TSUtil.isEmpty(model.getUCmXCol()) || (!TSUtil.isEmpty(model.getUCmXCol()) && model.getUCmXCol().length() > 10)) {
 
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_U_CMXCOL + Constantes.CAMPO_OBRIGATORIO + "\n");
 
 		}
-		
-		if (TSUtil.isEmpty(model.getUArea()) || model.getUArea().setScale(2,RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2,RoundingMode.HALF_UP))!=1) {
+
+		if (TSUtil.isEmpty(model.getUArea()) || model.getUArea().setScale(2, RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) != 1) {
 
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_U_AREA + Constantes.CAMPO_OBRIGATORIO + "\n");
 
-		}		
+		}
 
-		
-		if (TSUtil.isEmpty(model.getUValorUnitario()) || model.getUValorUnitario().setScale(2,RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2,RoundingMode.HALF_UP))!=1) {
+		if (TSUtil.isEmpty(model.getUValorUnitario()) || model.getUValorUnitario().setScale(2, RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) != 1) {
 
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_U_VALOR_UNITARIO + Constantes.CAMPO_OBRIGATORIO + "\n");
 
 		}
 
-		if (TSUtil.isEmpty(model.getUTotalCmXCol()) || model.getUTotalCmXCol().setScale(2,RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2,RoundingMode.HALF_UP))!=1) {
+		if (TSUtil.isEmpty(model.getUTotalCmXCol()) || model.getUTotalCmXCol().setScale(2, RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) != 1) {
 
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_U_TOTAL_CMXCOL + Constantes.CAMPO_OBRIGATORIO + "\n");
 
 		}
-		
-		if (TSUtil.isEmpty(model.getUQuantidadeInsercoes()) || (model.getUQuantidadeInsercoes()<=0)) {
+
+		if (TSUtil.isEmpty(model.getUQuantidadeInsercoes()) || (model.getUQuantidadeInsercoes() <= 0)) {
 
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_U_QUANTIDADE_INSERCOES + Constantes.CAMPO_OBRIGATORIO + "\n");
 
-		}		
+		}
 
 		if (!TSUtil.isEmpty(model.getPedidoVendaLinha())) {
 

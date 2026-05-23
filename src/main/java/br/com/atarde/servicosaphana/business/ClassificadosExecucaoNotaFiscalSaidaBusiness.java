@@ -12,9 +12,11 @@ import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.HistoricoClassificadosExecucaoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.business.service.ClassificadosExecucaoNotaFiscalSaidaSapBusinessService;
 import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.sap.dao.PedidoVendaDAO;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaida;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
+import br.com.atarde.servicosaphana.sap.model.PedidoVenda;
 import br.com.atarde.servicosaphana.sap.model.Status;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSStringUtil;
@@ -60,7 +62,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 				try {
 
-					new ClassificadosExecucaoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
+					new HistoricoClassificadosExecucaoNotaFiscalSaidaDAO().inserirInterface(this.carregaHistorico(item));
 
 					new ClassificadosExecucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
@@ -95,17 +97,34 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 			new VendedorBusiness().validar(model.getVendedor());
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
-
+						
 			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
 			if (TSUtil.isEmpty(nff)) {
+				
+				PedidoVenda pedido = new PedidoVenda(model.getEmpresa());
+				pedido.setOrigem(model.getOrigem());
+				pedido.setIdExterno(model.getIdExterno());
 
-				new ClassificadosExecucaoNotaFiscalSaidaSapBusinessService().inserir(model);
-				model.setFlagDocumentoExistente(false);
+				pedido = new PedidoVendaDAO().obterIdExterno(pedido);
+				if (!TSUtil.isEmpty(pedido)) {
 
+					model.setSapDocumentoId(pedido.getId());
+					model.setFlagDocumentoExistente(true);
+					model.setFlagNotaFiscalSaida(false);
+					
+				}else {
+					
+					new ClassificadosExecucaoNotaFiscalSaidaSapBusinessService().inserir(model);
+					model.setFlagDocumentoExistente(false);
+					model.setFlagNotaFiscalSaida(true);
+					
+				}
+								
 			} else {
 
 				model.setSapDocumentoId(nff.getId());
 				model.setFlagDocumentoExistente(true);
+				model.setFlagNotaFiscalSaida(true);
 
 			}
 
@@ -254,6 +273,10 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
 
 		nota.setSapDocumentoId(model.getSapDocumentoId());
+		
+		nota.setFlagNotaFiscalSaida(model.getFlagNotaFiscalSaida());
+		
+		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
 
 		return nota;
 

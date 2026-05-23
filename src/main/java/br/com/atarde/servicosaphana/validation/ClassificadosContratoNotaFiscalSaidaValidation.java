@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import br.com.atarde.servicosaphana.dao.ClassificadosContratoNotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.dao.ClassificadosContratoPedidoVendaDAO;
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.ClassificadosContratoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosContratoPedidoVenda;
 import br.com.atarde.servicosaphana.sap.dao.CategoriaDAO;
 import br.com.atarde.servicosaphana.sap.dao.CstDAO;
 import br.com.atarde.servicosaphana.sap.model.CST;
@@ -52,7 +54,7 @@ public class ClassificadosContratoNotaFiscalSaidaValidation extends NotaFiscalSa
 
 			ClassificadosContratoNotaFiscalSaida nota = (ClassificadosContratoNotaFiscalSaida) model;
 
-			if (!TSUtil.isEmpty(new ClassificadosContratoNotaFiscalSaidaDAO().obterIdExternoInterface(nota))) {
+			if (!TSUtil.isEmpty(new ClassificadosContratoNotaFiscalSaidaDAO().obterIdExternoInterface(nota)) || this.isExistePedidoVendaInterface(nota)) {
 
 				retorno.append(Constantes.DOCUMENTOEXPORTADO + "\n");
 
@@ -201,13 +203,31 @@ public class ClassificadosContratoNotaFiscalSaidaValidation extends NotaFiscalSa
 
 	}
 
+	private boolean isExistePedidoVendaInterface(ClassificadosContratoNotaFiscalSaida model) {
+
+		boolean retorno = false;
+
+		ClassificadosContratoPedidoVenda saida = new ClassificadosContratoPedidoVenda(model.getEmpresa());
+		saida.setOrigem(model.getOrigem());
+		saida.setIdExterno(model.getIdExterno());
+
+		if (!TSUtil.isEmpty(new ClassificadosContratoPedidoVendaDAO().obterIdExternoInterface(saida))) {
+
+			retorno = true;
+
+		}
+
+		return retorno;
+
+	}
+
 	protected String validaLinhaNFF(ClassificadosContratoNotaFiscalSaidaLinha model, Filial filial) {
 
 		Categoria categoria;
 
 		StringBuilder retorno = new StringBuilder();
 
-		retorno.append(super.validaLinhaNFF(model, filial));
+		retorno.append(super.validaDocumentoLinha(model, filial));
 
 		if (TSUtil.isEmpty(model.getUCmXCol()) || (!TSUtil.isEmpty(model.getUCmXCol()) && model.getUCmXCol().length() > 10)) {
 

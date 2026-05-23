@@ -1,35 +1,23 @@
 package br.com.atarde.servicosaphana.sap.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
-@XmlRootElement
-public class PedidoVenda extends DocumentoAB implements Serializable {
+public class PedidoVenda extends PedidoVendaAB implements Serializable {
 
-	private Long interfaceId;
-	private Long serial;
 	private Long serialInicial;
 	private Long serialFinal;
 	private Long idInicial;
 	private Long idFinal;
-	private Date dataEmissao;
-	private Date dataEmissaoInicial;
-	private Date dataEmissaoFinal;
+	private Date dataLancamentoInicial;
+	private Date dataLancamentoFinal;
+	private ParceiroNegocio anunciante;
 	private Boolean flagBoleto;
-	private BigDecimal valor;
-	private Empresa empresa;
+	private String autorizacaoPublicidade;
+	private String numeroPI;
 	private String arquivoUpload;
-	private List<PedidoVendaLinha> linhas;
-	private ParceiroNegocio cliente;
-	private Usuario usuario;
-    private ParcelaPedidoVenda parcela;
-    private List<ParcelaPedidoVenda> parcelas;   	
-
+	private String uTipoTransacao;
 
 	public PedidoVenda() {
 	}
@@ -38,23 +26,25 @@ public class PedidoVenda extends DocumentoAB implements Serializable {
 		this.setId(id);
 	}
 
+	public PedidoVenda(String valor, Long interfaceId) {
+
+		if (valor.equals("interfaceId")) {
+
+			this.setInterfaceId(interfaceId);
+
+		}
+	}
+
+	public PedidoVenda(Long interfaceId, Origem origem) {
+
+		this.setInterfaceId(interfaceId);
+		this.setOrigem(origem);
+
+	}
+
 	public PedidoVenda(Empresa empresa) {
 
 		this.setEmpresa(empresa);
-
-	}
-
-	public PedidoVenda(Status status) {
-
-		this.setStatus(status);
-	}
-
-	public Long getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Long serial) {
-		this.serial = serial;
 	}
 
 	public Long getSerialInicial() {
@@ -89,28 +79,12 @@ public class PedidoVenda extends DocumentoAB implements Serializable {
 		this.idFinal = idFinal;
 	}
 
-	public Date getDataEmissao() {
-		return dataEmissao;
+	public ParceiroNegocio getAnunciante() {
+		return anunciante;
 	}
 
-	public void setDataEmissao(Date dataEmissao) {
-		this.dataEmissao = dataEmissao;
-	}
-
-	public Date getDataEmissaoInicial() {
-		return dataEmissaoInicial;
-	}
-
-	public void setDataEmissaoInicial(Date dataEmissaoInicial) {
-		this.dataEmissaoInicial = dataEmissaoInicial;
-	}
-
-	public Date getDataEmissaoFinal() {
-		return dataEmissaoFinal;
-	}
-
-	public void setDataEmissaoFinal(Date dataEmissaoFinal) {
-		this.dataEmissaoFinal = dataEmissaoFinal;
+	public void setAnunciante(ParceiroNegocio anunciante) {
+		this.anunciante = anunciante;
 	}
 
 	public Boolean getFlagBoleto() {
@@ -121,20 +95,20 @@ public class PedidoVenda extends DocumentoAB implements Serializable {
 		this.flagBoleto = flagBoleto;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public String getAutorizacaoPublicidade() {
+		return autorizacaoPublicidade;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setAutorizacaoPublicidade(String autorizacaoPublicidade) {
+		this.autorizacaoPublicidade = autorizacaoPublicidade;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public String getNumeroPI() {
+		return numeroPI;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setNumeroPI(String numeroPI) {
+		this.numeroPI = numeroPI;
 	}
 
 	public String getArquivoUpload() {
@@ -145,52 +119,28 @@ public class PedidoVenda extends DocumentoAB implements Serializable {
 		this.arquivoUpload = arquivoUpload;
 	}
 
-	public Long getInterfaceId() {
-		return interfaceId;
+	public String getUTipoTransacao() {
+		return uTipoTransacao;
 	}
 
-	public void setInterfaceId(Long interfaceId) {
-		this.interfaceId = interfaceId;
+	public void setUTipoTransacao(String uTipoTransacao) {
+		this.uTipoTransacao = uTipoTransacao;
 	}
 
-	public ParceiroNegocio getCliente() {
-		return cliente;
+	public Date getDataLancamentoInicial() {
+		return dataLancamentoInicial;
 	}
 
-	public void setCliente(ParceiroNegocio cliente) {
-		this.cliente = cliente;
+	public void setDataLancamentoInicial(Date dataLancamentoInicial) {
+		this.dataLancamentoInicial = dataLancamentoInicial;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Date getDataLancamentoFinal() {
+		return dataLancamentoFinal;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<PedidoVendaLinha> getLinhas() {
-		return linhas;
-	}
-
-	public void setLinhas(List<PedidoVendaLinha> linhas) {
-		this.linhas = linhas;
-	}
-
-	public ParcelaPedidoVenda getParcela() {
-		return parcela;
-	}
-
-	public void setParcela(ParcelaPedidoVenda parcela) {
-		this.parcela = parcela;
-	}
-
-	public List<ParcelaPedidoVenda> getParcelas() {
-		return parcelas;
-	}
-
-	public void setParcelas(List<ParcelaPedidoVenda> parcelas) {
-		this.parcelas = parcelas;
+	public void setDataLancamentoFinal(Date dataLancamentoFinal) {
+		this.dataLancamentoFinal = dataLancamentoFinal;
 	}
 
 }

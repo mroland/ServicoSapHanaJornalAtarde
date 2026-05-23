@@ -49,6 +49,12 @@ public class PedidoVendaLinhaModel implements Serializable {
 	@SerializedName("TaxOnly")
 	private String flagImposto;
 
+	@SerializedName("WarehouseCode")
+	private String depositoId;
+
+	@SerializedName("CostingCode")
+	private String unidadeNegocioId;
+
 	public Integer getNumeroLinha() {
 		return numeroLinha;
 	}
@@ -159,6 +165,22 @@ public class PedidoVendaLinhaModel implements Serializable {
 
 	public void setFlagImposto(String flagImposto) {
 		this.flagImposto = flagImposto;
+	}
+
+	public String getDepositoId() {
+		return depositoId;
+	}
+
+	public void setDepositoId(String depositoId) {
+		this.depositoId = depositoId;
+	}
+
+	public String getUnidadeNegocioId() {
+		return unidadeNegocioId;
+	}
+
+	public void setUnidadeNegocioId(String unidadeNegocioId) {
+		this.unidadeNegocioId = unidadeNegocioId;
 	}
 
 }

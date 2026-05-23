@@ -31,6 +31,9 @@ public abstract class DocumentoAB implements Serializable {
 	private String atualizadoPor;
 	private Empresa empresa;
 	private Filial filial;
+	private Boolean flagNotaFiscalSaida;
+	private String arquivoRemessa;
+	private String arquivoRemessaSap;
 
 	public Date getDataDocumento() {
 		return dataDocumento;
@@ -165,5 +168,31 @@ public abstract class DocumentoAB implements Serializable {
 	public void setFilial(Filial filial) {
 		this.filial = filial;
 	}
+
+	public Boolean getFlagNotaFiscalSaida() {
+		return flagNotaFiscalSaida;
+	}
+
+	public void setFlagNotaFiscalSaida(Boolean flagNotaFiscalSaida) {
+		this.flagNotaFiscalSaida = flagNotaFiscalSaida;
+	}
+
+	public String getArquivoRemessa() {
+		return arquivoRemessa;
+	}
+
+	public void setArquivoRemessa(String arquivoRemessa) {
+		this.arquivoRemessa = arquivoRemessa;
+	}
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
+	}
+	
+	
 
 }

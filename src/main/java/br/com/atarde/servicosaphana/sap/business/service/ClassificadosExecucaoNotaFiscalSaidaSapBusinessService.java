@@ -137,6 +137,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaSapBusinessService {
 		nffJson = this.inserir(nffJson, this.conexaoSessaoHanaModel);
 
 		model.setId(nffJson.getId());
+		
+		model.setArquivoRemessaSap(nffJson.getArquivoRemessaSap());
 
 		return model;
 
@@ -145,8 +147,9 @@ public class ClassificadosExecucaoNotaFiscalSaidaSapBusinessService {
 	private ClassificadosExecucaoNotaFiscalSaidaModel inserir(ClassificadosExecucaoNotaFiscalSaidaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
 		//System.out.println(new Gson().toJson(model));
+		String arquivoRemessaSap = new Gson().toJson(model);
 
-		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Invoices").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
+		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Invoices").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(arquivoRemessaSap, MediaType.APPLICATION_JSON_TYPE));
 
 		ClassificadosExecucaoNotaFiscalSaidaModel resposta;
 
@@ -157,6 +160,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaSapBusinessService {
 			//System.out.println(json);
 
 			resposta = new Gson().fromJson(json, ClassificadosExecucaoNotaFiscalSaidaModel.class);
+			
+			resposta.setArquivoRemessaSap(arquivoRemessaSap);
 
 		} else {
 

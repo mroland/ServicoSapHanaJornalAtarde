@@ -1,6 +1,7 @@
 package br.com.atarde.servicosaphana.sap.hana.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +18,7 @@ public class PedidoVendaModel implements Serializable {
 	private String tipoDocumento = "dDocument_Items";
 
 	@SerializedName("DocObjectCode")
-	private String tipoObjeto = "oOrders"; //"oInvoices";
+	private String tipoObjeto = "oOrders"; // "oInvoices";
 
 	@SerializedName("DocDate")
 	private String dataLancamento;
@@ -55,8 +56,13 @@ public class PedidoVendaModel implements Serializable {
 	@SerializedName("Incoterms")
 	private String incoterms;
 
-	@SerializedName("U_Origem")
+	@SerializedName("U_ATRD_Origem")
 	private Integer uOrigem;
+
+	@SerializedName("DocumentReferences")
+	private List<DocumentoReferencia> referencias;
+
+	private String arquivoRemessaSap;
 
 	public Long getId() {
 		return id;
@@ -192,6 +198,22 @@ public class PedidoVendaModel implements Serializable {
 
 	public void setFilialId(Integer filialId) {
 		this.filialId = filialId;
+	}
+
+	public List<DocumentoReferencia> getReferencias() {
+		return referencias;
+	}
+
+	public void setReferencias(List<DocumentoReferencia> referencias) {
+		this.referencias = referencias;
+	}
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
 	}
 
 }

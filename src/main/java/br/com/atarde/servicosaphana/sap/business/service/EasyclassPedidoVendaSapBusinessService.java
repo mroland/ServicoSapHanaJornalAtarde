@@ -63,14 +63,21 @@ public class EasyclassPedidoVendaSapBusinessService {
 
 		nffJson.setDataDocumento(TSParseUtil.dateToString(model.getDataDocumento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
+		//e setar sempre a data de vencimento(data de entrega) a data de documento
+		nffJson.setDataVencimento(nffJson.getDataDocumento());
+
 		if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId())) {
 
 			// pegar a condicao de pagamento
 			nffJson.setCondicaoPagamentoId(Integer.valueOf(model.getCondicaoPagamento().getId().toString()));
-
+			
 		} else {
-
-			nffJson.setDataVencimento(TSParseUtil.dateToString(model.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+			
+			//quando tiver data de vencimento colocar no comments para pedido de vendas apenas
+			
+			nffJson.setObservacao("Vencimento: " + TSParseUtil.dateToString(model.getDataVencimento(), TSDateUtil.DD_MM_YYYY));
+			
+			//nffJson.setDataVencimento(TSParseUtil.dateToString(model.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
 		}
 
@@ -90,14 +97,11 @@ public class EasyclassPedidoVendaSapBusinessService {
 
 		}
 
-
-		//nffJson.setObservacao(model.getObservacao());
-
 		//nffJson.setIncoterms("0");
 
 		nffJson.setUOrigem(model.getOrigem().getId().intValue());
 
-		nffJson.setUAnuncianteId(model.getCliente().getId());
+		nffJson.setUAnuncianteId(model.getAnunciante().getId());
 
 		nffJson.setUEnderecoEntrega(model.getUEnderecoEntrega());
 
@@ -131,20 +135,20 @@ public class EasyclassPedidoVendaSapBusinessService {
 
 		}
 
-		if (!TSUtil.isEmpty(model.getCliente().getEndereco().getLogradouro())) {
+		if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getLogradouro())) {
 
 			String endereco;
 
-			endereco = model.getCliente().getEndereco().getLogradouro().concat(" ".concat(model.getCliente().getEndereco().getNumero()));
+			endereco = model.getAnunciante().getEndereco().getLogradouro().concat(" ".concat(model.getAnunciante().getEndereco().getNumero()));
 
-			if (!TSUtil.isEmpty(model.getCliente().getEndereco().getComplemento())) {
+			if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getComplemento())) {
 
-				endereco.concat(" ".concat(model.getCliente().getEndereco().getComplemento()));
+				endereco.concat(" ".concat(model.getAnunciante().getEndereco().getComplemento()));
 			}
 
-			if (!TSUtil.isEmpty(model.getCliente().getEndereco().getBairro())) {
+			if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getBairro())) {
 
-				endereco.concat(" ".concat(model.getCliente().getEndereco().getBairro()));
+				endereco.concat(" ".concat(model.getAnunciante().getEndereco().getBairro()));
 			}
 
 			endereco = TSStringUtil.rightPad(endereco, 254, " ").substring(0, 253).trim();
@@ -153,39 +157,39 @@ public class EasyclassPedidoVendaSapBusinessService {
 
 		}
 
-		if (!TSUtil.isEmpty(model.getCliente().getEndereco().getCep())) {
+		if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getCep())) {
 
-			nffJson.setUAnuncianteCEP(model.getCliente().getEndereco().getCep());
-
-		}
-
-		if (!TSUtil.isEmpty(model.getCliente().getEndereco().getCidade())) {
-
-			nffJson.setUAnuncianteCidade(model.getCliente().getEndereco().getCidade());
+			nffJson.setUAnuncianteCEP(model.getAnunciante().getEndereco().getCep());
 
 		}
 
-		if (!TSUtil.isEmpty(model.getCliente().getEndereco().getEstado())) {
+		if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getCidade())) {
 
-			nffJson.setUAnuncianteEstado(model.getCliente().getEndereco().getEstado().getId());
-
-		}
-
-		if (!TSUtil.isEmpty(model.getCliente().getIdentificadorFiscal().getIdentificador())) {
-
-			nffJson.setUAnuncianteIdentificador(model.getCliente().getIdentificadorFiscal().getIdentificador());
+			nffJson.setUAnuncianteCidade(model.getAnunciante().getEndereco().getCidade());
 
 		}
 
-		if (!TSUtil.isEmpty(model.getCliente().getNome())) {
+		if (!TSUtil.isEmpty(model.getAnunciante().getEndereco().getEstado())) {
 
-			nffJson.setUAnuncianteNome(model.getCliente().getNome());
+			nffJson.setUAnuncianteEstado(model.getAnunciante().getEndereco().getEstado().getId());
 
 		}
 
-		if (!TSUtil.isEmpty(model.getCliente().getIdentificadorFiscal().getInscricaoEstadual())) {
+		if (!TSUtil.isEmpty(model.getAnunciante().getIdentificadorFiscal().getIdentificador())) {
 
-			nffJson.setUAnuncianteInscricaoEstadual(model.getCliente().getIdentificadorFiscal().getInscricaoEstadual());
+			nffJson.setUAnuncianteIdentificador(model.getAnunciante().getIdentificadorFiscal().getIdentificador());
+
+		}
+
+		if (!TSUtil.isEmpty(model.getAnunciante().getNome())) {
+
+			nffJson.setUAnuncianteNome(model.getAnunciante().getNome());
+
+		}
+
+		if (!TSUtil.isEmpty(model.getAnunciante().getIdentificadorFiscal().getInscricaoEstadual())) {
+
+			nffJson.setUAnuncianteInscricaoEstadual(model.getAnunciante().getIdentificadorFiscal().getInscricaoEstadual());
 
 		}
 
@@ -281,6 +285,16 @@ public class EasyclassPedidoVendaSapBusinessService {
 			linhaJson.setUTotalCmXCol(linha.getUTotalCmXCol().doubleValue());
 
 			linhaJson.setUValorUnitario(linha.getUValorUnitario().doubleValue());
+			
+			linhaJson.setDepositoId(linha.getEstoque().getId());
+			
+			linhaJson.setUnidadeNegocioId(linha.getUnidadeNegocio().getId());
+			
+			if (!TSUtil.isEmpty(linha.getContaContabil().getId())) {
+
+				linhaJson.setContaContabilId(linha.getContaContabil().getId());
+
+			}
 
 			nffJson.getLinhas().add(linhaJson);
 
@@ -289,6 +303,8 @@ public class EasyclassPedidoVendaSapBusinessService {
 		nffJson = this.inserir(nffJson, this.conexaoSessaoHanaModel);
 
 		model.setId(nffJson.getId());
+		
+		model.setArquivoRemessaSap(nffJson.getArquivoRemessaSap());
 
 		return model;
 
@@ -297,8 +313,9 @@ public class EasyclassPedidoVendaSapBusinessService {
 	private EasyclassPedidoVendaModel inserir(EasyclassPedidoVendaModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
 		//System.out.println(new Gson().toJson(model));
+		String arquivoRemessaSap = new Gson().toJson(model);
 
-		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Orders").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
+		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/Orders").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(arquivoRemessaSap, MediaType.APPLICATION_JSON_TYPE));
 
 		EasyclassPedidoVendaModel resposta;
 
@@ -309,6 +326,8 @@ public class EasyclassPedidoVendaSapBusinessService {
 			//System.out.println(json);
 
 			resposta = new Gson().fromJson(json, EasyclassPedidoVendaModel.class);
+			
+			resposta.setArquivoRemessaSap(arquivoRemessaSap);
 
 		} else {
 

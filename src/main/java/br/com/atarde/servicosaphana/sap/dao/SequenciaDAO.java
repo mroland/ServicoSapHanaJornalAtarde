@@ -26,5 +26,15 @@ public class SequenciaDAO {
 		return (Sequencia) broker.getObjectBean(Sequencia.class, "id", "filial.id", "idExterno", "tipoDocumento");
 		
 	}
+	
+	public Sequencia obterInterface(Filial filial, Boolean flagNfe) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf(Constantes.JNDI_SABWEB);
+
+		broker.setSQL("SELECT ID, FILIAL_ID, ID_EXTERNO FROM SEQUENCIA S WHERE FILIAL_ID = ? AND FLAG_NFE = ?", filial.getId(), flagNfe);
+
+		return (Sequencia) broker.getObjectBean(Sequencia.class, "id", "filial.id", "idExterno");
+		
+	}
 
 }

@@ -12,14 +12,16 @@ import java.io.Serializable;
  * @author mroland
  */
 @SuppressWarnings("serial")
-public class HistoricoEasyclassPedidoVendaLinha extends EasyclassPedidoVendaLinha implements Serializable {
+public class HistoricoEasyclassPedidoVendaLinha extends EasyclassPedidoVendaLinha implements Serializable{
 
-	public HistoricoEasyclassPedidoVendaLinha(EasyclassPedidoVenda nota) {
-		this.setPedidoVenda(getPedidoVenda());
-	}
+    public HistoricoEasyclassPedidoVendaLinha(EasyclassPedidoVenda pedidoVenda) {
+        this.setPedidoVenda(pedidoVenda);
+    }
 
-	public HistoricoEasyclassPedidoVendaLinha() {
+    public HistoricoEasyclassPedidoVendaLinha() {
 
-	}
+    }
+
+
 
 }

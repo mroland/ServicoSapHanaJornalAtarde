@@ -10,85 +10,85 @@ public class EasyclassPedidoVendaModel extends PedidoVendaModel {
 	@SerializedName("DocumentLines")
 	private List<EasyclassPedidoVendaLinhaModel> linhas;
 
-	@SerializedName("U_EnderecoEntrega")
+	@SerializedName("U_ATRD_EnderecoEntrega")
 	private String uEnderecoEntrega;
 
-	@SerializedName("U_AnuncianteId")
+	@SerializedName("U_ATRD_AnuncianteId")
 	private String uAnuncianteId;
 
-	@SerializedName("U_NumeroPI")
+	@SerializedName("U_ATRD_NumeroPI")
 	private String uNumeroPI;
 
-	@SerializedName("U_ComissaoAgencia")
+	@SerializedName("U_ATRD_ComissaoAgencia")
 	private Double uComissaoAgencia;
 
-	@SerializedName("U_DtPublicacaoFinal")
+	@SerializedName("U_ATRD_DtPublicacaoFinal")
 	private String uDataPublicacaoFinal;
 
-	@SerializedName("U_DiasPublicacao")
+	@SerializedName("U_ATRD_DiasPublicacao")
 	private String uDiasPublicacao;
 
-	@SerializedName("U_ValorBruto")
+	@SerializedName("U_ATRD_ValorBruto")
 	private Double uValorBruto;
 
-	@SerializedName("U_TituloPublicacao")
+	@SerializedName("U_ATRD_TituloPublicacao")
 	private String uTituloPublicacao;
 
-	@SerializedName("U_AutPublicidade")
+	@SerializedName("U_ATRD_AutPublicidade")
 	private String uAutorizacaoPublicidade;
 
-	@SerializedName("U_TipoTransacao")
+	@SerializedName("U_ATRD_TipoTransacao")
 	private String uTipoTransacao;
 
-	@SerializedName("U_AnuncianteEndereco")
+	@SerializedName("U_ATRD_AnuncianteEndereco")
 	private String uAnuncianteEndereco;
 
-	@SerializedName("U_AnuncianteCEP")
+	@SerializedName("U_ATRD_AnuncianteCEP")
 	private String uAnuncianteCEP;
 
-	@SerializedName("U_AnuncianteCidade")
+	@SerializedName("U_ATRD_AnuncianteCidade")
 	private String uAnuncianteCidade;
 
-	@SerializedName("U_AnuncianteEstado")
+	@SerializedName("U_ATRD_AnuncianteEstado")
 	private String uAnuncianteEstado;
 
-	@SerializedName("U_AnuncianteIdent")
+	@SerializedName("U_ATRD_AnuncianteIdent")
 	private String uAnuncianteIdentificador;
 
-	@SerializedName("U_AnuncianteNome")
+	@SerializedName("U_ATRD_AnuncianteNome")
 	private String uAnuncianteNome;
 
-	@SerializedName("U_AnuncianteInscEst")
+	@SerializedName("U_ATRD_AnuncianteInscEst")
 	private String uAnuncianteInscricaoEstadual;
 
-	@SerializedName("U_Periodo")
+	@SerializedName("U_ATRD_Periodo")
 	private String uPeriodo;
 
-	@SerializedName("U_Formato")
+	@SerializedName("U_ATRD_Formato")
 	private String uFormato;
 
-	@SerializedName("U_PageViews")
+	@SerializedName("U_ATRD_PageViews")
 	private Integer uPageViews;
 
-	@SerializedName("U_EntregaVendedor")
+	@SerializedName("U_ATRD_EntregaVendedor")
 	private String uEntregaVendedor;
 
-	@SerializedName("U_Produto")
+	@SerializedName("U_ATRD_Produto")
 	private String uProduto;
 
-	@SerializedName("U_Campanha")
+	@SerializedName("U_ATRD_Campanha")
 	private String uCampanha;
 
-	@SerializedName("U_PostoId")
+	@SerializedName("U_ATRD_PostoId")
 	private String uPostoId;
 
-	@SerializedName("U_DtPublicacaoIni")
+	@SerializedName("U_ATRD_DtPublicacaoIni")
 	private String uDataPublicacaoInicial;
 
-	@SerializedName("U_Observacao")
+	@SerializedName("U_ATRD_Observacao")
 	private String uObservacao;
 
-	@SerializedName("U_Permuta")
+	@SerializedName("U_ATRD_Permuta")
 	private String uPermuta;
 
 	public List<EasyclassPedidoVendaLinhaModel> getLinhas() {

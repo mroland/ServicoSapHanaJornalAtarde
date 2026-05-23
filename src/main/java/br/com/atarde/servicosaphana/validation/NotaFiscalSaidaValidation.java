@@ -5,8 +5,10 @@ import java.math.RoundingMode;
 import java.util.Date;
 
 import br.com.atarde.servicosaphana.dao.EmpresaDAO;
+import br.com.atarde.servicosaphana.model.EasyclassPedidoVenda;
 import br.com.atarde.servicosaphana.sap.dao.CondicaoPagamentoDAO;
 import br.com.atarde.servicosaphana.sap.dao.NotaFiscalSaidaDAO;
+import br.com.atarde.servicosaphana.sap.dao.PedidoVendaDAO;
 import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
 import br.com.atarde.servicosaphana.sap.model.CondicaoPagamento;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
@@ -71,20 +73,20 @@ public class NotaFiscalSaidaValidation extends DocumentoValidationAB {
 	private String validaNFF(NotaFiscalSaidaAB model) {
 
 		StringBuilder retorno = new StringBuilder();
-		
-		if(TSUtil.isEmpty(model.getIdExterno())){
-			
+
+		if (TSUtil.isEmpty(model.getIdExterno())) {
+
 			retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_ID_EXTERNO + Constantes.CAMPO_OBRIGATORIO + "\n");
-			
-		}else{
-			
-			if (!TSUtil.isEmpty(new NotaFiscalSaidaDAO().obterIdExterno(model))) {
+
+		} else {
+
+			if (!TSUtil.isEmpty(new NotaFiscalSaidaDAO().obterIdExterno(model)) || this.isExistePedidoVenda(model)) {
 
 				retorno.append(Constantes.DOCUMENTOEXPORTADO + "\n");
 
 			} else {
 
-				if (TSUtil.isEmpty(model.getValor()) || model.getValor().compareTo(BigDecimal.ZERO)!=1 ) {
+				if (TSUtil.isEmpty(model.getValor()) || model.getValor().compareTo(BigDecimal.ZERO) != 1) {
 
 					retorno.append(Constantes.OBJETO_OBRIGATORIO_DOCUMENTOAB_VALOR + Constantes.CAMPO_OBRIGATORIO + "\n");
 
@@ -99,67 +101,65 @@ public class NotaFiscalSaidaValidation extends DocumentoValidationAB {
 					} else {
 
 						model.getCondicaoPagamento().setEmpresa(model.getEmpresa());
-						
+
 						CondicaoPagamento cond = new CondicaoPagamentoDAO().obter(model.getCondicaoPagamento());
 
 						if (TSUtil.isEmpty(cond)) {
 
 							retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_CONDICAO_PAGAMENTO_DATA_VENCIMENTO + Constantes.CAMPO_OBRIGATORIO + "\n");
 
-						}else{
-							
-							if(!TSUtil.isEmpty(model.getParcelas())){
-								
-								if(TSUtil.isEmpty(cond.getQuantidadeParcelas())){
-									
+						} else {
+
+							if (!TSUtil.isEmpty(model.getParcelas())) {
+
+								if (TSUtil.isEmpty(cond.getQuantidadeParcelas())) {
+
 									model.setParcelas(null);
-									
-								}else{
-									
-									if(model.getParcelas().size()!=cond.getQuantidadeParcelas()){
-										
+
+								} else {
+
+									if (model.getParcelas().size() != cond.getQuantidadeParcelas()) {
+
 										retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_QTD_PARCELAS + Constantes.CAMPO_OBRIGATORIO + "\n");
-										
-									}else{
-										
+
+									} else {
+
 										BigDecimal valor = BigDecimal.ZERO;
-										
+
 										for (ParcelaAB p : model.getParcelas()) {
-											
-											if(TSUtil.isEmpty(p.getDataVencimento()) || (!TSUtil.isEmpty(model.getDataVencimento()) && model.getDataVencimento().before(new Date()) )){
-												
+
+											if (TSUtil.isEmpty(p.getDataVencimento()) || (!TSUtil.isEmpty(model.getDataVencimento()) && model.getDataVencimento().before(new Date()))) {
+
 												retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_PARCELA_DATA_VENCIMENTO + Constantes.CAMPO_OBRIGATORIO + "\n");
-												
+
 											}
-											
-											if(TSUtil.isEmpty(p.getValor()) || (!TSUtil.isEmpty(p.getValor()) && p.getValor().compareTo(BigDecimal.ZERO)<=0)){
-												
+
+											if (TSUtil.isEmpty(p.getValor()) || (!TSUtil.isEmpty(p.getValor()) && p.getValor().compareTo(BigDecimal.ZERO) <= 0)) {
+
 												retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_PARCELA_VALOR + Constantes.CAMPO_OBRIGATORIO + "\n");
-												
-											}else{
-												
+
+											} else {
+
 												valor = valor.add(p.getValor());
-												
+
 											}
-											
+
 										}
-										
-										
-										if(model.getValor().setScale(2,RoundingMode.HALF_UP).compareTo(valor.setScale(2,RoundingMode.HALF_UP))!=0){
-											
+
+										if (model.getValor().setScale(2, RoundingMode.HALF_UP).compareTo(valor.setScale(2, RoundingMode.HALF_UP)) != 0) {
+
 											retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_VALOR_PARCELAS + Constantes.CAMPO_OBRIGATORIO + "\n");
-											
+
 										}
-										
+
 									}
-									
+
 								}
-								
 
 							}
-							
+
 						}
-						
+
 					}
 
 				} else {
@@ -190,13 +190,29 @@ public class NotaFiscalSaidaValidation extends DocumentoValidationAB {
 
 				}
 
-			}			
-			
+			}
+
 		}
 
 		return retorno.toString();
 
 	}
 
+	private boolean isExistePedidoVenda(NotaFiscalSaidaAB model) {
+
+		boolean retorno = false;
+
+		EasyclassPedidoVenda saida = new EasyclassPedidoVenda(model.getEmpresa());
+		saida.setOrigem(model.getOrigem());
+		saida.setIdExterno(model.getIdExterno());
+
+		if (!TSUtil.isEmpty(new PedidoVendaDAO().obterIdExterno(saida))) {
+
+			retorno = true;
+
+		}
+
+		return retorno;
+	}
 
 }

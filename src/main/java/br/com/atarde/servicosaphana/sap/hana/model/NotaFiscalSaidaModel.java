@@ -62,6 +62,8 @@ public class NotaFiscalSaidaModel implements Serializable {
 	@SerializedName("DocumentReferences")
 	private List<DocumentoReferencia> referencias;
 
+	private String arquivoRemessaSap;
+
 	public Long getId() {
 		return id;
 	}
@@ -204,6 +206,14 @@ public class NotaFiscalSaidaModel implements Serializable {
 
 	public void setReferencias(List<DocumentoReferencia> referencias) {
 		this.referencias = referencias;
+	}
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
 	}
 
 }
