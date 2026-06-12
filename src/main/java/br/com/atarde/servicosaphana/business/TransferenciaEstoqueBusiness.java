@@ -218,6 +218,8 @@ public class TransferenciaEstoqueBusiness {
 		nota.setObservacaoDiario(model.getObservacaoDiario());
 		
 		nota.setArquivoRemessa(model.getArquivoRemessa());
+		
+		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
 
 		return nota;
 

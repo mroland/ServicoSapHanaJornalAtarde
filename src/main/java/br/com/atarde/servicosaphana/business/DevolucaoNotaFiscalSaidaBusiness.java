@@ -244,6 +244,8 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 			nota.getTransferenciaEstoqueReferencia().setDataAtualizacao(nota.getDataAtualizacao());
 
 		}
+		
+		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
 
 		return nota;
 

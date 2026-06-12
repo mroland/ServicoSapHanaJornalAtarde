@@ -51,6 +51,8 @@ public class TabelaUsuarioMovimentacaoSapBusinessService {
 		}
 
 		nffJson = this.inserir(nffJson, this.conexaoSessaoHanaModel);
+		
+		model.setArquivoRemessaSap(nffJson.getArquivoRemessaSap());
 
 		return model;
 
@@ -59,8 +61,10 @@ public class TabelaUsuarioMovimentacaoSapBusinessService {
 	private TabelaUsuarioMovimentacaoModel inserir(TabelaUsuarioMovimentacaoModel model, ConexaoSessaoHanaModel conexaoSessaoHanaModel) throws Exception {
 
 		// System.out.println(new Gson().toJson(model));
+		
+		String arquivoRemessaSap = new Gson().toJson(model);
 
-		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/U_ATRD_MOVVDA").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(new Gson().toJson(model), MediaType.APPLICATION_JSON_TYPE));
+		Response response = Utilitarios.createClient().target(Utilitarios.getUrlAcesso(this.empresa.getUrlSapHana()) + "/U_ATRD_MOVVDA").request(MediaType.APPLICATION_JSON.concat("; charset=UTF-8")).header(HttpHeaders.COOKIE, "B1SESSION=" + conexaoSessaoHanaModel.getSessaoId()).post(Entity.entity(arquivoRemessaSap, MediaType.APPLICATION_JSON_TYPE));
 
 		TabelaUsuarioMovimentacaoModel resposta;
 
@@ -71,6 +75,8 @@ public class TabelaUsuarioMovimentacaoSapBusinessService {
 			// System.out.println(json);
 
 			resposta = new Gson().fromJson(json, TabelaUsuarioMovimentacaoModel.class);
+			
+			resposta.setArquivoRemessaSap(arquivoRemessaSap);
 
 		} else {
 

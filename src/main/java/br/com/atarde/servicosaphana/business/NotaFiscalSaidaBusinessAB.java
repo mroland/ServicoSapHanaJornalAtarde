@@ -1,20 +1,13 @@
 package br.com.atarde.servicosaphana.business;
 
-import br.com.atarde.servicosaphana.model.AssinaturaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.VendaAvulsaNotaFiscalSaida;
-import br.com.atarde.servicosaphana.sap.dao.ItemDAO;
-import br.com.atarde.servicosaphana.sap.dao.ParceiroNegocioDAO;
 import br.com.atarde.servicosaphana.sap.dao.SequenciaDAO;
-import br.com.atarde.servicosaphana.sap.model.DevolucaoNotaFiscalSaida;
-import br.com.atarde.servicosaphana.sap.model.Item;
 import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
-import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
 import br.com.atarde.servicosaphana.sap.model.Sequencia;
-import br.com.atarde.servicosaphana.util.Constantes;
 import br.com.topsys.util.TSUtil;
 
 public abstract class NotaFiscalSaidaBusinessAB {
 
+	/*
 	public void obterSequenciaDefaultParceiroNegocio(AssinaturaNotaFiscalSaida model) throws Exception {
 
 		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
@@ -90,7 +83,7 @@ public abstract class NotaFiscalSaidaBusinessAB {
 		model.getSequencia().setId(sequencia.getIdExterno());
 
 	}
-
+*/
 	public void obterSequenciaDefaultParceiroNegocio(NotaFiscalSaidaAB model) throws Exception {
 
 		Sequencia sequencia = new SequenciaDAO().obterInterface(model.getFilial(), Boolean.TRUE);
@@ -104,7 +97,7 @@ public abstract class NotaFiscalSaidaBusinessAB {
 		model.getSequencia().setId(sequencia.getIdExterno());
 
 	}
-
+/*
 	public void obterSequenciaDefaultParceiroNegocio(DevolucaoNotaFiscalSaida model) throws Exception {
 
 		ParceiroNegocio parceiro = new ParceiroNegocioDAO().obter(model.getCliente());
@@ -142,4 +135,5 @@ public abstract class NotaFiscalSaidaBusinessAB {
 		model.getSequencia().setId(sequencia.getIdExterno());
 
 	}
+	*/
 }

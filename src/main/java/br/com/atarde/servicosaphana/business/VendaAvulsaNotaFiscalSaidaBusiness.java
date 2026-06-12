@@ -280,6 +280,8 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
 
 		nota.setSapDocumentoId(model.getSapDocumentoId());
+		
+		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
 
 		return nota;
 

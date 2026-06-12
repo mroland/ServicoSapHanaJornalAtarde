@@ -28,6 +28,8 @@ public class TabelaUsuarioMovimentacaoModel implements Serializable {
 	@SerializedName("U_ItemCode")
 	private String itemId;
 
+	private String arquivoRemessaSap;
+
 	public Long getId() {
 		return id;
 	}
@@ -83,7 +85,13 @@ public class TabelaUsuarioMovimentacaoModel implements Serializable {
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
-	
-	
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
+	}
 
 }

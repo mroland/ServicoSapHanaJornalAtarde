@@ -47,6 +47,8 @@ public class TransferenciaEstoqueModel implements Serializable {
 	@SerializedName("StockTransferLines")
 	private List<TransferenciaEstoqueLinhaModel> linhas;
 
+	private String arquivoRemessaSap;
+
 	public Long getId() {
 		return id;
 	}
@@ -149,6 +151,14 @@ public class TransferenciaEstoqueModel implements Serializable {
 
 	public void setLinhas(List<TransferenciaEstoqueLinhaModel> linhas) {
 		this.linhas = linhas;
+	}
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
 	}
 
 }

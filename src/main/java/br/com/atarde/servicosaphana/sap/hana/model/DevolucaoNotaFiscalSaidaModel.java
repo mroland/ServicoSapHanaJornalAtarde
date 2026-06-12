@@ -65,6 +65,8 @@ public class DevolucaoNotaFiscalSaidaModel implements Serializable {
 	@SerializedName("DocumentLines")
 	private List<DevolucaoNotaFiscalSaidaLinhaModel> linhas;
 
+	private String arquivoRemessaSap;
+
 	public Long getId() {
 		return id;
 	}
@@ -215,6 +217,14 @@ public class DevolucaoNotaFiscalSaidaModel implements Serializable {
 
 	public void setLinhas(List<DevolucaoNotaFiscalSaidaLinhaModel> linhas) {
 		this.linhas = linhas;
+	}
+
+	public String getArquivoRemessaSap() {
+		return arquivoRemessaSap;
+	}
+
+	public void setArquivoRemessaSap(String arquivoRemessaSap) {
+		this.arquivoRemessaSap = arquivoRemessaSap;
 	}
 
 }
