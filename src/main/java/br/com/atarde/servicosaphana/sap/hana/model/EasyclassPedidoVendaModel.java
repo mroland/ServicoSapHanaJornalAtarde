@@ -90,6 +90,9 @@ public class EasyclassPedidoVendaModel extends PedidoVendaModel {
 
 	@SerializedName("U_ATRD_Permuta")
 	private String uPermuta;
+	
+	@SerializedName("U_ATRD_Intermediador")
+	private String uIntermediador;	
 
 	public List<EasyclassPedidoVendaLinhaModel> getLinhas() {
 		return linhas;
@@ -314,5 +317,13 @@ public class EasyclassPedidoVendaModel extends PedidoVendaModel {
 	public void setUPermuta(String uPermuta) {
 		this.uPermuta = uPermuta;
 	}
+	
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
+	}	
 
 }

@@ -231,7 +231,13 @@ public class RadioPedidoVendaSapBusinessService {
 			nffJson.setUPermuta(model.getUPermuta().toString());
 
 		}
+		
+		if(!TSUtil.isEmpty(model.getUIntermediador())) {
+			
+			nffJson.setUIntermediador(model.getUIntermediador());
 
+		}
+		
 		// linhas do titulo
 
 		if (TSUtil.isEmpty(nffJson.getLinhas())) {

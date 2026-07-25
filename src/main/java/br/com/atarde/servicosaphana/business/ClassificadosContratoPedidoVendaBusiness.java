@@ -278,6 +278,8 @@ public class ClassificadosContratoPedidoVendaBusiness extends PedidoVendaBusines
 		nota.setFlagNotaFiscalSaida(model.getFlagNotaFiscalSaida());
 		
 		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
+		
+		nota.setUIntermediador(model.getUIntermediador());
 
 		return nota;
 

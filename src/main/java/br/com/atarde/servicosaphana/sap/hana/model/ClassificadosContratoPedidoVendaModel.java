@@ -63,6 +63,9 @@ public class ClassificadosContratoPedidoVendaModel extends PedidoVendaModel {
 
 	@SerializedName("U_ATRD_DtPublicacaoIni")
 	private String uDataPublicacaoInicial;
+	
+	@SerializedName("U_ATRD_Intermediador")
+	private String uIntermediador;	
 
 	public List<ClassificadosContratoPedidoVendaLinhaModel> getLinhas() {
 		return linhas;
@@ -215,5 +218,13 @@ public class ClassificadosContratoPedidoVendaModel extends PedidoVendaModel {
 	public void setUDataPublicacaoInicial(String uDataPublicacaoInicial) {
 		this.uDataPublicacaoInicial = uDataPublicacaoInicial;
 	}
+	
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
+	}	
 
 }

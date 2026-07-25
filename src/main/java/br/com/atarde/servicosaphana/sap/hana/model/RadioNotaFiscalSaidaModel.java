@@ -90,6 +90,9 @@ public class RadioNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 
 	@SerializedName("U_ATRD_Permuta")
 	private String uPermuta;
+	
+	@SerializedName("U_ATRD_Intermediador")
+	private String uIntermediador;	
 
 	public List<RadioNotaFiscalSaidaLinhaModel> getLinhas() {
 		return linhas;
@@ -314,5 +317,13 @@ public class RadioNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 	public void setUPermuta(String uPermuta) {
 		this.uPermuta = uPermuta;
 	}
+	
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
+	}	
 
 }

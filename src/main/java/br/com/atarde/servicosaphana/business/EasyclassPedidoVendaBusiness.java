@@ -278,6 +278,8 @@ public class EasyclassPedidoVendaBusiness extends PedidoVendaBusinessAB {
 		nota.setFlagNotaFiscalSaida(model.getFlagNotaFiscalSaida());
 		
 		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
+		
+		nota.setUIntermediador(model.getUIntermediador());
 
 		return nota;
 

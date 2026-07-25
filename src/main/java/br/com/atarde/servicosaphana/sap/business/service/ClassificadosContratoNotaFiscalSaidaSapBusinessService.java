@@ -114,6 +114,12 @@ public class ClassificadosContratoNotaFiscalSaidaSapBusinessService {
 		nffJson.setUValorBruto(model.getUValorBruto().doubleValue());
 
 		nffJson.setUTituloPublicacao(model.getUTituloPublicacao());
+		
+		if(!TSUtil.isEmpty(model.getUIntermediador())) {
+			
+			nffJson.setUIntermediador(model.getUIntermediador());
+
+		}
 
 		if (!TSUtil.isEmpty(model.getUAutorizacaoPublicidade())) {
 

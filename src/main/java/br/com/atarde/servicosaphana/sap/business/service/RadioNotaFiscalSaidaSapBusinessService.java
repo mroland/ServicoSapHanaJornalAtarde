@@ -223,6 +223,12 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 			nffJson.setUPermuta(model.getUPermuta().toString());
 
 		}
+		
+		if(!TSUtil.isEmpty(model.getUIntermediador())) {
+			
+			nffJson.setUIntermediador(model.getUIntermediador());
+
+		}
 
 		// linhas do titulo
 

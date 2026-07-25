@@ -26,6 +26,7 @@ public class RadioNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializa
 	private Date uDataPublicacaoInicial;
 	private String uObservacao;
 	private Integer uPermuta;
+	private String uIntermediador;	
 
 	public RadioNotaFiscalSaida() {
 	}
@@ -103,6 +104,14 @@ public class RadioNotaFiscalSaida extends NotaFiscalSaidaAB implements Serializa
 
 	public void setUPeriodoVeiculacao(String uPeriodoVeiculacao) {
 		this.uPeriodoVeiculacao = uPeriodoVeiculacao;
+	}
+	
+	public String getUIntermediador() {
+		return uIntermediador;
+	}
+
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
 	}
 
 	public List<RadioNotaFiscalSaidaLinha> getLinhas() {

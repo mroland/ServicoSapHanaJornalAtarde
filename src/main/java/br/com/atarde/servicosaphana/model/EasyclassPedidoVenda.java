@@ -35,6 +35,7 @@ public class EasyclassPedidoVenda extends PedidoVendaAB implements Serializable 
 	private String uPostoId;
 	private String uPermuta;
 	private String uObservacao;
+	private String uIntermediador;	
 
 	public EasyclassPedidoVenda() {
 	}
@@ -184,6 +185,14 @@ public class EasyclassPedidoVenda extends PedidoVendaAB implements Serializable 
 
 	public void setUDataPublicacaoInicial(Date uDataPublicacaoInicial) {
 		this.uDataPublicacaoInicial = uDataPublicacaoInicial;
+	}
+	
+	public String getUIntermediador() {
+		return uIntermediador;
+	}
+
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
 	}
 
 	public ParceiroNegocio getAnunciante() {

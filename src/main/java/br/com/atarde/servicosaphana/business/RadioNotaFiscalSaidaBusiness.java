@@ -269,6 +269,8 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 		nota.setFlagNotaFiscalSaida(model.getFlagNotaFiscalSaida());
 		
 		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
+		
+		nota.setUIntermediador(model.getUIntermediador());
 
 		return nota;
 

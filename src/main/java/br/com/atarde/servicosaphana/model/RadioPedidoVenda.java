@@ -26,6 +26,7 @@ public class RadioPedidoVenda extends PedidoVendaAB implements Serializable {
 	private Date uDataPublicacaoInicial;
 	private String uObservacao;
 	private Integer uPermuta;
+	private String uIntermediador;	
 
 	public RadioPedidoVenda() {
 	}
@@ -103,6 +104,14 @@ public class RadioPedidoVenda extends PedidoVendaAB implements Serializable {
 
 	public void setUPeriodoVeiculacao(String uPeriodoVeiculacao) {
 		this.uPeriodoVeiculacao = uPeriodoVeiculacao;
+	}
+	
+	public String getUIntermediador() {
+		return uIntermediador;
+	}
+
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
 	}
 
 	public List<RadioPedidoVendaLinha> getLinhas() {

@@ -33,6 +33,7 @@ public class ClassificadosContratoNotaFiscalSaida extends NotaFiscalSaidaAB impl
     private String uProduto;
     private String uCampanha;
     private String uPostoId;
+    private String uIntermediador;
     
 
     public ClassificadosContratoNotaFiscalSaida() {
@@ -175,6 +176,14 @@ public class ClassificadosContratoNotaFiscalSaida extends NotaFiscalSaidaAB impl
 
 	public void setUDataPublicacaoInicial(Date uDataPublicacaoInicial) {
 		this.uDataPublicacaoInicial = uDataPublicacaoInicial;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
+	}
+
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
 	}
 
 	public ParceiroNegocio getAnunciante() {
