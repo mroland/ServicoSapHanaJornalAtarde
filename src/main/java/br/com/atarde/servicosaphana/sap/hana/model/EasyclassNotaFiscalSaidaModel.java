@@ -93,6 +93,9 @@ public class EasyclassNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 
 	@SerializedName("U_ATRD_Permuta")
 	private String uPermuta;
+	
+	@SerializedName("U_ATRD_Intermediador")
+	private String uIntermediador;	
 
 	public List<EasyclassNotaFiscalSaidaLinhaModel> getLinhas() {
 		return linhas;
@@ -317,6 +320,14 @@ public class EasyclassNotaFiscalSaidaModel extends NotaFiscalSaidaModel {
 	public void setUPermuta(String uPermuta) {
 		this.uPermuta = uPermuta;
 	}
+	
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
+	}	
 
 	public List<EasyclassParcelaNotaFiscalSaidaModel> getParcelas() {
 		return parcelas;

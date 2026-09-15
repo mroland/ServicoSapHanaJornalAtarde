@@ -206,6 +206,8 @@ public class TabelaUsuarioMovimentacaoBusiness {
 		nota.setTipoMovimentacao(model.getTipoMovimentacao());
 		
 		nota.setItem(model.getItem());
+		
+		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
 
 		return nota;
 

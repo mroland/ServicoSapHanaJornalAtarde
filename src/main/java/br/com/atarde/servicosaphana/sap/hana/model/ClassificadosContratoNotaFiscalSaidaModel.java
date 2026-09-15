@@ -66,6 +66,9 @@ public class ClassificadosContratoNotaFiscalSaidaModel extends NotaFiscalSaidaMo
 
 	@SerializedName("U_ATRD_DtPublicacaoIni")
 	private String uDataPublicacaoInicial;
+	
+	@SerializedName("U_ATRD_Intermediador")
+	private String uIntermediador;
 
 	public List<ClassificadosContratoNotaFiscalSaidaLinhaModel> getLinhas() {
 		return linhas;
@@ -217,6 +220,14 @@ public class ClassificadosContratoNotaFiscalSaidaModel extends NotaFiscalSaidaMo
 
 	public void setUDataPublicacaoInicial(String uDataPublicacaoInicial) {
 		this.uDataPublicacaoInicial = uDataPublicacaoInicial;
+	}
+	
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
+	}
+
+	public String getUIntermediador() {
+		return uIntermediador;
 	}
 
 	public List<ClassificadosContratoParcelaNotaFiscalSaidaModel> getParcelas() {

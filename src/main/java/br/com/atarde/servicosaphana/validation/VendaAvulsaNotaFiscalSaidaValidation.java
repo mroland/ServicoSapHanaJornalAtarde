@@ -190,7 +190,7 @@ public class VendaAvulsaNotaFiscalSaidaValidation extends NotaFiscalSaidaValidat
 
 		StringBuilder retorno = new StringBuilder();
 
-		retorno.append(super.validaLinhaNFF(model, filial));
+		retorno.append(super.validaDocumentoLinha(model, filial));
 
 		if (!TSUtil.isEmpty(model.getPedidoVendaLinha())) {
 

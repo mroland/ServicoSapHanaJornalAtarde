@@ -43,6 +43,11 @@ public class NotaFiscalSaida extends NotaFiscalSaidaAB implements Serializable {
 
 	}
 
+	public NotaFiscalSaida(Empresa empresa) {
+
+		this.setEmpresa(empresa);
+	}
+
 	public Long getSerialInicial() {
 		return serialInicial;
 	}

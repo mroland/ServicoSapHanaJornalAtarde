@@ -53,7 +53,7 @@ public class DocumentoValidationAB {
 
 	}
 
-	protected String validaLinhaNFF(DocumentoLinhaAB model, Filial filial) {
+	protected String validaDocumentoLinha(DocumentoLinhaAB model, Filial filial) {
 		
 		StringBuilder retorno = new StringBuilder();
 

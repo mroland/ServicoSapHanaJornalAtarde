@@ -8,13 +8,13 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.atarde.servicosaphana.sap.model.Empresa;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaAB;
 import br.com.atarde.servicosaphana.sap.model.ParceiroNegocio;
+import br.com.atarde.servicosaphana.sap.model.PedidoVendaAB;
 import br.com.atarde.servicosaphana.sap.model.Status;
 
 @SuppressWarnings("serial")
 @XmlRootElement
-public class EasyclassPedidoVenda extends NotaFiscalSaidaAB implements Serializable {
+public class EasyclassPedidoVenda extends PedidoVendaAB implements Serializable {
 
 	private ParceiroNegocio anunciante;
 	private BigDecimal uComissaoAgencia;
@@ -35,6 +35,7 @@ public class EasyclassPedidoVenda extends NotaFiscalSaidaAB implements Serializa
 	private String uPostoId;
 	private String uPermuta;
 	private String uObservacao;
+	private String uIntermediador;	
 
 	public EasyclassPedidoVenda() {
 	}
@@ -184,6 +185,14 @@ public class EasyclassPedidoVenda extends NotaFiscalSaidaAB implements Serializa
 
 	public void setUDataPublicacaoInicial(Date uDataPublicacaoInicial) {
 		this.uDataPublicacaoInicial = uDataPublicacaoInicial;
+	}
+	
+	public String getUIntermediador() {
+		return uIntermediador;
+	}
+
+	public void setUIntermediador(String uIntermediador) {
+		this.uIntermediador = uIntermediador;
 	}
 
 	public ParceiroNegocio getAnunciante() {
