@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("serial")
 public class EasyclassPedidoVendaModel extends PedidoVendaModel {
+	
+	@SerializedName("DocumentInstallments")
+	private List<EasyclassParcelaPedidoVendaModel> parcelas;
 
 	@SerializedName("DocumentLines")
 	private List<EasyclassPedidoVendaLinhaModel> linhas;
@@ -324,6 +327,14 @@ public class EasyclassPedidoVendaModel extends PedidoVendaModel {
 
 	public String getUIntermediador() {
 		return uIntermediador;
+	}
+
+	public List<EasyclassParcelaPedidoVendaModel> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(List<EasyclassParcelaPedidoVendaModel> parcelas) {
+		this.parcelas = parcelas;
 	}	
 
 }

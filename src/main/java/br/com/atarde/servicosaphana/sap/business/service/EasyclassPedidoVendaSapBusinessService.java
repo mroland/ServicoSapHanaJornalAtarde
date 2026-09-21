@@ -4,6 +4,7 @@
  */
 package br.com.atarde.servicosaphana.sap.business.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Entity;
@@ -16,10 +17,13 @@ import com.google.gson.Gson;
 import br.com.atarde.servicosaphana.model.EasyclassPedidoVenda;
 import br.com.atarde.servicosaphana.model.EasyclassPedidoVendaLinha;
 import br.com.atarde.servicosaphana.sap.hana.model.ConexaoSessaoHanaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.EasyclassParcelaNotaFiscalSaidaModel;
+import br.com.atarde.servicosaphana.sap.hana.model.EasyclassParcelaPedidoVendaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.EasyclassPedidoVendaLinhaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.EasyclassPedidoVendaModel;
 import br.com.atarde.servicosaphana.sap.hana.model.RetornoSapErroModel;
 import br.com.atarde.servicosaphana.sap.model.Empresa;
+import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.atarde.servicosaphana.util.ConexaoSapUtil;
 import br.com.atarde.servicosaphana.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
@@ -66,10 +70,45 @@ public class EasyclassPedidoVendaSapBusinessService {
 		//e setar sempre a data de vencimento(data de entrega) a data de documento
 		nffJson.setDataVencimento(nffJson.getDataDocumento());
 
-		if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId())) {
+		if (!TSUtil.isEmpty(model.getCondicaoPagamento().getId()) && !TSUtil.isEmpty(model.getParcelas())) {
 
 			// pegar a condicao de pagamento
 			nffJson.setCondicaoPagamentoId(Integer.valueOf(model.getCondicaoPagamento().getId().toString()));
+
+			if (!TSUtil.isEmpty(model.getParcelas())) {
+
+				if (TSUtil.isEmpty(nffJson.getParcelas())) {
+
+					nffJson.setParcelas(new ArrayList<EasyclassParcelaPedidoVendaModel>());
+
+				}
+
+				String ultimaDataVencimento = null;
+				EasyclassParcelaPedidoVendaModel parcelaJsonModel;
+				for (ParcelaAB parcela : model.getParcelas()) {
+
+					// verificar se vai add o InstallmentId 0,1,2
+
+					parcelaJsonModel = new EasyclassParcelaPedidoVendaModel();
+
+					parcelaJsonModel.setDataVencimento(TSParseUtil.dateToString(parcela.getDataVencimento(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+
+					parcelaJsonModel.setValor(TSUtil.isEmpty(parcela.getValorSemImpostoRetido()) ? parcela.getValor().doubleValue() : parcela.getValorSemImpostoRetido().doubleValue());
+
+					if (parcela.getValor().compareTo(BigDecimal.ZERO) == 0) {
+						parcelaJsonModel.setPercentual(100D);
+					}
+
+					nffJson.getParcelas().add(parcelaJsonModel);
+
+					// pega a ultima data de vencimento
+					ultimaDataVencimento = parcelaJsonModel.getDataVencimento();
+
+				}
+
+				nffJson.setDataVencimento(ultimaDataVencimento);
+
+			}
 			
 		} else {
 			
