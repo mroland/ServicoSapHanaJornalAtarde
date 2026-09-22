@@ -12,6 +12,8 @@ import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.EasyclassNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoEasyclassNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.TabelaUsuarioImpostoTaxaDAO;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinha;
+import br.com.atarde.servicosaphana.model.ClassificadosExecucaoNotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
 import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinhaImposto;
@@ -112,7 +114,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
-			//this.setarImpostoCasoNecessario(model);
+			this.setarImpostoCasoNecessario(model);
 
 			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
 			if (TSUtil.isEmpty(nff)) {

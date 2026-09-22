@@ -7,7 +7,6 @@ import java.util.List;
 
 import br.com.atarde.servicosaphana.dao.EasyclassPedidoVendaDAO;
 import br.com.atarde.servicosaphana.dao.EasyclassPedidoVendaLinhaDAO;
-import br.com.atarde.servicosaphana.dao.EasyclassPedidoVendaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.HistoricoEasyclassPedidoVendaDAO;
 import br.com.atarde.servicosaphana.model.EasyclassPedidoVenda;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassPedidoVenda;
@@ -36,8 +35,6 @@ public class EasyclassPedidoVendaBusiness extends PedidoVendaBusinessAB {
 				item.setEmpresa(model);
 
 				item.setLinhas(new EasyclassPedidoVendaLinhaDAO().pesquisarInterface(item));
-				
-				item.setParcelas(new EasyclassPedidoVendaParcelaDAO().pesquisarInterface(item));
 
 				item.setStatus(new Status(2L));
 

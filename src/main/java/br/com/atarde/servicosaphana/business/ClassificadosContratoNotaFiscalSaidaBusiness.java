@@ -112,7 +112,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 			this.obterSequenciaDefaultParceiroNegocio(model);
 
-			//this.setarImpostoCasoNecessario(model);
+			this.setarImpostoCasoNecessario(model);
 
 			NotaFiscalSaida nff = new NotaFiscalSaidaDAO().obterIdExterno(model);
 			if (TSUtil.isEmpty(nff)) {

@@ -9,14 +9,11 @@ import java.sql.Timestamp;
 
 import br.com.atarde.servicosaphana.model.EasyclassPedidoVenda;
 import br.com.atarde.servicosaphana.model.EasyclassPedidoVendaLinha;
-import br.com.atarde.servicosaphana.model.EasyclassPedidoVendaParcela;
 import br.com.atarde.servicosaphana.model.HistoricoEasyclassPedidoVenda;
-import br.com.atarde.servicosaphana.sap.model.ParcelaAB;
 import br.com.atarde.servicosaphana.sap.model.PedidoVendaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.util.TSUtil;
 
 /**
  *
@@ -155,20 +152,6 @@ public class HistoricoEasyclassPedidoVendaDAO {
 			
 			new HistoricoEasyclassPedidoVendaLinhaDAO().inserirInterface(linha,broker);
 
-		}
-		
-		if(!TSUtil.isEmpty(model.getParcelas())){
-			
-			for (ParcelaAB p : model.getParcelas()) {
-				
-				EasyclassPedidoVendaParcela parcela = (EasyclassPedidoVendaParcela) p;
-				
-				parcela.setPedidoVenda(new EasyclassPedidoVenda("interfaceId",model.getInterfaceId()));
-				
-				new HistoricoEasyclassPedidoVendaParcelaDAO().inserirInterface(parcela,broker);
-				
-			}
-			
 		}
 		
 		broker.endTransaction();
