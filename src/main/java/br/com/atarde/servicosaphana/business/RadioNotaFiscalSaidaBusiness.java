@@ -12,8 +12,6 @@ import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaDAO;
 import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaLinhaDAO;
 import br.com.atarde.servicosaphana.dao.RadioNotaFiscalSaidaParcelaDAO;
 import br.com.atarde.servicosaphana.dao.TabelaUsuarioImpostoTaxaDAO;
-import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.model.EasyclassNotaFiscalSaidaLinhaImposto;
 import br.com.atarde.servicosaphana.model.HistoricoRadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaidaLinha;

@@ -160,6 +160,8 @@ public class RadioNotaFiscalSaidaSapBusinessService {
 		nffJson.setUComissaoAgencia(model.getUComissaoAgencia().doubleValue());
 
 		nffJson.setUValorBruto(model.getUValorBruto().doubleValue());
+		
+		nffJson.setObservacao(model.getObservacao());
 
 		if (!TSUtil.isEmpty(model.getUAutorizacaoPublicidade())) {
 

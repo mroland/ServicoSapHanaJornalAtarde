@@ -144,6 +144,8 @@ public class ClassificadosExecucaoNotaFiscalSaidaSapBusinessService {
 		nffJson.setSequenciaId(Integer.valueOf(model.getSequencia().getId().toString()));
 
 		nffJson.setUValorBruto(model.getUValorBruto().doubleValue());
+		
+		nffJson.setObservacao(model.getObservacao());
 
 		// linhas do titulo
 

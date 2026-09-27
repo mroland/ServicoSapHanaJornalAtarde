@@ -122,6 +122,8 @@ public class ClassificadosContratoPedidoVendaSapBusinessService {
 
 		nffJson.setUTituloPublicacao(model.getUTituloPublicacao());
 		
+		nffJson.setObservacao(model.getObservacao());
+		
 		if(!TSUtil.isEmpty(model.getUIntermediador())) {
 			
 			nffJson.setUIntermediador(model.getUIntermediador());
