@@ -24,6 +24,8 @@ public class TabelaUsuarioMovimentacao extends DocumentoAB {
 
 	private Long sapDevolucaoNotaFiscalSaidaId;
 
+	private boolean flagDocumentoExistente;
+
 	public TabelaUsuarioMovimentacao() {
 
 	}
@@ -120,6 +122,14 @@ public class TabelaUsuarioMovimentacao extends DocumentoAB {
 
 	public void setSapDevolucaoNotaFiscalSaidaId(Long sapDevolucaoNotaFiscalSaidaId) {
 		this.sapDevolucaoNotaFiscalSaidaId = sapDevolucaoNotaFiscalSaidaId;
+	}
+
+	public boolean isFlagDocumentoExistente() {
+		return flagDocumentoExistente;
+	}
+
+	public void setFlagDocumentoExistente(boolean flagDocumentoExistente) {
+		this.flagDocumentoExistente = flagDocumentoExistente;
 	}
 
 }

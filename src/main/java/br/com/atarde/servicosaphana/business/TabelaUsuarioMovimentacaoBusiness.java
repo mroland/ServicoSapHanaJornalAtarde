@@ -104,18 +104,34 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 		try {
 
-			TabelaUsuarioMovimentacaoModel obterUltimo = new br.com.atarde.servicosaphana.sap.dao.TabelaUsuarioMovimentacaoDAO().obterUltimo(model);
+			Long docEntry = !TSUtil.isEmpty(model.getSapNotaFiscalSaidaId()) ? model.getSapNotaFiscalSaidaId() : model.getSapDevolucaoNotaFiscalSaidaId();
 
-			if (TSUtil.isEmpty(obterUltimo) || TSUtil.isEmpty(obterUltimo.getId())) {
+			TabelaUsuarioMovimentacaoModel existente = new br.com.atarde.servicosaphana.sap.dao.TabelaUsuarioMovimentacaoDAO().obterPorChave(model, docEntry);
 
-				obterUltimo = new TabelaUsuarioMovimentacaoModel();
-				obterUltimo.setId(1L);
+			if (!TSUtil.isEmpty(existente) && !TSUtil.isEmpty(existente.getId())) {
+
+				model.setId(existente.getId());
+
+				model.setFlagDocumentoExistente(true);
+
+			} else {
+
+				TabelaUsuarioMovimentacaoModel obterUltimo = new br.com.atarde.servicosaphana.sap.dao.TabelaUsuarioMovimentacaoDAO().obterUltimo(model);
+
+				if (TSUtil.isEmpty(obterUltimo) || TSUtil.isEmpty(obterUltimo.getId())) {
+
+					obterUltimo = new TabelaUsuarioMovimentacaoModel();
+					obterUltimo.setId(1L);
+
+				}
+
+				model.setId(obterUltimo.getId() + 1);
+
+				new TabelaUsuarioMovimentacaoSapBusinessService().inserir(model);
+
+				model.setFlagDocumentoExistente(false);
 
 			}
-
-			model.setId(obterUltimo.getId() + 1);
-
-			new TabelaUsuarioMovimentacaoSapBusinessService().inserir(model);
 
 			model.setStatus(new Status(1L));
 
@@ -208,6 +224,8 @@ public class TabelaUsuarioMovimentacaoBusiness {
 		nota.setItem(model.getItem());
 		
 		nota.setArquivoRemessaSap(model.getArquivoRemessaSap());
+
+		nota.setFlagDocumentoExistente(model.isFlagDocumentoExistente());
 
 		return nota;
 
