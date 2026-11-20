@@ -88,6 +88,16 @@ public class ClassificadosExecucaoNotaFiscalSaidaDAO {
 
 	}
 
+	public void alterarStatusInterface(ClassificadosExecucaoNotaFiscalSaida model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE CLASSIFICADOS_EXECUCAO_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(ClassificadosExecucaoNotaFiscalSaida model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

@@ -91,6 +91,16 @@ public class AssinaturaPedidoVendaDAO {
 
 	}
 
+	public void alterarStatusInterface(AssinaturaPedidoVenda model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE ASSINATURAPEDIDOVENDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(AssinaturaPedidoVenda model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

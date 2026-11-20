@@ -66,7 +66,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 					new EasyclassNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -162,7 +162,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 				new EasyclassNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -296,7 +296,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 			item.setMensagemErro(null);
 
-			new EasyclassNotaFiscalSaidaDAO().alterarInterface(item);
+			new EasyclassNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

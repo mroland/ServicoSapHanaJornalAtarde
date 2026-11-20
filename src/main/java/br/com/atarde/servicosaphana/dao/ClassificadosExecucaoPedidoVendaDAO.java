@@ -45,6 +45,16 @@ public class ClassificadosExecucaoPedidoVendaDAO {
 
 	}
 
+	public void alterarStatusInterface(ClassificadosExecucaoPedidoVenda model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE CLASSIFICADOS_EXECUCAO_PEDIDOVENDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(ClassificadosExecucaoPedidoVenda model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

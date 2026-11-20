@@ -66,7 +66,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 					new ClassificadosExecucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -158,7 +158,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 				new ClassificadosExecucaoNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -290,7 +290,7 @@ public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 			item.setMensagemErro(null);
 
-			new ClassificadosExecucaoNotaFiscalSaidaDAO().alterarInterface(item);
+			new ClassificadosExecucaoNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

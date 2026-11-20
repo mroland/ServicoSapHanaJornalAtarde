@@ -66,7 +66,7 @@ public class ClassificadosContratoPedidoVendaBusiness extends PedidoVendaBusines
 
 					new ClassificadosContratoPedidoVendaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -161,7 +161,7 @@ public class ClassificadosContratoPedidoVendaBusiness extends PedidoVendaBusines
 
 				new ClassificadosContratoPedidoVendaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -293,7 +293,7 @@ public class ClassificadosContratoPedidoVendaBusiness extends PedidoVendaBusines
 
 			item.setMensagemErro(null);
 
-			new ClassificadosContratoPedidoVendaDAO().alterarInterface(item);
+			new ClassificadosContratoPedidoVendaDAO().alterarStatusInterface(item);
 
 		}
 

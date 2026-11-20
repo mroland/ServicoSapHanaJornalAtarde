@@ -70,7 +70,7 @@ public class ContasReceberBusiness extends MainBusiness<ContasReceber>{
 
 				new ContasReceberDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -191,7 +191,7 @@ public class ContasReceberBusiness extends MainBusiness<ContasReceber>{
 
 					new ContasReceberDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 

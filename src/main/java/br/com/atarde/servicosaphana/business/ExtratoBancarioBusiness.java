@@ -61,7 +61,7 @@ public class ExtratoBancarioBusiness extends MainBusiness<ExtratoBancario> {
 
 					new ExtratoBancarioDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -167,7 +167,7 @@ public class ExtratoBancarioBusiness extends MainBusiness<ExtratoBancario> {
 
 				new ExtratoBancarioDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 

@@ -66,7 +66,7 @@ public class RadioPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 					new RadioPedidoVendaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -163,7 +163,7 @@ public class RadioPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 				new RadioPedidoVendaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -283,7 +283,7 @@ public class RadioPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 			item.setMensagemErro(null);
 
-			new RadioPedidoVendaDAO().alterarInterface(item);
+			new RadioPedidoVendaDAO().alterarStatusInterface(item);
 
 		}
 

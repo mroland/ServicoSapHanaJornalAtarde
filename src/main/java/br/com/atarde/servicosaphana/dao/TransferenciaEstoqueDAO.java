@@ -103,6 +103,16 @@ public class TransferenciaEstoqueDAO {
 
 	}
 
+	public void alterarStatusInterface(TransferenciaEstoque model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE TRANSFERENCIA_ESTOQUE SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(TransferenciaEstoque model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

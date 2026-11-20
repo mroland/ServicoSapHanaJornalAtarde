@@ -91,6 +91,16 @@ public class TabelaUsuarioMovimentacaoDAO {
 
 	}
 
+	public void alterarStatusInterface(TabelaUsuarioMovimentacao model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE TABELA_USUARIO_MOVIMENTACAO SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(TabelaUsuarioMovimentacao model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

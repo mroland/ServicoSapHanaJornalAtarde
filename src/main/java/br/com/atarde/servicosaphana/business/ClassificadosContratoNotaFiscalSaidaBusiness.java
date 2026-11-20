@@ -66,7 +66,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 					new ClassificadosContratoNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -162,7 +162,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 				new ClassificadosContratoNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -296,7 +296,7 @@ public class ClassificadosContratoNotaFiscalSaidaBusiness extends NotaFiscalSaid
 
 			item.setMensagemErro(null);
 
-			new ClassificadosContratoNotaFiscalSaidaDAO().alterarInterface(item);
+			new ClassificadosContratoNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

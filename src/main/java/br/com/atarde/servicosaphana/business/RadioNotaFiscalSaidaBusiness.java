@@ -66,7 +66,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 					new RadioNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -162,7 +162,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 				new RadioNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -284,7 +284,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB {
 
 			item.setMensagemErro(null);
 
-			new RadioNotaFiscalSaidaDAO().alterarInterface(item);
+			new RadioNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

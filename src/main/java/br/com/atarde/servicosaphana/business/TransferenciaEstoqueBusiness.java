@@ -87,7 +87,7 @@ public class TransferenciaEstoqueBusiness {
 
 					new TransferenciaEstoqueDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -151,7 +151,7 @@ public class TransferenciaEstoqueBusiness {
 
 				new TransferenciaEstoqueDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -233,7 +233,7 @@ public class TransferenciaEstoqueBusiness {
 
 			item.setMensagemErro(null);
 
-			new TransferenciaEstoqueDAO().alterarInterface(item);
+			new TransferenciaEstoqueDAO().alterarStatusInterface(item);
 
 		}
 	}

@@ -69,7 +69,7 @@ public class AssinaturaPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 					new AssinaturaPedidoVendaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -160,7 +160,7 @@ public class AssinaturaPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 				new AssinaturaPedidoVendaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -264,7 +264,7 @@ public class AssinaturaPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 			item.setMensagemErro(null);
 
-			new AssinaturaPedidoVendaDAO().alterarInterface(item);
+			new AssinaturaPedidoVendaDAO().alterarStatusInterface(item);
 
 		}
 

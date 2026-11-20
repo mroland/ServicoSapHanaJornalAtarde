@@ -66,7 +66,7 @@ public class EasyclassPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 					new EasyclassPedidoVendaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -161,7 +161,7 @@ public class EasyclassPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 				new EasyclassPedidoVendaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -293,7 +293,7 @@ public class EasyclassPedidoVendaBusiness extends PedidoVendaBusinessAB {
 
 			item.setMensagemErro(null);
 
-			new EasyclassPedidoVendaDAO().alterarInterface(item);
+			new EasyclassPedidoVendaDAO().alterarStatusInterface(item);
 
 		}
 

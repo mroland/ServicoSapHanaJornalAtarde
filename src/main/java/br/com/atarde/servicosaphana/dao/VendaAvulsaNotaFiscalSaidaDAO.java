@@ -72,6 +72,16 @@ public class VendaAvulsaNotaFiscalSaidaDAO {
 
 	}
 
+	public void alterarStatusInterface(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE VENDAAVULSANOTAFISCALSAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(VendaAvulsaNotaFiscalSaida model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

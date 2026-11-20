@@ -74,7 +74,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 					new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -165,7 +165,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 				new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -295,7 +295,7 @@ public class VendaAvulsaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessA
 
 			item.setMensagemErro(null);
 
-			new VendaAvulsaNotaFiscalSaidaDAO().alterarInterface(item);
+			new VendaAvulsaNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

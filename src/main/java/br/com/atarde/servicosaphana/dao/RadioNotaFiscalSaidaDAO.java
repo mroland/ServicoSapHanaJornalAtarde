@@ -8,8 +8,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaida;
-import br.com.atarde.servicosaphana.model.RadioNotaFiscalSaidaLinha;
-import br.com.atarde.servicosaphana.sap.model.NotaFiscalSaidaLinhaAB;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
@@ -45,6 +43,16 @@ public class RadioNotaFiscalSaidaDAO {
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
 		broker.setSQL("UPDATE RADIO_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ?, DATA_ATUALIZACAO =?, DATA_IMPORTACAO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), TSUtil.isEmpty(model.getDataAtualizacao()) ? null : new Timestamp(model.getDataAtualizacao().getTime()), TSUtil.isEmpty(model.getDataImportacao()) ? null : new Timestamp(model.getDataImportacao().getTime()), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
+	public void alterarStatusInterface(RadioNotaFiscalSaida model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE RADIO_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
 
 		broker.execute();
 

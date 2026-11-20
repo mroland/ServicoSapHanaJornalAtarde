@@ -91,6 +91,16 @@ public class EasyclassNotaFiscalSaidaDAO {
 
 	}
 
+	public void alterarStatusInterface(EasyclassNotaFiscalSaida model) throws TSApplicationException {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("UPDATE EASYCLASS_NFF_SAIDA SET STATUS_ID = ?, MENSAGEM_ERRO = ? WHERE ID = ?", model.getStatus().getId(), model.getMensagemErro(), model.getInterfaceId());
+
+		broker.execute();
+
+	}
+
 	public void excluirInterface(EasyclassNotaFiscalSaida model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

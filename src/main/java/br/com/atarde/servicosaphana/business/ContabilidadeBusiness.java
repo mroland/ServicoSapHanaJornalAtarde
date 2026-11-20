@@ -66,7 +66,7 @@ public class ContabilidadeBusiness extends MainBusiness<Contabilidade> {
 
 					new ContabilidadeDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -178,7 +178,7 @@ public class ContabilidadeBusiness extends MainBusiness<Contabilidade> {
 
 				new ContabilidadeDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 

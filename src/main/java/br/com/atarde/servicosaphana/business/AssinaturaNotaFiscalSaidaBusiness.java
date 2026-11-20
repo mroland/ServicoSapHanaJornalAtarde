@@ -69,7 +69,7 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 					new AssinaturaNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -165,7 +165,7 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 				new AssinaturaNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -271,7 +271,7 @@ public class AssinaturaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB
 
 			item.setMensagemErro(null);
 
-			new AssinaturaNotaFiscalSaidaDAO().alterarInterface(item);
+			new AssinaturaNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 

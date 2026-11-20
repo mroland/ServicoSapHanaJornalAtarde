@@ -80,7 +80,7 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 					new TabelaUsuarioMovimentacaoDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -149,7 +149,7 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 				new TabelaUsuarioMovimentacaoDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -221,7 +221,7 @@ public class TabelaUsuarioMovimentacaoBusiness {
 
 			item.setMensagemErro(null);
 
-			new TabelaUsuarioMovimentacaoDAO().alterarInterface(item);
+			new TabelaUsuarioMovimentacaoDAO().alterarStatusInterface(item);
 
 		}		
 	}

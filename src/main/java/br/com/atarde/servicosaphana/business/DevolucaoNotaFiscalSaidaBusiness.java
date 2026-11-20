@@ -71,7 +71,7 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 					new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
 
-				} catch (TSApplicationException e1) {
+				} catch (Exception e1) {
 
 					e1.printStackTrace();
 
@@ -151,7 +151,7 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 				new DevolucaoNotaFiscalSaidaDAO().alterarInterface(model);
 
-			} catch (TSApplicationException e1) {
+			} catch (Exception e1) {
 
 				e1.printStackTrace();
 
@@ -259,7 +259,7 @@ public class DevolucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusinessAB 
 
 			item.setMensagemErro(null);
 
-			new DevolucaoNotaFiscalSaidaDAO().alterarInterface(item);
+			new DevolucaoNotaFiscalSaidaDAO().alterarStatusInterface(item);
 
 		}
 
